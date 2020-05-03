@@ -6,13 +6,14 @@ const config = require('../config/keyToken');
 const validateRegisterInput = require('../validation/register');
 const Suscriptor = require('../models/Suscriptor');
 const Perfil = require('../models/Perfil');
+const cors = require('cors');
 
 router.get('/', async (req, res) => {
     const suscriptores = await Suscriptor.find();
     res.json(suscriptores);
 });
 
-router.post('/registrar', async (req,res) => {
+router.post('/registrar', cors(), async (req,res) => {
     
     const { errors, isValid } = validateRegisterInput(req.body);
     
@@ -48,13 +49,13 @@ router.post('/registrar', async (req,res) => {
 //    res.json({auth:true,token}); no me deja por los headers , pero en el login si me dejaaaa whatafaccc
 });
 
-router.post('/login', passport.authenticate('local', { 
+router.post('/login', cors(), passport.authenticate('local', { 
     failureRedirect: '/register',
     successRedirect: '/',
 }));
  
 //no entiendo bien como funciona pero es para cuando un suscriptor navegue por la aplicacion deberia tambien devolverse a si mismo y poder usarlo, para visualizar
-router.get('/me', async (req,res,next)=>{
+router.get('/me',cors(), async (req,res,next)=>{
    
     const token = req.headers['xaccess']; //cuando se lo paso?
     if(!token){
@@ -73,19 +74,19 @@ router.get('/me', async (req,res,next)=>{
     res.json(suscriptor);
 });
 
-router.post('/logout', (req,res) => {
+router.post('/logout', cors(),(req,res) => {
     req.logout();
     res.redirect('/');  
 });
 
 //no funca
-router.delete('/delete/:id'), async (re,res)=>{
+router.delete('/delete/:id'), cors(),async (re,res)=>{
     await Suscriptor.findByIdAndDelete(req.params.id)
         .then(res.status(400).send('Suscripción eliminada'))
         .catch(err);
 };
 //no funca
-router.put('/update/:id', async (req,res) => {
+router.put('/update/:id', cors(),async (req,res) => {
     await Suscriptor.findByIdAndUpdate(req.params.id)
         .then(res.status(400).send('Suscripción eliminada'))
         .catch(err);

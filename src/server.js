@@ -17,10 +17,25 @@ app.set('port', process.env.PORT || 4000) ;
 require('./config/passport');
 
 // MIDDLEWARES-> funciones q se van ejecutando a medida q llegan las ejecuciones, antes de que se procese
+//bodyParser esta incluida en esta de express
 app.use(express.urlencoded({extended: false}));//para soportar datos de parte del front
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+/*
+app.use((req,res,next) => {
+    res.header('Access-Control-Allow-Origin','*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (req.method === 'OPTIONS' ){
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).json({});    
+    }
+
+});
+*/
+
 app.use(morgan('dev'));
 app.use(session({
     secret: 'secret',
