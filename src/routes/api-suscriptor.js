@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const JWT = require('jsonwebtoken');
-const passport = require('passport'); //no es mi passport.js sino la library
 const config = require('../config/keyToken');
-const validateRegisterInput = require('../validation/register');
+const auth = require('../middleware/auth');
 const cors = require('cors');
+const validateRegisterInput = require('../validation/register');
+
 const Suscriptor = require('../models/Suscriptor');
 const Perfil = require('../models/Perfil');
 
@@ -25,7 +26,6 @@ router.post('/registrar', cors(), async (req,res) => {
        
     if (suscriptor){
         return res.status(500).send('Ingrese otro email, el actual ya está en uso' );
-       //401 sin auth
     }
     const nuevoSuscriptor = new Suscriptor({
         nombre: req.body.nombre,
@@ -35,88 +35,112 @@ router.post('/registrar', cors(), async (req,res) => {
         perfiles: [new Perfil({ nombre:req.body.nombre })]
     });
 
-    const nuevo= await nuevoSuscriptor
+    await nuevoSuscriptor
         .save()
-        .then(res.status(200).send('Suscriptor Registrade'))
+        .then( user => {
+            JWT.sign(
+                {   id: user._id },
+                config.secret,
+                {   expiresIn: 3600} ,
+                (err,token) => {
+                    if(err) throw err;    
+                    res.json({
+                        token,
+                        user:{
+                            id: user._id,
+                            nombre: user.nombre,
+                    
+                        }
+                    });
+                }
+            )
+        })
         .catch(err => res.status(500).send(err));
 
+});
 
-    const token = JWT.sign({id:nuevoSuscriptor._id}, config.secret,{
-        expiresIn: 60 * 60 * 2  
-     });
-    console.log(token, {id: nuevo._id});
+router.post('/login', cors(), async (req,res) => {
+    const { email , password } = req.body;
     
-//    res.json({auth:true,token}); no me deja por los headers , pero en el login si me dejaaaa whatafaccc
+    if(!email || !password ){
+        return res.status(400).send('Debe rellenar todos los campos')
+    }
+
+    const suscriptor = await Suscriptor.findOne({ email })
+    if (!suscriptor) {
+        return res.status(400).send('El usuario no existe');
+    }
+
+    const match = await suscriptor.matchPassword(password);
+    if(!match){
+        return res.status(400).send('La contraseña es incorrecta');
+    }
+
+    JWT.sign({ id: suscriptor._id },
+        config.secret,
+        {   expiresIn: 3600} ,
+        (err,token) => {
+            if(err) throw err;    
+            res.json({
+                token,
+                user:{
+                    id: suscriptor._id,
+                    nombre: suscriptor.nombre,
+            
+                }
+            });
+        }
+    )
 });
 
-router.post('/login', cors(), passport.authenticate('local', { 
-
-    successRedirect: '/',
-}));
+router.get('/me',auth, cors(), async (req,res,next)=>{
+    Suscriptor.findById(req.user.id)
+        .then(user => res.status(400).send(user))
+});
  
-//no entiendo bien como funciona pero es para cuando un suscriptor navegue por la aplicacion deberia tambien devolverse a si mismo y poder usarlo, para visualizar
-router.get('/me',cors(), async (req,res,next)=>{
-   
-    const token = req.headers['xaccess']; //cuando se lo paso?
-    if(!token){
-        return res.status(401).json({
-            auth:false,
-            message: 'no token provided'
-        });
+//debe recibir todos los datos y la validacion (en el front)
+router.post('/modificar', auth, cors(), async (req,res) => {
+    const suscriptorViejo = await Suscriptor.findById(req.user.id);
+    
+    if(! await Suscriptor.findOne({email:req.body.email}) != suscriptorViejo){
+    await new Suscriptor ({
+            nombre: req.body.nombre, 
+            email: req.body.email,
+            password:req.body.password, 
+            suscripcion:req.body.suscripcion
+    })
+        .save()
+        .then( user => {
+            suscriptorActual.delete(),
+            JWT.sign(
+                {   id: user._id },
+                config.secret,
+                {   expiresIn: 3600} ,
+                (err,token) => {
+                    if(err) throw err;    
+                    res.json({
+                        token,
+                        user
+                    });
+                }
+            )
+        })
+        .catch(err => res.status(500).send(err)); 
+        
     }
-    const decoded = JWT.verify(token, config.secret);
-
-    const suscriptor = await Suscriptor.findById(decoded.id, { password:0 });
-
-    if (!suscriptor){
-        return res.status(404).send('Usuario no encontrado');
-    }
-    res.json(suscriptor);
+    res.send('El email ya esta en uso');
 });
 
-router.post('/logout', cors(),(req,res) => {
+//no funciona
+router.post('/eliminar', auth, cors(), async (req,res)=>{
+    const suscriptor = await Suscriptor.findById(req.user.id);
+    suscriptor.delete().then(res=> res.redirect('/'));
+});
+
+//no funciona
+router.post('/logout', auth, cors(),(req,res) => {
     req.logout();
     res.redirect('/');  
-});
-
-//no funca
-router.delete('/delete/:id'), cors(),async (re,res)=>{
-    await Suscriptor.findByIdAndDelete(req.params.id)
-        .then(res.status(400).send('Suscripción eliminada'))
-        .catch(err);
-};
-//no funca
-router.put('/update/:id', cors(),async (req,res) => {
-    await Suscriptor.findByIdAndUpdate(req.params.id)
-        .then(res.status(400).send('Suscripción eliminada'))
-        .catch(err);
-
-    /*
-    const {nombre, email, password} = req.body;
-    const token = req.headers['xaccess']; //cuando se lo paso?
-    
-    if(!token){
-        return res.status(401).json({
-            auth:false,
-            message: 'no token provided'
-        });
-    }
-    
-    const decoded = JWT.verify(token, config.secret);
-    
-    await Suscriptor.findById(decoded.id, { password:0 }). update({
-        nombre: nombre,
-            email:email,
-            password:password
-        
-    });
-
-    res.json({auth:true,token});
-
-*/
-
-
-
 });
 
 

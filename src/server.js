@@ -3,10 +3,8 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require ('cookie-parser');
-const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
-require('./config/passport');
 
 
 // INITIALIZATIONS
@@ -14,7 +12,6 @@ const app = express();
 
 // SETTINGS
 app.set('port', process.env.PORT || 4000) ;
-require('./config/passport');
 
 // MIDDLEWARES-> funciones q se van ejecutando a medida q llegan las ejecuciones, antes de que se procese
 //bodyParser esta incluida en esta de express
@@ -30,9 +27,6 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }));
-app.use(passport.initialize());
-app.use(passport.session()); 
-
 
 //GLOBAL VARIABLE
 

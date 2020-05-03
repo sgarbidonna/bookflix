@@ -9,7 +9,6 @@ class App extends Component {
     constructor (){
         super();
         this.state = {
-           
             email: '',
             password:'',
       };
@@ -39,17 +38,37 @@ class App extends Component {
 //faltan los setState, y no funca el POST
     render(){
         return (
-            <div>
+        <div>
 
-            <div className="col-md-6 offset-md-3 form-login">
+        <div className="col-md-6 offset-md-3 form-login">
             <div className="card card-body bg-dark  text-light " >
+
                 <form onSubmit={this.iniciarSesion}>
                     <div className="form-group">
-                       <input className="form-control" placeholder="Email" ></input>
+                    <label className="text-light">Email
+                    </label>
+                    <input 
+                        className="form-control" 
+                        id="email" 
+                        name ="email"
+                        onChange={this.onInputChange}
+                        value={this.state.email}
+
+                        placeholder="Ingrese un email">
+                    </input>    
                     </div>
+
                     <div className="form-group">
-                        
-                        <input className="form-control" placeholder="Password"></input>
+                    <label className="text-light">Contraseña
+                    </label>
+                    <input 
+                        className="form-control" 
+                        id="password" 
+                        name ="password"
+                        onChange={this.onInputChange}
+                        value={this.state.password}
+                        placeholder="Ingrese la contraseña">
+                    </input>    
                     </div>
                     <div className="form-group">
                         <button  type="submit" className="btn btn-danger btn-lg btn-block">
@@ -58,8 +77,9 @@ class App extends Component {
                     </div>
                 </form>
             </div>   
-            </div>
-            </div>
+            
+        </div>
+        </div>
         )
     }
 }
