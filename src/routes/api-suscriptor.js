@@ -75,19 +75,15 @@ router.post('/login', cors(), async (req,res) => {
     if(!match){
         return res.status(400).send('La contraseña es incorrecta');
     }
-
+    //el primer parametro es un payload
     JWT.sign({ id: suscriptor._id },
         config.secret,
         {   expiresIn: 3600} ,
-        (err,token) => {
+        async (err,token) => {
             if(err) throw err;    
             res.json({
                 token,
-                user:{
-                    id: suscriptor._id,
-                    nombre: suscriptor.nombre,
-            
-                }
+                user: await Suscriptor.findById(suscriptor._id)
             });
         }
     )
