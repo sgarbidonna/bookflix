@@ -4,9 +4,9 @@ const JWT = require('jsonwebtoken');
 const passport = require('passport'); //no es mi passport.js sino la library
 const config = require('../config/keyToken');
 const validateRegisterInput = require('../validation/register');
+const cors = require('cors');
 const Suscriptor = require('../models/Suscriptor');
 const Perfil = require('../models/Perfil');
-const cors = require('cors');
 
 router.get('/', async (req, res) => {
     const suscriptores = await Suscriptor.find();
@@ -50,7 +50,7 @@ router.post('/registrar', cors(), async (req,res) => {
 });
 
 router.post('/login', cors(), passport.authenticate('local', { 
-    failureRedirect: '/register',
+
     successRedirect: '/',
 }));
  

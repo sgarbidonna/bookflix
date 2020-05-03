@@ -1,51 +1,71 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { Component } from 'react';
+import axios from 'axios';
 
 const apiRes = 'http://localhost:4000/api/suscriptores/';
-const cargar = 'registrar';
+const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
-
-export default class CargarSuscriptor extends Component {
+class App extends Component {
     
-        state = {
-            nombre: '',
-            apellido: '',
-            contraseña:'',
-            contraseña1: '',
-            numT: '',
+    constructor (){
+        super();
+        this.state = {
+            nombre: '', 
+            email: '',
+            password:'',
+            password2:'',
+            numT:'',
             codT:''
-        }
-    
-    validacion =()=>{
-        if(this.state.nombre === "" || this.state.apellido === "" || this.state.contraseña === "" || 
-        this.state.contraseña1 === ""|| this.state.numT === "" || this.state.codT === "" ){
-        alert("Complete todos los campos"); 
-        return false;
-        }
-        return true;
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.Tomardatos = this.Tomardatos.bind(this);
+        this.cargarSuscriptor = this.cargarSuscriptor.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+
     }
 
     async componentDidMount() {
+    /* DE ESTA MANERA ES MAS CLARA:
         const suscriptores = await fetch(apiRes)
             .then(res => res.json());
 
         console.log(suscriptores);
-
+    */
+        // ACA ESTA EN DATA:
+        const res = await axios.get(apiRes);
+        console.log(res);
     }
-    onSubmit = async (e) => {
-        e.preventDefault();
-        this.validacion();
 
-        
-    };
+    //Capturamos el evento del botón.
+    Tomardatos(event) {
+        console.log(this.state);
+        event.preventDefault();
+    }
 
-    onInputChange = (e) => {
+    handleChange(event) {
+        const { name, value } = event.target;
         this.setState({
-            [e.target.name]: e.target.value
+            [name]: value
+        });
+    }
+
+    
+
+    onInputChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
         })
     };
     
+    
+    async cargarSuscriptor(event){
+        console.log(this.state);
+        event.preventDefault();   
+        await axios.post(cargar,this.state)
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+        
+    }
+
     render(){
         return (
 
@@ -53,7 +73,7 @@ export default class CargarSuscriptor extends Component {
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
         
-        <form onSubmit={this.onSubmit} >
+        <form onSubmit={this.cargarSuscriptor} >
            
 
             
@@ -62,34 +82,34 @@ export default class CargarSuscriptor extends Component {
                 </label>
                 <input 
                     className="form-control" 
-                    id="input1" 
+                    id="nombre" 
                     name ="nombre"
                     onChange={this.onInputChange}
                     value={this.state.nombre}
 
-                    placeholder="Ingrese su numbre">
+                    placeholder="Ingrese su nombre">
                 </input>    
             </div>
             <div className="form-group">
-                <label className="text-light">Apellido
+                <label className="text-light">Email
                 </label>
                 <input 
                     className="form-control" 
-                    id="exampleFormControlInput1" 
-                    name ="apellido"
+                    id="email" 
+                    name ="email"
                     onChange={this.onInputChange}
-                    value={this.state.apellido}
+                    value={this.state.email}
 
-                    placeholder="Ingrese su apellido">
+                    placeholder="Ingrese un email">
                 </input>    
             </div>
             <div className="form-group">
                 <label className="text-light">Contreseña</label>
                 <input className="form-control" 
-                    id="exampleFormControlTextarea1" 
-                    name ="contraseña"
+                    id="password" 
+                    name ="password"
                     onChange={this.onInputChange}
-                    value={this.state.contraseña}
+                    value={this.state.password}
                     placeholder="Ingrese una contraseña"
                 ></input> 
             </div>
@@ -97,10 +117,10 @@ export default class CargarSuscriptor extends Component {
             <div className="form-group">
                 <label className="text-light">Confirmación de contraseña</label>
                 <input className="form-control" 
-                    id="exampleFormControlTextarea1" 
-                    name ="contraseña1"
+                    id="password2" 
+                    name ="password2"
                     onChange={this.onInputChange}
-                    value={this.state.contraseña1}
+                    value={this.state.password2}
 
                     placeholder="Vuelva a ingresar su contraseña"
                 ></input> 
@@ -111,7 +131,7 @@ export default class CargarSuscriptor extends Component {
                 </label>
                 <input 
                     className="form-control" 
-                    id="exampleFormControlInput1" 
+                    id="numT" 
                     name ="numT"
                     onChange={this.onInputChange}
                     value={this.state.numT}
@@ -125,7 +145,7 @@ export default class CargarSuscriptor extends Component {
                 </label>
                 <input 
                     className="form-control" 
-                    id="exampleFormControlInput1" 
+                    id="codT" 
                     name ="codT"
                     onChange={this.onInputChange}
                     value={this.state.codT}
@@ -148,4 +168,6 @@ export default class CargarSuscriptor extends Component {
          </div>
         )
     }
-}                 
+}
+
+export default App;      
