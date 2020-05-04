@@ -17,28 +17,16 @@ class App extends Component {
             codT:''
         };
         this.handleChange = this.handleChange.bind(this);
-        this.Tomardatos = this.Tomardatos.bind(this);
+
         this.cargarSuscriptor = this.cargarSuscriptor.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
 
     }
 
     async componentDidMount() {
-    /* DE ESTA MANERA ES MAS CLARA:
-        const suscriptores = await fetch(apiRes)
-            .then(res => res.json());
-
-        console.log(suscriptores);
-    */
-        // ACA ESTA EN DATA:
+ 
         const res = await axios.get(apiRes);
         console.log(res);
-    }
-
-    //Capturamos el evento del botón.
-    Tomardatos(event) {
-        console.log(this.state);
-        event.preventDefault();
     }
 
     handleChange(event) {
@@ -46,9 +34,7 @@ class App extends Component {
         this.setState({
             [name]: value
         });
-    }
-
-    
+    }    
 
     onInputChange = (event) => {
         this.setState({
@@ -58,12 +44,12 @@ class App extends Component {
     
     
     async cargarSuscriptor(event){
-        console.log(this.state);
-        event.preventDefault();   
+
+        event.preventDefault();  
         await axios.post(cargar,this.state)
                 .then(res => console.log(res))
                 .catch(err => console.log(err));
-        
+
     }
 
     render(){
