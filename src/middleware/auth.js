@@ -6,7 +6,7 @@ function auth(req,res,next){
 
     if(!token){
         res.status(401).send('No se envió ningún token');
-        //error 491 es de permisos
+        //error 401 es de permisos
     }
     try {
         const decoded = JWT.verify(token, config.secret);

@@ -8,12 +8,12 @@ router.get('/', async (req, res) => {
     res.json(novedades);
 });
 
-router.get('/:id', async (req, res) => {
-    const novedad = await Novedad.findById(req.params.id);
+router.get('/', auth, async (req, res) => {
+    const novedad = await Novedad.findById(req.user.id);
     res.send(novedad);
 });
 
-router.post('/cargar', async (req,res) => {
+router.post('/cargar', auth, async (req,res) => {
 
     const novedad = Novedad.findOne({ titulo:req.body.titulo, descripcion: req.body.descripcion });
     
@@ -35,9 +35,9 @@ router.post('/cargar', async (req,res) => {
 
 });
 
-router.delete('/eliminar/:id', async (req,res) => {
+router.delete('/eliminar', auth, async (req,res) => {
     
-    await Novedad.findByIdAndDelete(req.params.id)
+    await Novedad.findByIdAndDelete(req.user.id)
     .then(res.status(400).send('Novedad eliminada'));
     
 }); 
