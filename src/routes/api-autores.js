@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Autor = require('../models/Autor');
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     const autores = await Autor.find();

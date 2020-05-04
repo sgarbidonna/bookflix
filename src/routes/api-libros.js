@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Libro = require('../models/Libro');
+const auth = require('../middleware/auth');
 
 router.get('/',(req,res)=>{
     const libros = await Libro.find();

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Novedad = require('../models/Novedad');
-
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     const novedades = await Novedad.find();

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Genero = require('../models/Genero');
-
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     const generos = await Genero.find();

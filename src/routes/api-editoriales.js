@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Editorial = require('../models/Editorial');
+const auth = require('../middleware/auth');
 
 
 router.get('/', async (req, res) => {
