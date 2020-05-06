@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
 
 const apiRes = 'http://localhost:4000/api/suscriptores/';
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
@@ -47,14 +48,15 @@ class App extends Component {
 
         event.preventDefault();  
         await axios.post(cargar,this.state)
-                .then(res => console.log(res))
+                .then(res => console.log(res.data))
                 .catch(err => console.log(err));
 
     }
 
     render(){
         return (
-
+   
+        !this.state.token && !this.state.user?
         <div className="form-novedad" >
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
@@ -152,6 +154,10 @@ class App extends Component {
          </div>
          </div>   
          </div>
+         :
+         <Redirect
+         to="/home" />
+
         )
     }
 }
