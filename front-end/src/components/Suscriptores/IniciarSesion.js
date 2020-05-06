@@ -35,6 +35,7 @@ class App extends Component {
             }
         );
         console.log("token:");    
+        console.log(data.user.nombre === "jhon");    
         console.log(sessionStorage.getItem('token'));
             
     }

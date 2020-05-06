@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import IniciarSesion from './components/Suscriptores/IniciarSesion';
 import CargarSuscriptor from './components/Suscriptores/CargarSuscriptor';
 import Home from './components/Home';
+import Navegacion from './components/NavegacionHome';
 
 
 
@@ -16,13 +17,17 @@ function App() {
   return (
     <Router>
       <div className="body" >
+       
         <Route path="/" exact>
+          <Navegacion></Navegacion>
           <h1>hola</h1>
         </Route>
-        <Route  path="/login">   
+        <Route  path="/login"> 
+          <Navegacion></Navegacion>
           <IniciarSesion></IniciarSesion>
         </Route>
         <Route  path="/singup">
+          <Navegacion></Navegacion>
           <CargarSuscriptor></CargarSuscriptor>
         </Route>
         <Route  path="/home">

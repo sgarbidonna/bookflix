@@ -26,8 +26,11 @@ export default class Home extends Component {
         return (
             !this.state.token == ''? 
                 this.state.soyAdmin?
-                    <HomeAdmin></HomeAdmin>
-                :   <HomeSuscriptor></HomeSuscriptor>
+
+                <HomeAdmin></HomeAdmin>
+                :
+                
+                <HomeSuscriptor></HomeSuscriptor>
             :<Redirect to="/login"/>
         )
     }
