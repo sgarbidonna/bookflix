@@ -22,21 +22,38 @@ class App extends Component {
         this.onInputChange = this.onInputChange.bind(this);
 
     }
+    getErrors=(err)=>{
+        //traigo la data de los errores
+        const {data} = err;
+        alert(data);
+        
+       
+        
+    }
 
     getToken=(res)=>{
-      //pido la data de la respuesta  
-      const { data } = res;
+        //pido la data de la respuesta  
+        const { data } = res;
+        const { user, token}= data;        
         //guardo el token en session storage
-        sessionStorage.setItem('token', data.token);
+        //paso el Json a string y lo guardo en sesion storage
+        sessionStorage.setItem('token', JSON.stringify( {token} ) );
+        sessionStorage.setItem('user', JSON.stringify( {user} ) );
+        // token tiene un objeto que contiene el token
+        // para acceder al token:
+        // const { token } = this.state.token || 
+        // para tarer en token de sesion storage: const { token } = JSON.parse(sessionStorage.getItem("token")
+        // lo mismo para user
         this.setState(
             {
-                token:sessionStorage.getItem('token'),
-                user: data.user
+                token: JSON.parse(sessionStorage.getItem("token")),
+                user: JSON.parse(sessionStorage.getItem("user")),
             }
         );
+        console.log("user:");    
+        console.log(JSON.parse(sessionStorage.getItem("user")));   
         console.log("token:");    
-        console.log(data.user.nombre === "jhon");    
-        console.log(sessionStorage.getItem('token'));
+        console.log(JSON.parse(sessionStorage.getItem('token')));
             
     }
 
@@ -49,7 +66,7 @@ class App extends Component {
             password: this.state.password,
         })
                 .then(res =>this.getToken(res))
-                .catch(err => console.log(err));
+                .catch(err => this.getErrors(err.response));
         
     }
 
@@ -64,8 +81,6 @@ class App extends Component {
 //faltan los setState, y no funca el POST
     render(){
         return (
-        console.log('token'),
-        console.log(this.state.token),    
         //verifico si existe el token
         !this.state.token && !this.state.user?
         <div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
+import Errors from '../Errors';     
 
 const apiRes = 'http://localhost:4000/api/suscriptores/';
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
@@ -15,20 +16,27 @@ class App extends Component {
             password:'',
             password2:'',
             numT:'',
-            codT:''
+            codT:'',
+            token:'',
+            user: null,
+            errors:[],
+           
         };
         this.handleChange = this.handleChange.bind(this);
-
         this.cargarSuscriptor = this.cargarSuscriptor.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-
+        this.getToken = this.getToken.bind(this);
+        this.getErrors = this.getErrors.bind(this);
+      
     }
 
-    async componentDidMount() {
- 
-        const res = await axios.get(apiRes);
-        console.log(res);
-    }
+        //async componentDidMount() {
+    
+        
+        //const res = await axios.get(apiRes);
+        
+        //console.log(res);
+        // }
 
     handleChange(event) {
         const { name, value } = event.target;
@@ -43,13 +51,54 @@ class App extends Component {
         })
     };
     
+    getToken=(res)=>{
+            const {data} = res;
+            const {token , user} = data; 
+            sessionStorage.setItem("token", JSON.stringify(token));
+            sessionStorage.setItem("user",JSON.stringify(user));
+
+            this.setState(
+                {
+                token: sessionStorage.getItem('token'),
+                user: sessionStorage.getItem('user'),
+                }
+            );
+    };
+    getErrors=(err)=>{
+        //traigo la data de los errores
+        const {data} = err;
+        //traigo los mensajes de errores por su nombre
+        const {nombre , email, password , password2}=data; 
+        //pongo los mensajes en un arreglo
+        const error = [nombre , email, password , password2]; 
+
+        //mapeo el arreglo
+        this.setState(
+            {errors:error}
+        )
+        error.map(err=>{
+            if(! err == '') 
+                alert(err);
+        } );
+        
+        
+    }
     
     async cargarSuscriptor(event){
 
         event.preventDefault();  
-        await axios.post(cargar,this.state)
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err));
+        await axios.post(cargar,{
+            nombre:this.state.nombre ,
+            email: this.state.email,
+            password:this.state.password,
+            password2:this.state.password2,
+            numT:this.state.numT,
+            codT:this.state.codT,
+        })
+                .then(res => this.getToken(res))
+                .catch(res => {
+                  this.getErrors(res.response)
+                });
 
     }
 
@@ -57,6 +106,9 @@ class App extends Component {
         return (
    
         !this.state.token && !this.state.user?
+
+        <div>  
+           
         <div className="form-novedad" >
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
@@ -154,10 +206,11 @@ class App extends Component {
          </div>
          </div>   
          </div>
+         </div> 
          :
          <Redirect
+         from="/singup"
          to="/home" />
-
         )
     }
 }
