@@ -6,7 +6,6 @@ const cookieParser = require ('cookie-parser');
 const session = require('express-session');
 const cors = require('cors');
 
-
 // INITIALIZATIONS
 const app = express();
 
@@ -20,7 +19,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
-
 app.use(morgan('dev'));
 app.use(session({
     secret: 'secret',
@@ -32,11 +30,10 @@ app.use(session({
 
 // STATIC FILES-> cualquier app cleinte puede acceder desde el servidor
 app.use(express.static(path.join(__dirname,'public')));
-
+app.use('/uploads',express.static('uploads'));
 
 //ROUTERS
-app.use('/api/bookflix', require('./routes/api-bookflix'));
-app.use('/api/suscriptores', require('./routes/api-suscriptor'));
+app.use('/api/suscriptores', require('./routes/api-suscriptores'));
 app.use('/api/autores', require('./routes/api-autores'));
 app.use('/api/editoriales', require('./routes/api-editoriales'));
 app.use('/api/generos', require('./routes/api-generos'));

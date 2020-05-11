@@ -5,7 +5,7 @@ const NovedadSchema = new Schema({
     titulo:{  type: String, required: true   },
     descripcion:{  type: String, required: true   },
     publicacion:{ type: Date , require:true },
-    //{timestamps:true}
+    portada:{ type:String, required:true },
 
 });
 

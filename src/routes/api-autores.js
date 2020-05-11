@@ -1,41 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const Autor = require('../models/Autor');
 const auth = require('../middleware/auth');
+const cors = require('cors');
+const { listar, visualizar, cargar, modificar, eliminar } = require('../controllers/autores-controllers'); 
 
-router.get('/', async (req, res) => {
-    const autores = await Autor.find();
-    res.json(autores);
-});
 
-router.post('/cargar', async (req,res) => {
-    const autor = Autor.findOne({nombre:req.body.nombre, apellido:req.body.apellido});
-    
-    if(autor){
-        res.json('El autor ya fue cargado')
-    }
-    await Autor({
-        nombre: req.body.nombre,
-        apellido:req.body.apellido
-    }).save()
-        .then(res.status(400).send('Autor cargado'))
-        .catch(err);
+router.get('/', auth, cors(), listar);
 
-});
+router.get('/:id',auth, cors(),visualizar);
 
-router.delete('/eliminar/:id', async (req,res) => {
-    
-    await Autor.findByIdAndDelete(req.params.id)
-    .then(res.status(400).send('Autor eliminado'));
-    
-});
+router.post('/cargar', auth,cors(), cargar);
 
-router.put('/modificar/:id', async (req,res) => {
-    
-    await Autor.findByIdAndUpdate(req.params.id)
-    .then(res.status(400).send('Autor modificado'));
-    
-});
+router.delete('/eliminar/:id', auth, cors(),eliminar);
+
+router.put('/modificar/:id', auth,cors(), modificar);
 
 
 module.exports = router;

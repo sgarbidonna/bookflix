@@ -6,8 +6,9 @@ const LibroSchema = new Schema({
         type:String,
         required:true,
     },
-    portada:{
-        img: { data : Buffer, contentType: String}
+    portada:{ 
+        type:String, 
+        required:true 
     },
     autor:{
         ingredients: {
@@ -18,7 +19,6 @@ const LibroSchema = new Schema({
     },
     isbn:{
         type: Number,
-        index:true,
         required:true,
     },
     editorial:{

@@ -7,6 +7,8 @@ module.exports = function validateRegisterInput(data){
 
     data.nombre = ! isEmpty(data.nombre) ? data.nombre : '';
     data.email = ! isEmpty(data.email) ? data.email : '';
+    data.suscripcon = ! isEmpty(data.suscripcon) ? data.suscripcon : '';
+    data.dni = ! isEmpty(data.dni) ? data.dni : '';
     data.password = ! isEmpty(data.password) ? data.password : '';
     data.password2 = ! isEmpty(data.password2) ? data.password2 : '';
     // data.suscripcion = !isEmpty(data.suscripcion) ? data.suscripcion:'';
@@ -21,7 +23,12 @@ module.exports = function validateRegisterInput(data){
     else if(!Validator.isEmail(data.email)){
         errors.email = 'Email inválido';
     }
-    
+    if(Validator.isEmpty(data.suscripcon)){
+        errors.password = 'Es obligatorio elegir un tipo de suscripcion';
+    }
+    if(Validator.isEmpty(data.dni)){
+        errors.password = 'DNI es obligatorio';
+    }
     if(Validator.isEmpty(data.password)){
         errors.password = 'La contraseña es obligatoria';
     }
