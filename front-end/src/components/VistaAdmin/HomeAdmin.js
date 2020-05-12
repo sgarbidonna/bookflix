@@ -1,5 +1,5 @@
-import React, { Component , useEffect} from 'react'
-import { BrowserRouter as Router, link, Redirect, Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Redirect,  } from 'react-router-dom';
 export default class Home extends Component {
 
     constructor(){

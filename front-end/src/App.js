@@ -15,6 +15,7 @@ import Navegacion from './components/NavegacionHome';
 
 function App() {
   return (
+   
     <Router>
       <div className="body" >
        

@@ -1,12 +1,19 @@
-import React, { Component , useEffect} from 'react'
-import { BrowserRouter as Router, link, Redirect, Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { BrowserRouter as Router,  Redirect } from 'react-router-dom';
+//import axios from 'axios';
+import CargarMetadataLibro from '../VistaAdmin/libros/CargarMetadataLibro';
+import ListarNovedades from './ListarNovedades';
+import Carrusel from './Carrusel';
+
+
 export default class Home extends Component {
 
     constructor(){
         super();
         this.state={
-            user:'',
+            user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
+            libros: null
         };
         this.cerrarSesion= this.cerrarSesion.bind(this);
 
@@ -17,7 +24,17 @@ export default class Home extends Component {
         sessionStorage.removeItem('token');
        
        
+    };
+    async componentDidMount() {
+        this.getData();
     }
+
+    getData = async () => {
+        //const {user} = this.state.user;
+        //const token = this.state.token;
+
+    }
+   
     
     render() {
         return (
@@ -28,6 +45,11 @@ export default class Home extends Component {
                     <form onSubmit= {this.cerrarSesion}>
                         <button type= 'submit'> cerrar sesion </button>
                     </form>
+                    
+                    <CargarMetadataLibro></CargarMetadataLibro>
+                    <Carrusel></Carrusel>
+                    <ListarNovedades></ListarNovedades>
+
                     
                 </div>
             :

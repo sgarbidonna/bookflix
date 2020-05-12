@@ -20,7 +20,7 @@ class App extends Component {
       };
         this.iniciarSesion = this.iniciarSesion.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-
+        sessionStorage.removeItem('token');
     }
     getErrors=(err)=>{
         //traigo la data de los errores
@@ -31,31 +31,46 @@ class App extends Component {
         
     }
 
-    getToken=(res)=>{
+
+   
+    getToken=async(res)=>{
         //pido la data de la respuesta  
+        console.log('entro en sesion');
         const { data } = res;
         const { user, token}= data;        
         //guardo el token en session storage
         //paso el Json a string y lo guardo en sesion storage
-        sessionStorage.setItem('token', JSON.stringify( {token} ) );
+        console.log(token);
+        sessionStorage.setItem('token', token );
+        console.log( sessionStorage.getItem('token'));
+       
         sessionStorage.setItem('user', JSON.stringify( {user} ) );
         // token tiene un objeto que contiene el token
         // para acceder al token:
         // const { token } = this.state.token || 
         // para tarer en token de sesion storage: const { token } = JSON.parse(sessionStorage.getItem("token")
         // lo mismo para user
+        console.log("token posta")
+        console.log(token);
         this.setState(
             {
-                token: JSON.parse(sessionStorage.getItem("token")),
-                user: JSON.parse(sessionStorage.getItem("user")),
+                token: token,
+                user: user,
+                //token: JSON.parse(sessionStorage.getItem("token")),
+                //user: JSON.parse(sessionStorage.getItem("user")),
             }
         );
         console.log("user:");    
         console.log(JSON.parse(sessionStorage.getItem("user")));   
         console.log("token:");    
         console.log(JSON.parse(sessionStorage.getItem('token')));
+
+
+       
+
             
-    }
+    };
+    
 
     async iniciarSesion(event){
 
@@ -66,7 +81,12 @@ class App extends Component {
             password: this.state.password,
         })
                 .then(res =>this.getToken(res))
-                .catch(err => this.getErrors(err.response));
+                .catch(err => {
+                    console.log('error en sesion');
+                    console.log(err);
+                    //this.getErrors(err.response)
+                }
+                    );
         
     }
 

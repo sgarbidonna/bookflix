@@ -54,13 +54,16 @@ class App extends Component {
     getToken=(res)=>{
             const {data} = res;
             const {token , user} = data; 
-            sessionStorage.setItem("token", JSON.stringify(token));
-            sessionStorage.setItem("user",JSON.stringify(user));
+
+           
+            sessionStorage.setItem('token', token );
+         
+            sessionStorage.setItem('user', JSON.stringify( {user} ) );
 
             this.setState(
                 {
-                token: sessionStorage.getItem('token'),
-                user: sessionStorage.getItem('user'),
+                token: token,
+                user: user,
                 }
             );
     };
