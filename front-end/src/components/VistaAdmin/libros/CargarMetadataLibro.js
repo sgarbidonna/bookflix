@@ -132,15 +132,6 @@ export default class CargarMetadata extends Component {
         formData.append('portadaImg', this.state.portadaImg);
         formData.append('expiracion',this.state.fechaDeExpiracion)
     
-        /*{
-            titulo: this.state.titulo,
-            portada: this.state.portada,
-            isbn:this.state.ISBN,
-            autor: this.state.autor,
-            editorial: this.state.editorial,
-            genero: this.state.genero,
-            lanzamiento: this.state.fechaDePublicacion
-             } */
         axios.post(libros,formData,{
                 headers: { 'xaccess':this.state.token }
             })
@@ -152,8 +143,6 @@ export default class CargarMetadata extends Component {
                 console.log(err);
             }
         );
-
-
     };
 
     onInputChange = (e) => {
@@ -180,7 +169,6 @@ export default class CargarMetadata extends Component {
     }
      
    
-
     render(){
         return (
         <div className="form-novedad" >
@@ -204,8 +192,7 @@ export default class CargarMetadata extends Component {
                 </input>
             </div>
             <div className="form-group">
-                <label className="text-light">ISBN
-                </label>
+                <label className="text-light">ISBN </label>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -217,34 +204,36 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-            <select className="form-control"   
-             onChange={this.onInputChange} 
-             id="exampleFormControlSelect1" 
-             name="autor"
-            >    {this.state.autores.map(autor =>
-                <option key={autor.id} value={autor._id} >{autor.nombre}</option>
-                )}
-            </select>
-            </div>
-            <div className="form-group">
-            <label for="exampleFormControlSelect1">genero</label>
-                <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero">
-                  
-                {this.state.generos.map(ge =>
-                <option key={ge._id} value={ge._id} >{ge.nombre}</option>
-                )}
+            <label className="text-light"> Autor/a </label>
+                <select className="form-control"   
+                    onChange={this.onInputChange} 
+                    id="exampleFormControlSelect1" 
+                    name="autor"
+                >    {this.state.autores.map(autor =>
+                        <option key={autor._id} value={autor._id} >{autor.nombre}</option>
+                        )}
                 </select>
             </div>
+
             <div className="form-group">
-            <label for="exampleFormControlSelect1">editorial</label>
-                <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial">
-                {this.state.editoriales.map(ed =>
-                   <option key={ed.id} value={ed._id} >{ed.nombre}</option>
-                )}
-                </select>
+                <label for="exampleFormControlSelect1"> Género</label>
+                    <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero">
+                        {this.state.generos.map(ge =>
+                        <option key={ge._id} value={ge._id} >{ge.nombre}</option>
+                        )}
+                    </select>
+            </div>
+
+            <div className="form-group">
+                <label for="exampleFormControlSelect1"> Editorial </label>
+                    <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial">
+                    {this.state.editoriales.map(ed =>
+                    <option key={ed.id} value={ed._id} >{ed.nombre}</option>
+                    )}
+                    </select>
             </div>
             
-            <label className="text-light">fecha De Publicacion</label>
+            <label className="text-light">Fecha De Publicacion</label>
             <div className="form-group">
                
                 <DatePicker className="form-control"
@@ -253,7 +242,7 @@ export default class CargarMetadata extends Component {
                  onChange={this.onChangeFechaDePublicacion}
                 />
             </div>
-            <label className="text-light">fecha De Expiracion</label>
+            <label className="text-light"> Fecha De Expiración</label>
             <div className="form-group">
                
                 <DatePicker className="form-control"
@@ -263,7 +252,7 @@ export default class CargarMetadata extends Component {
                 />
             </div>
 
-            <label className="text-light">portada</label>
+            <label className="text-light">Portada</label>
             <div className="form-group">
 
                <input type='file' enctype="multipart/form-data" name='portadaImg' onChange={this.getPortada}>
@@ -271,13 +260,9 @@ export default class CargarMetadata extends Component {
                 
             </div >
     
+            
             <div className="form-group">
-                <img width='200px' height='200px' src={this.state.portada} alt="Imagen" />
-            </div>
-            <div className="form-group">
-                <button type ="submit" className="btn btn-success">
-                    Agregar          
-                </button>
+                <button type ="submit" className="btn btn-success"> Agregar </button>
             </div>
          </form>
          </div>

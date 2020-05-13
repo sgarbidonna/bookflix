@@ -28,7 +28,7 @@ const upload = multer({
   storage: storage ,
   limits: { fileSize: 1024 * 1024 * 5  },
  // fileFilter: imageFilter ,
-}).single('portada');
+}).single('portadaImg');
 
 router.get('/', auth,cors(),novedadesCtrl.listar);
 
