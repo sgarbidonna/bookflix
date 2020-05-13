@@ -46,7 +46,7 @@ export default class CargarMetadata extends Component {
     }
 
     setAutores(res){
-        
+
         console.log(res);
         this.setState({
             autores:res
@@ -119,18 +119,22 @@ export default class CargarMetadata extends Component {
         console.log('hola');
     //falta activar la ruta para los libros
     //const {user} = this.state.user;
-    await axios.post(libros,{
+    
+    await axios.post(libros,
+        {
         titulo: this.state.titulo,
         portada: this.state.portada,
         isbn:this.state.ISBN,
         autor: this.state.autor,
         editorial: this.state.editorial,
         genero: this.state.genero,
-        lanzamiento: this.state.fechaDePublicacion,
-        
-        headers:{'xaccess':this.state.token}
-    })
-            .then(res =>console.log(res))
+        lanzamiento: this.state.fechaDePublicacion
+        },        
+        {headers:{'xaccess':this.state.token}}
+        )
+            .then(res =>{
+                console.log('se pudo cargar')
+                console.log(res)})
             .catch(err => {
                 console.log('error en cargar libro');
                 console.log(err.response);

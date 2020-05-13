@@ -6,21 +6,38 @@ const LibroSchema = new Schema({
         type:String,
         required:true,
     },
-    portada:{ 
-        type:String, 
-        required:true 
+    autor:{type:String,
+        required:true,
     },
-    autor:{
-        ingredients: {
-            type: Schema.Types.ObjectId,
-            ref: 'Autor'
-        },
+    editorial:{
+        type:String,
+        required:true,
+    },
+    genero:{
+        type:String,
         required:true,
     },
     isbn:{
-        type: Number,
+        type: String,
         required:true,
     },
+    lanzamiento:{
+        type: Date,
+        required:true,
+    },
+    portada:{ 
+        type:String, 
+        //required:true 
+    },
+    expiracion:{
+        type: Date
+    }
+});
+
+module.exports = mongoose.model('Libro', LibroSchema);
+/*
+
+    
     editorial:{
         ingredients: {
             type: Schema.Types.ObjectId,
@@ -35,13 +52,4 @@ const LibroSchema = new Schema({
         },
         required:true,
     },
-    lanzamiento:{
-        type: Date,
-        required:true,
-    },
-    expiracion:{
-        type: Date
-    }
-});
-
-module.exports = mongoose.model('Libro', LibroSchema);
+    */
