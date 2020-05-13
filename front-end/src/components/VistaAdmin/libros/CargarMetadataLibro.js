@@ -154,7 +154,6 @@ export default class CargarMetadata extends Component {
 
     getPortada(e){
         
-        console.log(e.target.files[0])
         this.setState({
             portadaImg: e.target.files[0]
         })

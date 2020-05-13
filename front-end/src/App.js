@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className="body" >
        
-        <Route  path="/" exact> <Navegacion></Navegacion> <h1>hola</h1>  </Route>
+        <Route  path="/" exact> <Navegacion></Navegacion> <h1>aca iria iniciar sesion</h1>  </Route>
         <Route  path="/login">   <Navegacion></Navegacion> <IniciarSesion></IniciarSesion>  </Route>
         <Route  path="/singup"> <Navegacion></Navegacion> <RegistrarSuscriptor></RegistrarSuscriptor> </Route>
         <Route  path="/home"> <Home></Home>  </Route>

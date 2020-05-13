@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
 
-const apiRes = 'http://localhost:4000/api/generos';
-const cargar = 'http://localhost:4000/api/generos/cargar';
+const apiRes = 'http://localhost:4000/api/editoriales';
+const cargar = 'http://localhost:4000/api/editoriales/cargar';
 
 
 
@@ -19,14 +19,12 @@ class App extends Component {
         };
 
         this.handleChange =  this.handleChange.bind(this);
-        this.agregarGenero =  this.agregarGenero.bind(this);
+        this.agregarEditorial =  this.agregarEditorial.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         //this.getErrors = this.getErrors.bind(this);
         
         
     }
-
-    
 
     handleChange(e){
         const { name, value } = e.target;
@@ -71,7 +69,7 @@ getErrors=(err)=>{
     
     }
 */
-    agregarGenero = async(e) =>{
+    agregarEditorial = async(e) =>{
         e.preventDefault();  
         console.log(this.state.nombre);
         console.log(this.state.token);
@@ -81,14 +79,16 @@ getErrors=(err)=>{
         {headers: {'xaccess':this.state.token}}
 
     ).then(res =>{ 
-            console.log('se cargo un genero');
+            console.log('se cargo una editorial');
             console.log(res)})
            .catch(err =>{ 
-            console.log('error en cargar genero');   
+            console.log('error en cargar editorial');   
             console.log(err)}
         );
 
     };
+
+    
 
    
     
@@ -98,12 +98,15 @@ getErrors=(err)=>{
         
        
         
-        <div className="col-md-4">
-        <form onSubmit={this.agregarGenero} >
+        <div className="form-autor" >
+        <div className="col-md-6 offset-md-3">
+        <div className="card card-body text-light bg-dark">
+        
+        <form onSubmit={this.agregarEditorial} >
 
            <div className="col s5"> 
             <div className="form-input-field col s5 bg-dark">
-                <label className="text-light">Ingrese el género
+                <label className="text-light">Ingrese la editorial
                 </label>
                 <input 
                     className="form-control col s12" 
@@ -112,22 +115,23 @@ getErrors=(err)=>{
                     value={this.state.nombre}
                     onChange={this.handleChange}
                     
-                   placeholder="Ingrese nombre de genero">
+                   placeholder="Ingrese nombre de Editorial">
                 </input>
             </div>
             
                 </div>
          
             <div className="form-group">
-                <button type ="submit" className="btn btn-success " >
-                    Agregar Genero
+                <button type ="submit" className="btn btn-success" >
+                    Agregar Editorial
                 </button>
             </div>
                     
           
          </form>
          </div>
-        
+         </div>   
+         </div>
        
         )
     }

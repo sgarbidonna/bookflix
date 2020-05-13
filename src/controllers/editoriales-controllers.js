@@ -12,10 +12,10 @@ editorialesCtrl.visualizar = async (req,res) => {
 };
 
 editorialesCtrl.cargar = async (req,res) => {
-    const editorial = Editorial.findOne({nombre:req.body.nombre});
+    const editorial = Editorial.findOne( { nombre:req.body.nombre } );
     
     if(editorial){
-        res.json('La editorial ya fue cargada')
+        res.json('La editorial ya fue cargada anteriormente')
     }
     
     await new Editorial({
@@ -37,7 +37,7 @@ editorialesCtrl.modificar = async (req,res) => {
     const editorialNueva = await Editorial.findOne({ nombre:req.body.nombre} );
    
     //si encuentra un autorNuevo Y no es el mismo al viejo
-    if(editorialNueva  && editorialNueva != editorialVieja){
+    if(editorialNueva  && (editorialNueva != editorialVieja)){
         res.json('La editorial ya fue cargado')   
     } else {
         await new Editorial({
