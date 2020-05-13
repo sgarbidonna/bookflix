@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-
-import axios from 'axios';
+import React, { Component } from '../../../../node_modules/react'
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from '../../../../node_modules/react-datepicker';
+import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
+import axios from '../../../../node_modules/axios';
 
 const autores = 'http://localhost:4000/api/autores/';
 const generos = 'http://localhost:4000/api/generos/';

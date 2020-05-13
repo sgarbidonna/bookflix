@@ -64,7 +64,7 @@ suscriptoresCtrl.registrar = async (req,res) => {
                         token,
                         user:{
                             id: user._id,
-                            nombre: user.nombre,
+                            email: user.email,
                         }
                     });
                 }

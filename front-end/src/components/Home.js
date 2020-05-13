@@ -19,19 +19,14 @@ export default class Home extends Component {
         
        
     }  
-   
-    
 
     render() {
         return (
+            
             !this.state.token == ''? 
-                this.state.soyAdmin?
-
-                <HomeAdmin></HomeAdmin>
-                :
-                
-                <HomeSuscriptor></HomeSuscriptor>
-            :<Redirect to="/login"/>
+                this.state.soyAdmin? <HomeAdmin></HomeAdmin> : <HomeSuscriptor></HomeSuscriptor>
+           
+                :<Redirect to="/login"/>
         )
     }
 }

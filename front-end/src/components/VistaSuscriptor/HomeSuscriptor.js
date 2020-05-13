@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router,  Redirect } from 'react-router-dom';
-//import axios from 'axios';
-import CargarMetadataLibro from '../VistaAdmin/libros/CargarMetadataLibro';
-import ListarNovedades from './ListarNovedades';
+import CargarMetadataLibro from '../VistaAdmin/Libros/CargarMetadataLibro';
+import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
-import CargarGenero from '../VistaAdmin/CargarGenero';
+import CargarGenero from '../VistaAdmin/Generos/CargarGenero';
 
 
 export default class Home extends Component {
@@ -21,7 +20,7 @@ export default class Home extends Component {
     }
 
  
-    cerrarSesion=()=>{
+    cerrarSesion = () =>{
         sessionStorage.removeItem('token');
        
        

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
-import Errors from '../Errors';     
 
-const apiRes = 'http://localhost:4000/api/suscriptores/';
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
 class App extends Component {
@@ -29,14 +27,6 @@ class App extends Component {
         this.getErrors = this.getErrors.bind(this);
       
     }
-
-        //async componentDidMount() {
-    
-        
-        //const res = await axios.get(apiRes);
-        
-        //console.log(res);
-        // }
 
     handleChange(event) {
         const { name, value } = event.target;

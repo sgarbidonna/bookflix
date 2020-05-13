@@ -4,10 +4,6 @@ import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
 
 const login = 'http://localhost:4000/api/suscriptores/login';
 
-
-
-   
-
 class App extends Component {
     
     constructor (){
@@ -23,52 +19,21 @@ class App extends Component {
         
     }
     getErrors=(err)=>{
-        //traigo la data de los errores
+        
         const {data} = err;
-        alert(data);
-        
-       
-        
+        alert(data);    
     }
 
-
-   
-    getToken=async(res)=>{
-        //pido la data de la respuesta  
-        console.log('entro en sesion');
-        const { data } = res;
-        const { user, token}= data;        
-        //guardo el token en session storage
-        //paso el Json a string y lo guardo en sesion storage
-        console.log(token);
+ 
+    getToken = async(res) => {
+        const { user, token } = res.data;        
         sessionStorage.setItem('token', token );
-        console.log( sessionStorage.getItem('token'));
-       
         sessionStorage.setItem('user', JSON.stringify( {user} ) );
-        // token tiene un objeto que contiene el token
-        // para acceder al token:
-        // const { token } = this.state.token || 
-        // para tarer en token de sesion storage: const { token } = JSON.parse(sessionStorage.getItem("token")
-        // lo mismo para user
-        console.log("token posta")
-        console.log(token);
-        this.setState(
-            {
-                token: token,
-                user: user,
-                //token: JSON.parse(sessionStorage.getItem("token")),
-                //user: JSON.parse(sessionStorage.getItem("user")),
-            }
-        );
-        console.log("user:");    
-        console.log(JSON.parse(sessionStorage.getItem("user")));   
-        console.log("token:");    
-        console.log(JSON.parse(sessionStorage.getItem('token')));
 
+        this.setState( { token,  user } );
 
-       
-
-            
+        /// esto es lo q deberiamos guardar en el atributo soyAdmin de Home
+        console.log(user.email === 'admin@admin.com')
     };
     
 
