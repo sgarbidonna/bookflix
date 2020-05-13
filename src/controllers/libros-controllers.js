@@ -19,20 +19,25 @@ librosCtrl.cargar = async (req,res)=>{
     if (libro){
         res.json('El nombre del libro o el numero de isbn ya se encuentra en uso')
     }
+    
+    const autor = await Autor.findById({__id: req.body.autor});
+    const editorial = await Editorial.findById({__id: req.body.editorial});
+    const genero = await Genero.findById({__id: req.body.genero});
 
-    libro = await new Libro({
+
+    const libroNuevo = await new Libro({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor: await Autor.findById({__id: req.body.autor}),
-        editorial: await Editorial.findById({__id: req.body.editorial}),
-        genero: await Genero.findById({__id: req.body.genero}),
+        autor,
+        editorial,
+        genero,
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){
-        libro.update({expiracion: req.body.expiracion})
+        libroNuevo.update({expiracion: req.body.expiracion})
     }
-        libro.save()
+    libroNuevo.save()
             .then(lib => {
                 res.status(200).send('Libro cargado con éxito'),
                 res.json(lib)
@@ -45,19 +50,23 @@ librosCtrl.cargar = async (req,res)=>{
 
 librosCtrl.modificar = async (req,res)=>{
     const libroViejo = await Libro.findById({__id: req.params.id})
-    const libroNuevo = await Libro.findOne({ isbn: req.body.isbn});
+    const libroNuevo = await Libro.findOne({ titulo: req.body.titulo, isbn: req.body.isbn});
     
     if (libroNuevo && libroNuevo!= libroViejo){
-        res.json('El número de isbn ya se encuentra en uso por otro libro')
+        res.json('El número de isbn o el título ya se encuentran en uso por otro libro')
     }
     
-    libroNuevo = await new Libro({
+    const autor = await Autor.findById({__id: req.body.autor});
+    const editorial = await Editorial.findById({__id: req.body.editorial});
+    const genero = await Genero.findById({__id: req.body.genero});
+
+    const libroNuevo = await new Libro({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor: await Autor.findById({__id: req.body.autor}),
-        editorial: await Editorial.findById({__id: req.body.editorial}),
-        genero: await Genero.findById({__id: req.body.genero}),
+        autor,
+        editorial,
+        genero,
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){

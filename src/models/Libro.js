@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const Autor = require('./Autor');
+const Editorial = require ('./Editorial');
+const Genero = require('./Genero');
 
 const LibroSchema = new Schema({
     titulo:{
@@ -11,28 +14,19 @@ const LibroSchema = new Schema({
         required:true 
     },
     autor:{
-        ingredients: {
-            type: Schema.Types.ObjectId,
-            ref: 'Autor'
-        },
+        type: Autor,
         required:true,
     },
     isbn:{
-        type: Number,
+        type: String,
         required:true,
     },
     editorial:{
-        ingredients: {
-            type: Schema.Types.ObjectId,
-            ref: 'Editorial'
-        },
+        type:Editorial, 
         required:true,
     },
     genero:{
-        ingredients: {
-            type: Schema.Types.ObjectId,
-            ref: 'Genero'
-        },
+        type:Genero,
         required:true,
     },
     lanzamiento:{

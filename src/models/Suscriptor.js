@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcryptjs');
+const Perfil = require('./Perfil');
 
 
 const SuscriptorSchema = new Schema({
     nombre:{ type: String, required:true },
-    email:{ type: String, required:true },
-    password:{ type: String,required:true} ,
-    perfiles:[{type: mongoose.Schema.Types.ObjectId, ref:'Perfil'}], 
+    email:{ type: String,  required:true },
+    password:{ type: String, required:true} ,
+    perfiles:[{type:Perfil, required:true }], 
     suscripcion:{ type:String, enum: ['regular','premium'], require:true }, 
          
 });
