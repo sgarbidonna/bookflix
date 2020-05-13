@@ -57,6 +57,7 @@ export default class CargarMetadata extends Component {
             generos:res
         });
     }
+    
     setEditoriales(res){   
         console.log(res);
         this.setState({
@@ -265,7 +266,8 @@ export default class CargarMetadata extends Component {
          </div>
          </div>   
         
-         </div>
+         </div> 
+         
            
         )
     }
