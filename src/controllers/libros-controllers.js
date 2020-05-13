@@ -20,6 +20,7 @@ librosCtrl.cargar = async (req,res)=>{
         res.json('El nombre del libro o el numero de isbn ya se encuentra en uso')
     }
     
+    console.log(req.file);
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,
@@ -80,7 +81,7 @@ librosCtrl.modificar = async (req,res)=>{
 librosCtrl.eliminar = async (req,res)=>{
    
     await Libro.findById(req.params.id)
-        .delete()
+        .remove()
         .then(res.status(200).send('Libro eliminado'));
     
 };

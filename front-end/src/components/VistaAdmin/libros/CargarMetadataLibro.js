@@ -23,7 +23,7 @@ export default class CargarMetadata extends Component {
 
             titulo: '',
             ISBN:'',
-            portada: '',
+            portadaImg: null,
             autor:'',
             editorial:'',
             genero:'',
@@ -119,30 +119,41 @@ export default class CargarMetadata extends Component {
         console.log('hola');
     //falta activar la ruta para los libros
     //const {user} = this.state.user;
+
     
-    await axios.post(libros,
-        {
-        titulo: this.state.titulo,
-        portada: this.state.portada,
-        isbn:this.state.ISBN,
-        autor: this.state.autor,
-        editorial: this.state.editorial,
-        genero: this.state.genero,
-        lanzamiento: this.state.fechaDePublicacion
-        },        
-        {headers:{'xaccess':this.state.token}}
-        )
+    // prueba mia
+        const formData = new FormData();
+        formData.append('titulo', this.state.titulo);
+        formData.append('isbn',this.state.ISBN);
+        formData.append('autor', this.state.autor);
+        formData.append('editorial', this.state.editorial);
+        formData.append('genero', this.state.genero);
+        formData.append('lanzamiento', this.state.fechaDePublicacion);
+        formData.append('portadaImg', this.state.portadaImg);
+        formData.append('expiracion',this.state.fechaDeExpiracion)
+    
+        /*{
+            titulo: this.state.titulo,
+            portada: this.state.portada,
+            isbn:this.state.ISBN,
+            autor: this.state.autor,
+            editorial: this.state.editorial,
+            genero: this.state.genero,
+            lanzamiento: this.state.fechaDePublicacion
+             } */
+        axios.post(libros,formData,{
+                headers: { 'xaccess':this.state.token }
+            })
             .then(res =>{
-                console.log('se pudo cargar')
+                alert('Libro cargado con exito')
                 console.log(res)})
             .catch(err => {
-                console.log('error en cargar libro');
-                console.log(err.response);
+                alert('error en cargar libro');
+                console.log(err);
             }
-    );
+        );
 
 
-        
     };
 
     onInputChange = (e) => {
@@ -160,9 +171,10 @@ export default class CargarMetadata extends Component {
     };
 
     getPortada(e){
-        var copia = URL.createObjectURL(e.target.files[0]);
+        
+        console.log(e.target.files[0])
         this.setState({
-            portada:copia
+            portadaImg: e.target.files[0]
         })
 
     }
@@ -219,7 +231,7 @@ export default class CargarMetadata extends Component {
                 <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero">
                   
                 {this.state.generos.map(ge =>
-                <option key={ge.id} value={ge._id} >{ge.nombre}</option>
+                <option key={ge._id} value={ge._id} >{ge.nombre}</option>
                 )}
                 </select>
             </div>
@@ -254,11 +266,11 @@ export default class CargarMetadata extends Component {
             <label className="text-light">portada</label>
             <div className="form-group">
 
-               <input type = 'file' name = 'portada' onChange={this.getPortada}>
+               <input type='file' enctype="multipart/form-data" name='portadaImg' onChange={this.getPortada}>
                </input>
                 
-               
             </div >
+    
             <div className="form-group">
                 <img width='200px' height='200px' src={this.state.portada} alt="Imagen" />
             </div>

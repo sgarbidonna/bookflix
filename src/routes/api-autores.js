@@ -11,9 +11,9 @@ router.get('/:id',auth, cors(),visualizar);
 
 router.post('/cargar', auth,cors(), cargar);
 
-router.delete('/eliminar/:id', auth, cors(),eliminar);
+router.post('/eliminar/:id', auth, cors(),eliminar);
 
-router.put('/modificar/:id', auth,cors(), modificar);
+router.post('/modificar/:id', auth,cors(), modificar);
 
 
 module.exports = router;

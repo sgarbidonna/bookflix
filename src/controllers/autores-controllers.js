@@ -56,7 +56,7 @@ autoresCtrl.modificar = async (req,res) => {
 autoresCtrl.eliminar = async (req,res) => {
     
     await Autor.findById(req.params.id)
-        .delete()
+        .remove()
         .then(res.status(200).send('Autor eliminado correctamente'));
     
 };

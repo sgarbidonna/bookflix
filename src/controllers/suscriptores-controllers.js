@@ -173,8 +173,9 @@ suscriptoresCtrl.modificar =  async (req,res) => {
 
 suscriptoresCtrl.eliminar =  async (req,res)=>{
     //encuentro el suscriptor y lo elimino redireccionandolo al home
-    const suscriptor = await Suscriptor.findById(req.user.id);
-    suscriptor.delete().then(res=> res.redirect('/'));
+    await Suscriptor.findById(req.user.id)
+        .remove()
+        .then(res=> res.redirect('/'));
 };
 
 suscriptoresCtrl.logout = (req,res) => {

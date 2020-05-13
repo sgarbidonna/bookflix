@@ -68,7 +68,7 @@ novedadesCtrl.modificar = async (req,res) => {
 novedadesCtrl.eliminar = async (req,res) => {
     
     await Novedad.findOne({ _id: req.params.id })
-        .delete()
+        .remove()
         .then(res.status(200).send('Novedad eliminada'));
     
 };

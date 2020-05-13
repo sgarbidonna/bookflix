@@ -30,7 +30,7 @@ app.use(session({
 
 // STATIC FILES-> cualquier app cleinte puede acceder desde el servidor
 app.use(express.static(path.join(__dirname,'public')));
-app.use('/uploads',express.static('uploads'));
+//app.use('/uploads',express.static('uploads'));
 
 //ROUTERS
 app.use('/api/suscriptores', require('./routes/api-suscriptores'));

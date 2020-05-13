@@ -11,9 +11,11 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, '../../uploads/'));
     },
     filename : function (req, file, cb){
+        console.log(req.file,file);
         cb(null,  file.originalname)
     }
 });
+
 /*
 const imageFilter = function(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4)$/i)) {
@@ -23,20 +25,19 @@ const imageFilter = function(req, file, cb) {
 };
 */
 
-const upload = multer({ 
+const uploadPortada = multer({ 
     storage: storage ,
-    limits: { fileSize: 1024 * 1024 * 5  },
-   // fileFilter: imageFilter ,
-}).single('portada');
-
+    //limits: { fileSize: 1024 * 1024 * 5  },
+    // fileFilter: imageFilter ,
+}).single('portadaImg');
 
 router.get('/',auth,cors(),listar);
 
 router.get('/:id',auth, cors(),visualizar);
 
-router.post('/cargar',auth,cors(), upload, cargar);
+router.post('/cargar',auth, uploadPortada, cargar);
 
-router.post('/modificar/:id',auth,cors(), upload, modificar);
+router.post('/modificar/:id',auth,cors(), uploadPortada, modificar);
 
 router.post('/eliminar/:id',auth,cors(),eliminar);
 
