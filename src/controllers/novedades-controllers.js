@@ -57,7 +57,7 @@ novedadesCtrl.modificar = async (req,res) => {
             novedadVieja.delete();
             console.log(novedad);
             res.status(200).json({
-                message: 'Novedad cargada con éxito',
+                message: 'Novedad modificada con éxito',
                 novedad
             })
         })

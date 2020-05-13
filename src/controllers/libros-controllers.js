@@ -1,5 +1,8 @@
 const librosCtrl = {};
 const Libro = require('../models/Libro');
+const Editorial = require('../models/Editorial');
+const Autor = require('../models/Autor');
+const Genero = require('../models/Genero');
 
 librosCtrl.listar = async (req,res)=>{
     const libros = await Libro.find();
@@ -21,9 +24,9 @@ librosCtrl.cargar = async (req,res)=>{
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor: req.body.autor,
-        editorial: req.body.editorial,
-        genero: req.body.genero,
+        autor: await Autor.findById({__id: req.body.autor}),
+        editorial: await Editorial.findById({__id: req.body.editorial}),
+        genero: await Genero.findById({__id: req.body.genero}),
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){
@@ -42,19 +45,19 @@ librosCtrl.cargar = async (req,res)=>{
 
 librosCtrl.modificar = async (req,res)=>{
     const libroViejo = await Libro.findById({__id: req.params.id})
-    const libroNuevo = await Libro.findOne({titulo: req.body.titulo, isbn: req.body.isbn});
+    const libroNuevo = await Libro.findOne({ isbn: req.body.isbn});
     
     if (libroNuevo && libroNuevo!= libroViejo){
-        res.json('El nombre del libro o el numero de isbn ya se encuentra en uso por otro libro')
+        res.json('El número de isbn ya se encuentra en uso por otro libro')
     }
     
     libroNuevo = await new Libro({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor: req.body.autor,
-        editorial: req.body.editorial,
-        genero: req.body.genero,
+        autor: await Autor.findById({__id: req.body.autor}),
+        editorial: await Editorial.findById({__id: req.body.editorial}),
+        genero: await Genero.findById({__id: req.body.genero}),
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){

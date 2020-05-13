@@ -12,7 +12,7 @@ autoresCtrl.visualizar = async (req,res) => {
 };
 
 autoresCtrl.cargar = async (req,res) => {
-    const autor = await Autor.findOne({ nombre:req.body.nombre},{apellido:req.body.apellido} );
+    const autor = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido} );
    
     if(autor){
         res.json('El autor ya fue cargado')   
@@ -33,10 +33,10 @@ autoresCtrl.cargar = async (req,res) => {
 autoresCtrl.modificar = async (req,res) => {
     
     const autorViejo = await Autor.findById(req.params.id);
-    const autorNuevo = await Autor.findOne({ nombre:req.body.nombre},{apellido:req.body.apellido} );
+    const autorNuevo = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido} );
    
     //si encuentra un autorNuevo Y no es el mismo al viejo
-    if(autorNuevo  && autorNuevo != autorViejo){
+    if(autorNuevo  && (autorNuevo != autorViejo)){
         res.json('El autor ya fue cargado')   
     } else {
         await new Autor({
