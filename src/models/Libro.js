@@ -11,7 +11,6 @@ const LibroSchema = new Schema({
         type:String, 
         required:true 
     },
-    portada2:{},
     autor:{
         type: String,
         required:true,
@@ -30,7 +29,7 @@ const LibroSchema = new Schema({
     },
     lanzamiento:{
         type: Date,
-        required:true,
+        //required:true,
     },
     expiracion:{
         type: Date
