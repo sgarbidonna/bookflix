@@ -44,21 +44,17 @@ export default class CargarMetadata extends Component {
     }
 
     setAutores(res){
-
-        console.log(res);
         this.setState({
             autores:res
         });
     }
     setGeneros(res){
-        console.log(res);
         this.setState({
             generos:res
         });
     }
     
     setEditoriales(res){   
-        console.log(res);
         this.setState({
             editoriales:res
         });
@@ -67,8 +63,7 @@ export default class CargarMetadata extends Component {
     
     getData = async () => {
         const {user} = this.state.user;
-        console.log('token librosa');
-        console.log(this.state.token);
+       
         await axios.get(autores,{
             user: user,
             headers:{'xaccess':this.state.token}  
@@ -214,7 +209,7 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-                <label for="exampleFormControlSelect1"> Género</label>
+                <label htmlFor="exampleFormControlSelect1"> Género</label>
                     <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero">
                         {this.state.generos.map(ge =>
                         <option key={ge._id} value={ge._id} >{ge.nombre}</option>
@@ -223,7 +218,7 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-                <label for="exampleFormControlSelect1"> Editorial </label>
+                <label htmlFor="exampleFormControlSelect1"> Editorial </label>
                     <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial">
                     {this.state.editoriales.map(ed =>
                     <option key={ed.id} value={ed._id} >{ed.nombre}</option>
@@ -253,7 +248,7 @@ export default class CargarMetadata extends Component {
             <label className="text-light">Portada</label>
             <div className="form-group">
 
-               <input type='file' enctype="multipart/form-data" name='portadaImg' onChange={this.getPortada}>
+               <input type='file' encType="multipart/form-data" name='portadaImg' onChange={this.getPortada}>
                </input>
                 
             </div >

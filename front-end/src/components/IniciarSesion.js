@@ -91,6 +91,7 @@ class App extends Component {
                     <label className="text-light">Contraseña
                     </label>
                     <input 
+                        type='password'
                         className="form-control" 
                         id="password" 
                         name ="password"

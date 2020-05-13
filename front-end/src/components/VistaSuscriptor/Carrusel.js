@@ -52,7 +52,7 @@ export default class Carrusel extends Component {
 
     getData = async () =>{
         const {user} = this.state.user;
-        const con=await axios.get(novedades,{
+        const con = await axios.get(novedades,{
             user: user,
             headers:{'xaccess':this.state.token}  
         })

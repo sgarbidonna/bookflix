@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, '../../uploads/'));
     },
     filename : function (req, file, cb){
-        console.log(req.file,file);
+        
         cb(null,  file.originalname)
     }
 });
@@ -28,7 +28,7 @@ const imageFilter = function(req, file, cb) {
 const uploadPortada = multer({ 
     storage: storage ,
     //limits: { fileSize: 1024 * 1024 * 5  },
-    // fileFilter: imageFilter ,
+    //fileFilter: imageFilter ,
 }).single('portadaImg');
 
 router.get('/',auth,cors(),listar);

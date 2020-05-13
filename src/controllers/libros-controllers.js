@@ -20,7 +20,7 @@ librosCtrl.cargar = async (req,res)=>{
         res.json('El nombre del libro o el numero de isbn ya se encuentra en uso')
     }
     
-    console.log(req.file);
+    console.log(req.body.genero);
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,
