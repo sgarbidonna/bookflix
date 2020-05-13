@@ -20,18 +20,14 @@ librosCtrl.cargar = async (req,res)=>{
         res.json('El nombre del libro o el numero de isbn ya se encuentra en uso')
     }
     
-    const autor = await Autor.findById({__id: req.body.autor});
-    const editorial = await Editorial.findById({__id: req.body.editorial});
-    const genero = await Genero.findById({__id: req.body.genero});
-
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor,
-        editorial,
-        genero,
+        autor:req.body.autor,
+        editorial:req.body.editorial,
+        genero:req.body.genero,
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){
@@ -56,23 +52,20 @@ librosCtrl.modificar = async (req,res)=>{
         res.json('El número de isbn o el título ya se encuentran en uso por otro libro')
     }
     
-    const autor = await Autor.findById({__id: req.body.autor});
-    const editorial = await Editorial.findById({__id: req.body.editorial});
-    const genero = await Genero.findById({__id: req.body.genero});
-
-    const libroNuevo = await new Libro({
+   
+    const libroModificado = await new Libro({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
-        autor,
-        editorial,
-        genero,
+        autor:req.body.autor,
+        editorial:req.body.editorial,
+        genero:req.body.genero,
         lanzamiento: req.body.lanzamiento
     });
     if(req.body.expiracion != null){
-        libroNuevo.update({expiracion: req.body.expiracion})
+        libroModificado.update({expiracion: req.body.expiracion})
     }
-        libroNuevo.save()
+    libroModificado.save()
             .then(lib => {
                 libroViejo.delete(),
                 res.status(200).send('Libro modificado con éxito'),

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const Autor = require('./Autor');
-const Editorial = require ('./Editorial');
-const Genero = require('./Genero');
+
 
 const LibroSchema = new Schema({
     titulo:{
@@ -13,8 +11,9 @@ const LibroSchema = new Schema({
         type:String, 
         required:true 
     },
+    portada2:{},
     autor:{
-        type: Autor,
+        type: String,
         required:true,
     },
     isbn:{
@@ -22,11 +21,11 @@ const LibroSchema = new Schema({
         required:true,
     },
     editorial:{
-        type:Editorial, 
+        type: String,
         required:true,
     },
     genero:{
-        type:Genero,
+        type: String,
         required:true,
     },
     lanzamiento:{

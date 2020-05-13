@@ -145,7 +145,8 @@ suscriptoresCtrl.modificar =  async (req,res) => {
             email: req.body.email,
             dni: req.body.dni,
             password:req.body.password, 
-            suscripcion:req.body.suscripcion
+            suscripcion:req.body.suscripcion,
+            perfiles: [new Perfil({ nombre: req.body.nombre })]
             // restan modificar los perfiles
     })
         .save()
