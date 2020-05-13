@@ -38,7 +38,7 @@ app.use('/api/autores', require('./routes/api-autores'));
 app.use('/api/editoriales', require('./routes/api-editoriales'));
 app.use('/api/generos', require('./routes/api-generos'));
 app.use('/api/novedades', require('./routes/api-novedades'));
-
+app.use('/api/libros', require('./routes/api-libros'));
 
 module.exports = app;
 

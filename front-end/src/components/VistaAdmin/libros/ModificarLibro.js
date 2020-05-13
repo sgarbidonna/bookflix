@@ -11,8 +11,7 @@ const editoriales = 'http://localhost:4000/api/editoriales/';
 
 
 
-
-export default class ModificarLibro extends Component {
+class ModificarLibro extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -244,3 +243,6 @@ export default class ModificarLibro extends Component {
         )
     }
 }
+
+
+export default ModificarLibro;
