@@ -31,7 +31,7 @@ librosCtrl.cargar = async (req,res)=>{
     }
         libro.save()
             .then(lib => {
-                res.status(400).send('Libro cargado con éxito'),
+                res.status(200).send('Libro cargado con éxito'),
                 res.json(lib)
             })
             .catch(err =>{
@@ -63,7 +63,7 @@ librosCtrl.modificar = async (req,res)=>{
         libroNuevo.save()
             .then(lib => {
                 libroViejo.delete(),
-                res.status(400).send('Libro modificado con éxito'),
+                res.status(200).send('Libro modificado con éxito'),
                 res.json(lib)
             })
             .catch(err =>{
@@ -76,7 +76,7 @@ librosCtrl.eliminar = async (req,res)=>{
    
     await Libro.findById(req.params.id)
         .delete()
-        .then(res.status(400).send('Libro eliminado'));
+        .then(res.status(200).send('Libro eliminado'));
     
 };
 

@@ -24,7 +24,7 @@ editorialesCtrl.cargar = async (req,res) => {
         .save()
         .then(edit => {
             res.json(edit);
-            res.status(400).send('Editorial cargada')
+            res.status(200).send('Editorial cargada')
         })
         .catch(err => res.json(err));
 
@@ -46,7 +46,7 @@ editorialesCtrl.modificar = async (req,res) => {
         .save()
         .then(edit => {
             res.json(edit);
-            res.status(400).send('Editorial cargada')
+            res.status(200).send('Editorial cargada')
         })
         .catch(err => res.json(err));
     };
@@ -56,7 +56,7 @@ editorialesCtrl.eliminar = async (req,res) => {
     
     await Editorial.findById(req.params.id)
         .delete()
-        .then(res.status(400).send('Editorial eliminada'));
+        .then(res.status(200).send('Editorial eliminada'));
     
 };
 

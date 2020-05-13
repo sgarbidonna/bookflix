@@ -46,6 +46,7 @@ export default class CargarMetadata extends Component {
     }
 
     setAutores(res){
+        
         console.log(res);
         this.setState({
             autores:res
@@ -267,7 +268,7 @@ export default class CargarMetadata extends Component {
          </div>   
         
          </div> 
-         
+
            
         )
     }

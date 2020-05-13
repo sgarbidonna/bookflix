@@ -22,7 +22,7 @@ generosCtrl.cargar=async (req,res) => {
         nombre: req.body.nombre,
        }).save()
         .then( gen =>{
-            res.status(400).send('Género cargado');
+            res.status(200).send('Género cargado');
             res.json(gen);
         })
         .catch(err => res.json(err));
@@ -45,7 +45,7 @@ generosCtrl.modificar = async (req,res) => {
             .save() 
             .then(gen => {
                 generoViejo.delete();
-                res.status(400).send('Género modificado correctamente');
+                res.status(200).send('Género modificado correctamente');
                 res.json(gen)
             });
     };
@@ -55,7 +55,7 @@ generosCtrl.modificar = async (req,res) => {
 generosCtrl.eliminar = async (req,res) => {
     await Genero.findById(req.params.id)
         .delete()
-        .then(res.status(400).send('Género eliminado'));
+        .then(res.status(200).send('Género eliminado'));
     
 };
 

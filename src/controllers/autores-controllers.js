@@ -24,7 +24,7 @@ autoresCtrl.cargar = async (req,res) => {
     }).save()
         .then(aut => {
             res.json(aut);
-            res.status(400).send('Autor cargado')
+            res.status(200).send('Autor cargado')
         })
         .catch(err => res.json(err));
 
@@ -46,7 +46,7 @@ autoresCtrl.modificar = async (req,res) => {
             .save() 
             .then(autor => {
                 autorViejo.delete();
-                res.status(400).send('Autor modificado correctamente');
+                res.status(200).send('Autor modificado correctamente');
                 res.json(autor)
             });
     };
@@ -57,7 +57,7 @@ autoresCtrl.eliminar = async (req,res) => {
     
     await Autor.findById(req.params.id)
         .delete()
-        .then(res.status(400).send('Autor eliminado correctamente'));
+        .then(res.status(200).send('Autor eliminado correctamente'));
     
 };
 

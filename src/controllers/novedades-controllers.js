@@ -33,7 +33,7 @@ novedadesCtrl.cargar =  async (req,res) => {
         .save()
         .then( novedad => {
             console.log(novedad);
-            res.status(400).json({
+            res.status(200).json({
                 message: 'Novedad cargada con éxito',
                 novedad
             })
@@ -56,7 +56,7 @@ novedadesCtrl.modificar = async (req,res) => {
         .then( novedad => {
             novedadVieja.delete();
             console.log(novedad);
-            res.status(400).json({
+            res.status(200).json({
                 message: 'Novedad cargada con éxito',
                 novedad
             })
@@ -69,7 +69,7 @@ novedadesCtrl.eliminar = async (req,res) => {
     
     await Novedad.findOne({ _id: req.params.id })
         .delete()
-        .then(res.status(400).send('Novedad eliminada'));
+        .then(res.status(200).send('Novedad eliminada'));
     
 };
 

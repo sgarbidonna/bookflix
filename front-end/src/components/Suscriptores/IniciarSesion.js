@@ -20,7 +20,7 @@ class App extends Component {
       };
         this.iniciarSesion = this.iniciarSesion.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        sessionStorage.removeItem('token');
+        
     }
     getErrors=(err)=>{
         //traigo la data de los errores
@@ -83,10 +83,9 @@ class App extends Component {
                 .then(res =>this.getToken(res))
                 .catch(err => {
                     console.log('error en sesion');
-                    console.log(err);
+                    console.log(err.response);
                     //this.getErrors(err.response)
-                }
-                    );
+                });
         
     }
 
