@@ -37,7 +37,7 @@ export default class Home extends Component {
     
     render() {
         return (
-            !this.state.token === ''? 
+            this.state.token !== '' ? 
 
                 <div>
                      <h1>home suscriptor</h1>

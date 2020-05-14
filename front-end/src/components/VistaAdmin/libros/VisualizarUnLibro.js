@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ModificarUnLibro from './ModificarUnLibro';
 
 const eliminar = 'http://localhost:4000/api/libros/eliminar'
 const portada = 'http://localhost:4000/uploads/';
@@ -22,12 +23,25 @@ export default class UnLibro extends Component {
         });
 
     }
+
+
+    const modificarLibro = async () => {
+        
+        return(
+            <div><ModificarUnLibro libro={this.props.libro}/>
+            </div>
+        )
+    }
+    
     return (
         
             <div className="card-body">
                 <h5 className="card-title"> {this.props.libro.titulo}
                     <form>
-                        <button type="button" className="btn btn-success" onClick={() => {eliminarLibro()}}> X </button>
+                        <button type="button" className="btn btn-success" onClick={() => {eliminarLibro()}}> Delete </button>
+                    </form>
+                    <form>
+                        <button type="button" className="btn btn-success" onClick={() => {modificarLibro()}}> Modificar </button>
                     </form>
                 </h5>
                 

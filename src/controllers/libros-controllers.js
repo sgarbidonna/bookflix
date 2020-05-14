@@ -10,15 +10,15 @@ librosCtrl.listar = async (req,res)=>{
 };
 
 librosCtrl.visualizar = async (req,res)=>{
-    const libro = await Libro.findById({_id:req.params.id});
+    const libro = await Libro.findById({_id:req.body.id});
     res.json(libro);
 };
 
 librosCtrl.cargar = async (req,res)=>{
-    const libro = await Libro.findOne({titulo: req.body.titulo, isbn: req.body.isbn});
+    const libro = await Libro.findOne({isbn: req.body.isbn});
    
     if (libro){
-        res.status(401).json('El nombre del libro o el numero de isbn ya se encuentra en uso')
+        res.status(401).json('El numero de isbn ya se encuentra en uso')
     }
     
 
@@ -48,10 +48,10 @@ librosCtrl.cargar = async (req,res)=>{
 
 librosCtrl.modificar = async (req,res)=>{
     const libroViejo = await Libro.findById({__id: req.body.id})
-    const libroNuevo = await Libro.findOne({ titulo: req.body.titulo, isbn: req.body.isbn});
+    const libroNuevo = await Libro.findOne({isbn: req.body.isbn});
     
     if (libroNuevo && (libroNuevo!= libroViejo)){
-        res.status(401).json('El número de isbn o el título ya se encuentran en uso por otro libro')
+        res.status(401).json('El número de isbn ya se encuentra en uso por otro libro')
     }
     
     if(req.body.expiracion != null){

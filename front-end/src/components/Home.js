@@ -41,7 +41,9 @@ export default class Home extends Component {
                 <VisualizacionInicial/>
 
             :    this.state.soyAdmin 
+
                     ? <HomeAdmin></HomeAdmin> 
+                    
                     : <HomeSuscriptor></HomeSuscriptor>
                     
              

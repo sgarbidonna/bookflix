@@ -94,7 +94,7 @@ class Autor extends Component {
             this.getData();
         })
             .catch(err => {
-                alert(err)
+                alert(err.data)
         });
     };
 

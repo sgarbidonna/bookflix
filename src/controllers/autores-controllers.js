@@ -36,7 +36,7 @@ autoresCtrl.modificar = async (req,res) => {
     const autorNuevo = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido } );
    
     if(autorNuevo  && (autorNuevo != autorViejo)){
-        res.status(401).json('El autor ya fue cargado anteriormente')   
+        return res.status(401).json('El autor ya fue cargado anteriormente')   
     } 
     await autorViejo.update({
         nombre: req.body.nombre,

@@ -12,10 +12,12 @@ export default class Libros extends Component {
 render() {
     return (
         <div>
+
             <NavegacionAdmin/>
             <CargarMetadata/>
             <Carrousel/>
             <ListarVertical/>
+            
 
         </div>
     )

@@ -118,7 +118,7 @@ export default class CargarMetadata extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then( res=> {
-                console.log(res);
+                alert(res.data);
                 //alert('Libro cargado con exito')
              })
             .catch(err => {
