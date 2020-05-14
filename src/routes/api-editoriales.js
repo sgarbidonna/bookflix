@@ -10,9 +10,9 @@ router.get('/:id',auth, cors(),visualizar);
 
 router.post('/cargar',auth,cors(), cargar );
 
-router.post('/modificar/:id',auth,cors(),modificar);
+router.post('/modificar',auth,cors(),modificar);
 
-router.post('/eliminar/:id',auth,cors(), eliminar );
+router.post('/eliminar',auth,cors(), eliminar );
 
 
 

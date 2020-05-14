@@ -4,6 +4,8 @@ import Genero from '../VistaAdmin/Generos/GeneroCRUD';
 import Editorial from '../VistaAdmin/Editoriales/EditorialCRUD';
 import CargarMetadataLibro from '../VistaAdmin/Libros/CargarMetadataLibro';
 import CargarNovedad from '../VistaAdmin/Novedades/CargarNovedad';
+import Autores from './Autores/AutoresCRUD';
+import Libros from './Libros/Libros';
 
 export default class Home extends Component {
 
@@ -32,6 +34,8 @@ export default class Home extends Component {
                     <form onSubmit= {this.cerrarSesion}>
                         <button type= 'submit'> cerrar sesion </button>
                     </form>
+                    <Libros></Libros>
+                    <Autores> </Autores>
                     <Editorial> </Editorial>
                     <CargarNovedad> </CargarNovedad>
                     <Genero> </Genero>

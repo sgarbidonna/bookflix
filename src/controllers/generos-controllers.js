@@ -32,29 +32,23 @@ generosCtrl.cargar=async (req,res) => {
 
 generosCtrl.modificar = async (req,res) => {
     
-    const generoViejo = await Genero.findById(req.params.id);
+    const generoViejo = await Genero.findById(req.body.id);
     const generoNuevo = await Genero.findOne({ nombre:req.body.nombre});
    
-    //si encuentra un autorNuevo Y no es el mismo al viejo
-    if(generoNuevo  && generoNuevo != generoViejo){
-        res.status(401).json('El género ya fue cargado anteriormente')   
-    } else {
-        await new Genero({
+    if(generoNuevo && (generoNuevo != generoViejo)){
+            res.status(401).json('El género ya fue cargado anteriormente')   
+        
+    }
+        await generoViejo.update({
             nombre: req.body.nombre,
-        })
-            .save() 
-            .then(gen => {
-                generoViejo.delete();
-                res.status(200).send('Género modificado correctamente');
-                res.json(gen)
-            });
-    };
+        }).then( res.status(200).json('Género modificado'))
+    
+    
     
 };
 
 generosCtrl.eliminar = async (req,res) => {
-    await Genero.findById(req.params.id)
-        .remove()
+    await Genero.findByIdAndRemove(req.body.id)
         .then(res.status(200).send('Género eliminado'));
     
 };

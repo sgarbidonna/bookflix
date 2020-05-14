@@ -56,14 +56,14 @@ class Generos extends Component {
 
         ).then(res => {
             console.log('se cargo un genero');
-            console.log(res)
+            alert(res)
             this.getData();
         }
         )
 
             .catch(err => {
                 console.log('error en cargar genero');
-                console.log(err)
+                alert(err)
             }
             );
 
@@ -71,25 +71,21 @@ class Generos extends Component {
 
 
     setGeneros(res) {
-        console.log(res);
         this.setState({
             generos: res
         });
     }
 
     getData = async () => {
-        const { user } = this.state.user;
-
-
+        
         await axios.get(generos, {
-            user: user,
+            
             headers: { 'xaccess': this.state.token }
         })
             .then(res => {
                 this.setGeneros(res.data)
             })
             .catch(err => {
-                console.log('lista de generos');
                 console.log(err.response)
             });
 
@@ -115,33 +111,24 @@ class Generos extends Component {
 
     eliminarGenero = async (e) => {
         e.preventDefault();
-        await axios.post(borrar + this.state.id,
+        await axios.post(borrar,
             { id: this.state.id },
             { headers: { 'xaccess': this.state.token } }
-
-
-
-        ).then(res => {
-            console.log('se elimino el genero');
-            console.log(res)
-            this.getData();
-        })
+        )
+            .then(res => {
+                alert(res)
+                this.getData();
+            })
             .catch(err => {
-                console.log('error en borrar genero');
-                console.log(err)
-            }
-            );
+               alert('error en borrar genero');
+            });
     };
 
 
-    //Actualizar Genero
     onInputChange3 = (e) => {
         console.log('input', e.target.value);
-
-
         this.setState({
             id: e.target.value
-
 
         });
 
@@ -150,16 +137,14 @@ class Generos extends Component {
 
     modificarGenero = async (e) => {
         e.preventDefault();
-        console.log(this.state.nombre);
-        console.log(this.state.token);
 
-        await axios.post(modificar + this.state.id,
-            { nombre: this.state.nombre },
+        await axios.post(modificar ,
+            { nombre: this.state.nombre, 
+                id: this.state.id },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            console.log('se cargo un genero');
-            console.log(res)
+            alert(res);
             this.getData();
         }
         )
@@ -213,9 +198,9 @@ class Generos extends Component {
 
 
                                     <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione un genero para eliminar</label>
+                                       
                                         <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="genero">
-
+                                            <option selected>Seleccione un género para eliminar</option>
                                             {this.state.generos.map(ge =>
                                                 <option key={ge.id} value={ge._id} >{ge.nombre}</option>
                                             )}
@@ -246,9 +231,9 @@ class Generos extends Component {
 
 
                                     <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione un genero para editar</label>
+                                        
                                         <select className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="genero">
-
+                                        <option selected>Seleccione un género para editar</option>
                                             {this.state.generos.map(ge =>
                                                 <option key={ge.id} value={ge._id} >{ge.nombre}</option>
                                             )}

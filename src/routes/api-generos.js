@@ -10,8 +10,8 @@ router.get('/:id',auth,cors(), visualizar);
 
 router.post('/cargar', auth,cors(), cargar);
 
-router.post('/modificar/:id', auth, modificar);
+router.post('/modificar', cors(), auth, modificar);
 
-router.post('/eliminar/:id', auth,cors(), eliminar);
+router.post('/eliminar', auth,cors(), eliminar);
 
 module.exports = router;

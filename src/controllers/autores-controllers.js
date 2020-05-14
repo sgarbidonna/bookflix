@@ -32,31 +32,24 @@ autoresCtrl.cargar = async (req,res) => {
 
 autoresCtrl.modificar = async (req,res) => {
     
-    const autorViejo = await Autor.findById(req.params.id);
-    const autorNuevo = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido} );
+    const autorViejo = await Autor.findById(req.body.id);
+    const autorNuevo = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido } );
    
-    //si encuentra un autorNuevo Y no es el mismo al viejo
     if(autorNuevo  && (autorNuevo != autorViejo)){
         res.status(401).json('El autor ya fue cargado anteriormente')   
-    } else {
-        await new Autor({
-            nombre: req.body.nombre,
-            apellido:req.body.apellido
-        })
-            .save() 
-            .then(autor => {
-                autorViejo.delete();
-                res.status(200).send('Autor modificado correctamente');
-                res.json(autor)
-            });
-    };
+    } 
+    await autorViejo.update({
+        nombre: req.body.nombre,
+        apellido:req.body.apellido
+    })
+        .then( res.status(200).send('Autor modificado correctamente'));
+ 
     
 };
 
 autoresCtrl.eliminar = async (req,res) => {
     
-    await Autor.findById(req.params.id)
-        .remove()
+    await Autor.findByIdAndRemove(req.body.id)
         .then(res.status(200).send('Autor eliminado correctamente'));
     
 };

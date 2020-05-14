@@ -22,17 +22,13 @@ class Editorial extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.agregarEditorial = this.agregarEditorial.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        this.setEditoriales = this.setEditoriales.bind(this);
+        
     }
 
-
-
-
-
-    handleChange(e) {
-        const { name, value } = e.target;
+    handleChange= (e) => {
+        
         this.setState({
-            [name]: value
+            [e.target.name]: e.target.value
         }
 
         );
@@ -46,112 +42,82 @@ class Editorial extends Component {
 
     agregarEditorial = async (e) => {
         e.preventDefault();
-       
 
         await axios.post(cargar,
             { nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            console.log('se cargo una editorial');
-            console.log(res)
-            this.getData();
-        }
-        )
+            alert('se cargo una editorial');
+            this.getData()
+        })
 
-            .catch(err => {
-                console.log(err)
-            }
-            );
+        .catch(err => {
+            alert(err)
+        } );
 
     };
 
-
-    setEditoriales(res) {
-
-        this.setState({
-            editoriales: res
-        });
-    }
-
-    getData = async () => {
-
-        await axios.get(editoriales, {
-            headers: { 'xaccess': this.state.token }
+    async getData() {
+        await axios.get(editoriales, 
+            { headers: { 'xaccess': this.state.token }
         })
             .then(res => {
-                this.setEditoriales(res.data)
+                this.setState({
+                    editoriales: res.data
+                });
             })
             .catch(err => {
-                alert(err.response)
+                alert(err)
             });
 
     }
     async componentDidMount() {
-        this.getData();
-    }
+        await this.getData();
+    };
 
     onInputChange2 = (e) => {
        this.setState({
             id: e.target.value
-
         });
-
-
     };
 
     eliminarEditorial = async (e) => {
         e.preventDefault();
-        await axios.post(borrar + this.state.id,
+
+        await axios.post(borrar ,
             { id: this.state.id },
             { headers: { 'xaccess': this.state.token } }
 
-
-
         ).then(res => {
-            console.log('se elimino el genero');
-            console.log(res)
+            alert('Editorial eliminada');
             this.getData();
         })
             .catch(err => {
-                console.log('error en borrar genero');
-                console.log(err)
-            }
-            );
+                alert(err)
+        });
     };
 
-
-    //Actualizar Genero
     onInputChange3 = (e) => {
-        console.log('input', e.target.value);
-
-
         this.setState({
             id: e.target.value
-
-
         });
-
-
     };
 
     modificarEditorial = async (e) => {
         e.preventDefault();
 
-        await axios.post(modificar + this.state.id,
-            { nombre: this.state.nombre },
+        await axios.post(modificar,
+            { id: this.state.id,
+            nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            
-            this.getData();
-        }
-        )
-
-            .catch(err => {
-                console.log(err)
-            }
-            );
+            this.getData()
+        })
+        .catch(err => {
+            alert(err)
+        });
 
     };
 
@@ -161,117 +127,105 @@ class Editorial extends Component {
 
             <div className="row">
 
-                <div className="col-md-4">
-                    <form onSubmit={this.agregarGenero} >
+                <div className="form-autor" >
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+                    <form onSubmit={this.agregarEditorial} >
 
                         <div className="col s5">
                             <div className="form-input-field col s5 bg-dark">
                                 <label className="text-light">Ingrese la editorial</label>
-                                <input
-                                    className="form-control col s12"
+                                <input className="form-control col s12"
                                     id="nombre"
                                     name="nombre"
                                     value={this.state.nombre}
                                     onChange={this.handleChange}
-
-                                    placeholder="Ingrese nombre de genero">
+                                    placeholder="Ingrese el nombre de la editorial"
+                                    required>
                                 </input>
-                                <button type="submit" className="btn btn-success " >
-                                    Agregar Edtorial
-                                </button>
-                            </div>
 
+                                <button type="submit" className="btn btn-success " > Agregar Edtorial </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+               
+
+                
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+
+                    <form onSubmit={this.eliminarEditorial}>
+                        <div className="form-group">
+                            
+                            <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
+                            <option selected>Seleccione una editorial para eliminar</option>
+                                {this.state.editoriales.map(ed =>
+                                    <option key={ed.id} value={ed._id} >{ed.nombre}</option>
+                                )}
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-success" > Eliminar Editorial </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+                
+
+
+                
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+
+                    <form onSubmit={this.modificarEditorial}>
+
+                        <div className="form-group">
+                           
+                            <select required className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="editorial">
+                            <option selected>Seleccione una editorial para modificar</option>
+                                {this.state.editoriales.map(ed =>
+                                    <option key={ed.id} value={ed._id} >{ed.nombre}</option>
+                                )}
+                            </select>
+                            <label className="text-light">Ingrese la nueva editorial</label>
+                            <input
+                                className="form-control col s12"
+                                id="nombre"
+                                name="nombre"
+                                value={this.state.nombre}
+                                onChange={this.handleChange}
+                                required
+                                placeholder="Ingrese el nuevo nombre">
+                            </input>
+                        </div>
+
+
+
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-success" >
+                                Actualizar Editorial
+                            </button>
                         </div>
 
 
                     </form>
-
-
-                    <div className="form-autor" >
-                        <div className="form-input-field col s5 bg-dark">
-                            <div className="card card-body text-light bg-dark">
-
-                                <form onSubmit={this.eliminarEditorial}>
-
-
-
-                                    <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione una editorial para eliminar</label>
-                                        <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="genero">
-
-                                            {this.state.editoriales.map(ed =>
-                                                <option key={ed.id} value={ed._id} >{ed.nombre}</option>
-                                            )}
-                                        </select>
-                                    </div>
-
-
-
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-success" >
-                                            Eliminar Edtorial
-                                        </button>
-                                    </div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="form-autor" >
-                        <div className="form-input-field col s5 bg-dark">
-                            <div className="card card-body text-light bg-dark">
-
-                                <form onSubmit={this.modificarEditorial}>
-
-
-
-                                    <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione una editorial para editar</label>
-                                        <select className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="genero">
-
-                                            {this.state.editoriales.map(ed =>
-                                                <option key={ed.id} value={ed._id} >{ed.nombre}</option>
-                                            )}
-                                        </select>
-                                        <label className="text-light">Ingrese la nueva editorial</label>
-                                        <input
-                                            className="form-control col s12"
-                                            id="nombre"
-                                            name="nombre"
-                                            value={this.state.nombre}
-                                            onChange={this.handleChange}
-
-                                            placeholder="Ingrese nombre de la editorial">
-                                        </input>
-                                    </div>
-
-
-
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-success" >
-                                            Actualizar Genero
-                                        </button>
-                                    </div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                
+                </div>
 
 
                 </div>
 
 
                 <div className="col-md-8">
-                    {this.state.editoriales.map(gene =>
+                    {this.state.editoriales.map(ed =>
                         <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                             <div class="card-body">
-                                <h5 class="card-title">{gene.nombre}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{gene._id}</h6>
+                    
+                                <h5 class="card-title" onChange={this.onInputChange2} >{ed.nombre}</h5>
+                    
                             </div>
                         </div>
                     )}
