@@ -5,7 +5,8 @@ import { Redirect} from 'react-router-dom';
 import HomeAdmin from './VistaAdmin/HomeAdmin';
 import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
 import axios from 'axios';
-import Navegacion from './Navegacion';
+//import Navegacion from './Navegacion';
+import VisualizacionInicial from './VisualizacionInicial';
 
 const soyAdminApi = 'http://localhost:4000/api/suscriptores/soyAdmin'
 
@@ -36,13 +37,16 @@ export default class Home extends Component {
 
     render() {
         return (
-            !(this.state.token == '' || null) ?  
-                this.state.soyAdmin 
+            (this.state.token == '' || null) ?  
+                <VisualizacionInicial/>
+
+            :    this.state.soyAdmin 
                     ? <HomeAdmin></HomeAdmin> 
                     : <HomeSuscriptor></HomeSuscriptor>
                     
-                : 
-                <Navegacion/>
+             
+                
         )
     }
 }
+//<Navegacion/>

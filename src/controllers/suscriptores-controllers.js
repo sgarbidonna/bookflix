@@ -192,7 +192,8 @@ suscriptoresCtrl.eliminar =  async (req,res)=>{
 
 suscriptoresCtrl.logout = (req,res) => {
     //borro su token redireccionandolo al home
-    req.logout();
+    req.logout().then(res.status(200).json('Sesion eliminada'))
+                .catch(err => res.json(err));
     res.redirect('/');  
 } 
 

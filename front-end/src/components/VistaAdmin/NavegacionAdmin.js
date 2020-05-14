@@ -1,6 +1,8 @@
 import React, {  Component } from 'react';
 import { Redirect , Link } from 'react-router-dom';
+import axios from 'axios';
 
+const logout = 'https://localhost:4000/api/suscriptores/logout'
 
 
 export default class NavegacionAdmin extends Component {
@@ -15,15 +17,20 @@ export default class NavegacionAdmin extends Component {
   };
 
 
-  cerrarSesion = () => {
+  cerrarSesion = async () => {
     sessionStorage.removeItem('token');
-    
+    return (<Redirect to='https://www.google.com.ar'/>)
    
-}
+  };
+   
+
     render (){
         return (
-         this.state.token !== '' ?
-          <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
+         this.state.token == '' ?
+
+          <Redirect to='/login'/>
+
+          : <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
               <a className="navbar-brand" href=" "> BOOKFLIX </a>
               
               <div className="collapse navbar-collapse" id="navbarNav">
@@ -53,16 +60,16 @@ export default class NavegacionAdmin extends Component {
                   <Link className="nav-link" to="/generos">Generos </Link>
                   </li>
                   
-                  <form onSubmit= {this.cerrarSesion}>
-                    <button type= 'submit'> Cerrar Sesión </button>
-                  </form>
+                  <form>
+                    <button type= 'submit' onClick= {this.cerrarSesion}> Cerrar Sesión </button>
+                    </form>
                 </ul>
               </div>
           
       
           </nav>
 
-        : <Redirect to='/home'/>
+        
 
             
         );
