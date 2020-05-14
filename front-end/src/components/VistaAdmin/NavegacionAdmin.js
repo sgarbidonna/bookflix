@@ -1,8 +1,5 @@
 import React, {  Component } from 'react';
 import { Redirect , Link } from 'react-router-dom';
-import axios from 'axios';
-
-const logout = 'https://localhost:4000/api/suscriptores/logout'
 
 
 export default class NavegacionAdmin extends Component {
@@ -58,6 +55,10 @@ export default class NavegacionAdmin extends Component {
 
                   <li className="nav-item">
                   <Link className="nav-link" to="/generos">Generos </Link>
+                  </li>
+
+                  <li className="nav-item">
+                  <Link className="nav-link" to="/suscriptores">Suscriptores </Link>
                   </li>
                   
                   <form>

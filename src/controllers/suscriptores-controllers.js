@@ -132,7 +132,7 @@ suscriptoresCtrl.modificar =  async (req,res) => {
     // esto implica quedarnos con sus datos unicos
     // pero le cambiaria el id, por lo que hay q actualizar su token
 
-    const suscriptorViejo = await Suscriptor.findById(req.user.id);
+    const suscriptorViejo = await Suscriptor.findById(req.body.id);
     
     //me fijo que el mail no este en uso
     const nuevoSuscriptor = await Suscriptor.findOne( {email:req.body.email});
@@ -185,9 +185,10 @@ suscriptoresCtrl.modificar =  async (req,res) => {
 };
 
 suscriptoresCtrl.eliminar =  async (req,res)=>{
-    //encuentro el suscriptor y lo elimino redireccionandolo al home
-    await Suscriptor.findByIdAndRemove(req.user.id)
-        .then(res=> res.redirect('/'));
+    console.log(req.body.id);
+    
+    await Suscriptor.findByIdAndRemove(req.body.id)
+        .then(respuesta=>  res.json(respuesta));
 };
 
 suscriptoresCtrl.logout = (req,res) => {

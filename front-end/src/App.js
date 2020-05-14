@@ -12,7 +12,7 @@ import Novedades from './components/VistaAdmin/Novedades/Novedades';
 import Autores from './components/VistaAdmin/Autores/AutoresCRUD';
 import Editoriales from './components/VistaAdmin/Editoriales/EditorialCRUD';
 import Generos from './components/VistaAdmin/Generos/GeneroCRUD';
-
+import Suscriptores from './components/VistaAdmin/Suscriptores/Suscriptores';
 
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
         <Route  path='/autores'> <Autores/> </Route>
         <Route  path='/editoriales'> <Editoriales/> </Route>
         <Route  path='/generos'> <Generos/> </Route>
+        <Route  path='/suscriptores'> <Suscriptores/> </Route>
       
       </div>
     </Router>
