@@ -7,7 +7,7 @@ autoresCtrl.listar = async (req, res) => {
 };
 
 autoresCtrl.visualizar = async (req,res) => {
-    const autor = await Autor.findById({_id: req.params.id});
+    const autor = await Autor.findById(req.body.id);
     res.json(autor);
 };
 

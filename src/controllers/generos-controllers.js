@@ -7,7 +7,7 @@ generosCtrl.listar = async (req, res) => {
 };
 
 generosCtrl.visualizar =async (req, res) => {
-    const genero = await Genero.findById(req.params.id);
+    const genero = await Genero.findById(req.body.id);
     res.json(genero);
 };
 

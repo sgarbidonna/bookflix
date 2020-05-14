@@ -7,7 +7,7 @@ editorialesCtrl.listar = async (req, res) => {
 };
 
 editorialesCtrl.visualizar = async (req,res) => {
-    const editorial = await Editorial.findById({_id: req.params.id});
+    const editorial = await Editorial.findById(req.body.id);
     res.json(editorial);
 };
 
