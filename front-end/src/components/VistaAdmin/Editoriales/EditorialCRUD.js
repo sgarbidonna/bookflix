@@ -8,7 +8,7 @@ const borrar = 'http://localhost:4000/api/editoriales/eliminar/';
 const modificar = 'http://localhost:4000/api/editoriales/modificar/';
 
 
-class Edtorial extends Component {
+class Editorial extends Component {
     constructor() {
         super();
         this.state = {
@@ -267,7 +267,7 @@ class Edtorial extends Component {
 
 
                 <div className="col-md-8">
-                    {this.state.generos.map(gene =>
+                    {this.state.editoriales.map(gene =>
                         <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                             <div class="card-body">
                                 <h5 class="card-title">{gene.nombre}</h5>
@@ -280,4 +280,4 @@ class Edtorial extends Component {
         )
     }
 }
-export default Generos;
+export default Editorial;
