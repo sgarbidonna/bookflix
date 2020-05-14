@@ -1,31 +1,49 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { Component } from '../../../../node_modules/react'
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from '../../../../node_modules/react-datepicker';
+import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
+import axios from '../../../../node_modules/axios';
 
+const cargar = 'http://localhost:4000/api/novedades/cargar';
 
 export default class CargarNovedad extends Component {
 
-    state = {
-        titulo: '',
-        descripcion: '',
-        fecha: new Date(), 
+    constructor(){
+        super();
+            this.state = {
+                user: JSON.parse(sessionStorage.getItem('user')),
+                token: sessionStorage.getItem('token'),
+                
+                titulo: '',
+                descripcion: '',
+                publicacion: new Date(), 
+                portadaImg: null,
+    };
+        this.getPortada=this.getPortada.bind(this);
     }
-    validacion =()=> { 
-        if(this.state.titulo == "" || this.state.descripcion == "" || this.state.fecha == ""){
-            alert("complete todos los campos por favor"); 
-            return false;
-        }
-        return true;
     
-        
-    }
+    
 
     onSubmit = async (e) => {
         e.preventDefault();
-        this.validacion();
-
-        
+ 
+        const formData = new FormData();
+        formData.append('titulo', this.state.titulo);
+        formData.append('descripcion', this.state.descripcion);
+        formData.append('portadaImg', this.state.portadaImg);
+        formData.append('publicacion',this.state.publicacion)
+    
+        axios.post(cargar,formData,{
+                headers: { 'xaccess':this.state.token }
+            })
+            .then(res =>{
+                alert('Novedad cargada con exito')
+                console.log(res)})
+            .catch(err => {
+                alert(err);
+                console.log(err);
+            }
+        );
     };
 
     onInputChange = (e) => {
@@ -33,14 +51,21 @@ export default class CargarNovedad extends Component {
             [e.target.name]: e.target.value
         })
     };
-    onChangeFecha = fecha => {
-        this.setState({ fecha });
+    onChangeFecha = publicacion => {
+        this.setState({ publicacion });
     };
+
+    getPortada(e){
+        
+        this.setState({
+            portadaImg: e.target.files[0]
+        })
+
+    }
 
     render(){
         return (
         <div className="form-novedad" >
-
        
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
@@ -58,10 +83,11 @@ export default class CargarNovedad extends Component {
                     name ="titulo"
                     onChange={this.onInputChange}
                     value={this.state.titulo}
-
-                    placeholder="escriba un titulo">
+                    placeholder="Escriba un titulo"
+                    required>
                 </input>
             </div>
+
             <div className="form-group">
                 <label className="text-light">Descripción </label>
                 <textarea className="form-control" 
@@ -70,16 +96,27 @@ export default class CargarNovedad extends Component {
                     name ="descripcion"
                     onChange={this.onInputChange}
                     value={this.state.descripcion}
-
-                    placeholder="escriba una descripcion"
-                ></textarea> 
+                    placeholder="Escriba una descripcion"
+                    required >
+                </textarea> 
             </div>
+
             <div className="form-group">
                 <DatePicker className="form-control"
-                 selected={this.state.fecha}
-                 onChange={this.onChangeFecha}
-                />
+                        selected={this.state.publicacion}
+                        name='publicacion'
+                        onChange={this.onChangeFecha}
+                        required />
             </div>
+
+            <label className="text-light">Portada</label>
+            <div className="form-group">
+
+               <input type='file' encType="multipart/form-data" name='portadaImg' onChange={this.getPortada}>
+               </input>
+                
+            </div >
+
             <div className="form-group">
                 <button type ="submit" className="btn btn-success">
                     Agregar          

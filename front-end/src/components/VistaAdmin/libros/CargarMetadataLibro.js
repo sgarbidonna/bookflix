@@ -7,7 +7,6 @@ import axios from '../../../../node_modules/axios';
 const autores = 'http://localhost:4000/api/autores/';
 const generos = 'http://localhost:4000/api/generos/';
 const editoriales = 'http://localhost:4000/api/editoriales/';
-
 const libros='http://localhost:4000/api/libros/cargar';
 
 
@@ -102,19 +101,11 @@ export default class CargarMetadata extends Component {
         this.getData();
     }
    
-    validacion =()=> { 
-              
-    }
+    
 
     onSubmit = async (e) => {
         e.preventDefault();
-        this.validacion();
-        console.log('hola');
-    //falta activar la ruta para los libros
-    //const {user} = this.state.user;
 
-    
-    // prueba mia
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('isbn',this.state.ISBN);
@@ -132,8 +123,7 @@ export default class CargarMetadata extends Component {
                 alert('Libro cargado con exito')
                 console.log(res)})
             .catch(err => {
-                alert('error en cargar libro');
-                console.log(err);
+                alert(err);
             }
         );
     };
@@ -180,7 +170,8 @@ export default class CargarMetadata extends Component {
                     name ="titulo"
                     onChange={this.onInputChange}
                     value={this.state.titulo}
-                    placeholder="escriba un titulo">
+                    placeholder="Escriba un titulo"
+                    required>
                 </input>
             </div>
             <div className="form-group">
@@ -191,7 +182,8 @@ export default class CargarMetadata extends Component {
                     name ="ISBN"
                     onChange={this.onInputChange}
                     value={this.state.ISBN}
-                    placeholder="escriba la ISBN">
+                    placeholder="Escriba el ISBN"
+                    required>
                 </input>
             </div>
 
@@ -201,6 +193,7 @@ export default class CargarMetadata extends Component {
                     onChange={this.onInputChange} 
                     id="exampleFormControlSelect1" 
                     name="autor"
+                    required
                 >    {this.state.autores.map(autor =>
                         <option key={autor._id} value={autor._id} >{autor.nombre}</option>
                         )}
@@ -209,7 +202,7 @@ export default class CargarMetadata extends Component {
 
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1"> Género</label>
-                    <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero">
+                    <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero" required>
                         {this.state.generos.map(ge =>
                         <option key={ge._id} value={ge._id} >{ge.nombre}</option>
                         )}
@@ -218,7 +211,7 @@ export default class CargarMetadata extends Component {
 
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1"> Editorial </label>
-                    <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial">
+                    <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial" required>
                     {this.state.editoriales.map(ed =>
                     <option key={ed.id} value={ed._id} >{ed.nombre}</option>
                     )}
@@ -232,8 +225,9 @@ export default class CargarMetadata extends Component {
                  selected={this.state.fechaDePublicacion}
                  name='fechaDePublicacion'
                  onChange={this.onChangeFechaDePublicacion}
-                />
+                 required/>
             </div>
+
             <label className="text-light"> Fecha De Expiración</label>
             <div className="form-group">
                

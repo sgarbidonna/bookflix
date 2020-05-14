@@ -16,20 +16,22 @@ suscriptoresCtrl.listar = async (req, res) => {
 suscriptoresCtrl.registrar = async (req,res) => {
     
     const { errors, isValid } = validateRegisterInput(req.body);
-    
+    console.log(req.body.suscripcion);
+
     if(!isValid){
         return res.status(401).send(errors);
     }
     
     // si existe el email
-    const suscriptor = await Suscriptor.findOne({ email: req.body.email });
-    if (suscriptor){
+    const suscriptorEmail = await Suscriptor.findOne({ email: req.body.email });
+    if (suscriptorEmail){
         return res.status(401).send('Ingrese otro email, el actual ya está en uso' );
     };
     
     //si no existe el email pregunto por el dni
-    suscriptor = await Suscriptor.findOne({dni: req.body.dni}) ;
-    if(suscriptor){
+    const suscriptorDNI = await Suscriptor.findOne({dni: req.body.dni}) ;
+
+    if(suscriptorDNI){
         return res.status(401).send('Ingrese otro dni, el actual ya está en uso')
     };
 

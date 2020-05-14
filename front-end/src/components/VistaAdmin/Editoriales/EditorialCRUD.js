@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import CargarGenero from './CargarGenero';
-//Probando git 2
-//Probanco cambiosd de git
-const generos = 'http://localhost:4000/api/generos/';
-const cargar = 'http://localhost:4000/api/generos/cargar';
-const borrar = 'http://localhost:4000/api/generos/eliminar/';
-const modificar = 'http://localhost:4000/api/generos/modificar/';
+
+const editoriales = 'http://localhost:4000/api/editoriales/';
+const cargar = 'http://localhost:4000/api/editoriales/cargar';
+const borrar = 'http://localhost:4000/api/editoriales/eliminar/';
+const modificar = 'http://localhost:4000/api/editoriales/modificar/';
 
 
-class Generos extends Component {
+class Edtorial extends Component {
     constructor() {
         super();
         this.state = {
             user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
-            generos: [],
+            
+            editoriales: [],
             nombre: '',
             id: ''
         };
         this.handleChange = this.handleChange.bind(this);
-        this.agregarGenero = this.agregarGenero.bind(this);
+        this.agregarEditorial = this.agregarEditorial.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-
+        this.setEditoriales = this.setEditoriales.bind(this);
     }
 
 
@@ -45,24 +44,22 @@ class Generos extends Component {
         })
     };
 
-    agregarGenero = async (e) => {
+    agregarEditorial = async (e) => {
         e.preventDefault();
-        console.log(this.state.nombre);
-        console.log(this.state.token);
+       
 
         await axios.post(cargar,
             { nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            console.log('se cargo un genero');
+            console.log('se cargo una editorial');
             console.log(res)
             this.getData();
         }
         )
 
             .catch(err => {
-                console.log('error en cargar genero');
                 console.log(err)
             }
             );
@@ -70,42 +67,32 @@ class Generos extends Component {
     };
 
 
-    setGeneros(res) {
-        console.log(res);
+    setEditoriales(res) {
+
         this.setState({
-            generos: res
+            editoriales: res
         });
     }
 
     getData = async () => {
-        const { user } = this.state.user;
 
-
-        await axios.get(generos, {
-            user: user,
+        await axios.get(editoriales, {
             headers: { 'xaccess': this.state.token }
         })
             .then(res => {
-                this.setGeneros(res.data)
+                this.setEditoriales(res.data)
             })
             .catch(err => {
-                console.log('lista de generos');
-                console.log(err.response)
+                alert(err.response)
             });
 
     }
     async componentDidMount() {
-
         this.getData();
     }
 
-
-    //Borrar Genero
     onInputChange2 = (e) => {
-        console.log('input', e.target.value);
-
-
-        this.setState({
+       this.setState({
             id: e.target.value
 
         });
@@ -113,7 +100,7 @@ class Generos extends Component {
 
     };
 
-    eliminarGenero = async (e) => {
+    eliminarEditorial = async (e) => {
         e.preventDefault();
         await axios.post(borrar + this.state.id,
             { id: this.state.id },
@@ -148,24 +135,20 @@ class Generos extends Component {
 
     };
 
-    modificarGenero = async (e) => {
+    modificarEditorial = async (e) => {
         e.preventDefault();
-        console.log(this.state.nombre);
-        console.log(this.state.token);
 
         await axios.post(modificar + this.state.id,
             { nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            console.log('se cargo un genero');
-            console.log(res)
+            
             this.getData();
         }
         )
 
             .catch(err => {
-                console.log('error en cargar genero');
                 console.log(err)
             }
             );
@@ -183,7 +166,7 @@ class Generos extends Component {
 
                         <div className="col s5">
                             <div className="form-input-field col s5 bg-dark">
-                                <label className="text-light">Ingrese el género</label>
+                                <label className="text-light">Ingrese la editorial</label>
                                 <input
                                     className="form-control col s12"
                                     id="nombre"
@@ -194,7 +177,7 @@ class Generos extends Component {
                                     placeholder="Ingrese nombre de genero">
                                 </input>
                                 <button type="submit" className="btn btn-success " >
-                                    Agregar Genero
+                                    Agregar Edtorial
                                 </button>
                             </div>
 
@@ -208,16 +191,16 @@ class Generos extends Component {
                         <div className="form-input-field col s5 bg-dark">
                             <div className="card card-body text-light bg-dark">
 
-                                <form onSubmit={this.eliminarGenero}>
+                                <form onSubmit={this.eliminarEditorial}>
 
 
 
                                     <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione un genero para eliminar</label>
+                                        <label for="exampleFormControlSelect1">Seleccione una editorial para eliminar</label>
                                         <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="genero">
 
-                                            {this.state.generos.map(ge =>
-                                                <option key={ge.id} value={ge._id} >{ge.nombre}</option>
+                                            {this.state.editoriales.map(ed =>
+                                                <option key={ed.id} value={ed._id} >{ed.nombre}</option>
                                             )}
                                         </select>
                                     </div>
@@ -226,7 +209,7 @@ class Generos extends Component {
 
                                     <div className="form-group">
                                         <button type="submit" className="btn btn-success" >
-                                            Eliminar Genero
+                                            Eliminar Edtorial
                                         </button>
                                     </div>
 
@@ -241,19 +224,19 @@ class Generos extends Component {
                         <div className="form-input-field col s5 bg-dark">
                             <div className="card card-body text-light bg-dark">
 
-                                <form onSubmit={this.modificarGenero}>
+                                <form onSubmit={this.modificarEditorial}>
 
 
 
                                     <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Seleccione un genero para editar</label>
+                                        <label for="exampleFormControlSelect1">Seleccione una editorial para editar</label>
                                         <select className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="genero">
 
-                                            {this.state.generos.map(ge =>
-                                                <option key={ge.id} value={ge._id} >{ge.nombre}</option>
+                                            {this.state.editoriales.map(ed =>
+                                                <option key={ed.id} value={ed._id} >{ed.nombre}</option>
                                             )}
                                         </select>
-                                        <label className="text-light">Ingrese el nuevo genero</label>
+                                        <label className="text-light">Ingrese la nueva editorial</label>
                                         <input
                                             className="form-control col s12"
                                             id="nombre"
@@ -261,7 +244,7 @@ class Generos extends Component {
                                             value={this.state.nombre}
                                             onChange={this.handleChange}
 
-                                            placeholder="Ingrese nombre de genero">
+                                            placeholder="Ingrese nombre de la editorial">
                                         </input>
                                     </div>
 

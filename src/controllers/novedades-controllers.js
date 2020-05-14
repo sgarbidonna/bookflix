@@ -13,11 +13,7 @@ novedadesCtrl.visualizar = async (req, res) => {
 };
 
 novedadesCtrl.cargar =  async (req,res) => {
-    //me aseguro que entre algo por el multer
-    // req.file is the `multimedia` file
-    console.log(req.file); 
     
-    //chusmear bien la validacion de existencia
     const novedad = await Novedad.findOne({titulo : req.body.titulo, descripcion: req.body.descripcion });
    
     if(novedad){
@@ -28,7 +24,7 @@ novedadesCtrl.cargar =  async (req,res) => {
         titulo:req.body.titulo, 
         descripcion: req.body.descripcion,
         publicacion: req.body.publicacion,
-        portada: req.file.filename
+        portada: req.file.filename,
        })
         .save()
         .then( novedad => {

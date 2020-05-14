@@ -14,11 +14,14 @@ export default class Home extends Component {
         this.state={
             user: '',
             token: sessionStorage.getItem('token'),
-            soyAdmin: true //arreglar
+            soyAdmin: true
         };
         this.setSoyAdmin = this.setSoyAdmin.bind(this)
        
     }  
+    componentDidMount(){
+        this.setSoyAdmin();
+    }
     async setSoyAdmin() {
         await axios.get( soyAdminApi ,{
             headers:{'xaccess':this.state.token}  
@@ -31,7 +34,7 @@ export default class Home extends Component {
 
     render() {
         
-        this.setSoyAdmin()
+        
         return (
             this.state.token !== null ?  // si token es distinto de vacio pregunto por el admin
                 this.state.soyAdmin 

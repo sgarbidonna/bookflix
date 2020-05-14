@@ -37,7 +37,7 @@ router.get('/:id',auth, cors(),visualizar);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 
-router.post('/modificar/:id',auth,cors(), uploadPortada, modificar);
+router.post('/modificar/:id',auth, uploadPortada, modificar);
 
 router.post('/eliminar/:id',auth,cors(),eliminar);
 
