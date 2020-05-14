@@ -70,7 +70,7 @@ export default class CargarMetadata extends Component {
         .then(res =>{
             this.setAutores(res.data)
         })
-        .catch(err =>{console.log(err.response)});
+        .catch(err =>{console.log(err)});
 
         await axios.get(generos,{
             user: user,
@@ -79,7 +79,7 @@ export default class CargarMetadata extends Component {
         .then(res =>{
             this.setGeneros(res.data)
         })
-        .catch(err =>{console.log(err.response)});
+        .catch(err =>{console.log(err)});
 
         await axios.get(editoriales,{
             user: user,
@@ -88,7 +88,7 @@ export default class CargarMetadata extends Component {
         .then(res =>{
             this.setEditoriales(res.data)
         })
-        .catch(err =>{console.log(err.response)});
+        .catch(err =>{console.log(err)});
 
 
 
@@ -119,9 +119,7 @@ export default class CargarMetadata extends Component {
         axios.post(libros,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then(res =>{
-                alert('Libro cargado con exito')
-                console.log(res)})
+            .then( alert('Libro cargado con exito') )
             .catch(err => {
                 alert(err);
             }

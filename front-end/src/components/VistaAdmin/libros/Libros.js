@@ -61,7 +61,7 @@ render() {
                         <h6 class="card-subtitle mb-2 text-muted">Editorial: {libros.editorial}</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Fecha de lanzamiento: {libros.lanzamiento}</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Fecha de expiración: {libros.expiracion}</h6>
-                        <img src={portada + `${libros.portada}`}></img>
+                        <img width="300px" height="auto" src={portada + `${libros.portada}`} />
 
 
 

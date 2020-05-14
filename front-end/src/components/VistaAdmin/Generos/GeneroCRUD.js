@@ -47,22 +47,18 @@ class Generos extends Component {
 
     agregarGenero = async (e) => {
         e.preventDefault();
-        console.log(this.state.nombre);
-        console.log(this.state.token);
 
         await axios.post(cargar,
             { nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
-        ).then(res => {
-            console.log('se cargo un genero');
-            alert(res)
-            this.getData();
-        }
+        ).then(
+            this.getData()
+
         )
 
             .catch(err => {
-                console.log('error en cargar genero');
+                
                 alert(err)
             }
             );
@@ -86,7 +82,7 @@ class Generos extends Component {
                 this.setGeneros(res.data)
             })
             .catch(err => {
-                console.log(err.response)
+                alert(err)
             });
 
     }
@@ -98,7 +94,6 @@ class Generos extends Component {
 
     //Borrar Genero
     onInputChange2 = (e) => {
-        console.log('input', e.target.value);
 
 
         this.setState({
@@ -126,7 +121,6 @@ class Generos extends Component {
 
 
     onInputChange3 = (e) => {
-        console.log('input', e.target.value);
         this.setState({
             id: e.target.value
 
@@ -150,8 +144,7 @@ class Generos extends Component {
         )
 
             .catch(err => {
-                console.log('error en cargar genero');
-                console.log(err)
+                alert(err)
             }
             );
 

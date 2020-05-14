@@ -26,7 +26,7 @@ class Autor extends Component {
         
     }
 
-    handleChange= (e) => {
+    handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -143,6 +143,7 @@ class Autor extends Component {
                                     placeholder="Nombre"
                                     required>
                                 </input>
+                                
                                 <input className="form-control col s12"
                                     id="apellido"
                                     name="apellido"
