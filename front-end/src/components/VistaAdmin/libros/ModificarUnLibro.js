@@ -7,7 +7,7 @@ import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 
 
-export default class ModificarUnLibro extends Component {
+const Modificar = (props) => {
         
     render() {
         const titulo='';
@@ -56,3 +56,4 @@ export default class ModificarUnLibro extends Component {
     }
 
     }
+    export default Modificar
