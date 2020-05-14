@@ -18,19 +18,19 @@ suscriptoresCtrl.registrar = async (req,res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     
     if(!isValid){
-        return res.status(200).send(errors);
+        return res.status(401).send(errors);
     }
     
     // si existe el email
     const suscriptor = await Suscriptor.findOne({ email: req.body.email });
     if (suscriptor){
-        return res.status(200).send('Ingrese otro email, el actual ya está en uso' );
+        return res.status(401).send('Ingrese otro email, el actual ya está en uso' );
     };
     
     //si no existe el email pregunto por el dni
     suscriptor = await Suscriptor.findOne({dni: req.body.dni}) ;
     if(suscriptor){
-        return res.status(200).send('Ingrese otro dni, el actual ya está en uso')
+        return res.status(401).send('Ingrese otro dni, el actual ya está en uso')
     };
 
     //si llego aca es porq no se repite, lo guardo
@@ -70,7 +70,7 @@ suscriptoresCtrl.registrar = async (req,res) => {
                 }
             )
         })
-        .catch(err => res.status(200).send(err));
+        .catch(err => res.status(401).send(err));
 
 };
 
@@ -79,17 +79,17 @@ suscriptoresCtrl.login = async (req,res) => {
     
     //esto deberian checarlo en el front
     if(!email || !password ){
-        return res.status(200).send('Debe rellenar todos los campos')
+        return res.status(401).send('Debe rellenar todos los campos')
     }
 
     const suscriptor = await Suscriptor.findOne({ email })
     if (!suscriptor) {
-        return res.status(200).send('El usuario no existe');
+        return res.status(401).send('El usuario no existe');
     }
 
     const match = await suscriptor.matchPassword(password);
     if(!match){
-        return res.status(200).send('La contraseña es incorrecta');
+        return res.status(401).send('La contraseña es incorrecta');
     }
     //el primer parametro es un payload
     JWT.sign({ id: suscriptor._id },
@@ -110,9 +110,20 @@ suscriptoresCtrl.visualizar =  async (req,res,next)=>{
     // que se quedo con el token y del token saca el id
     // prestar atencion q el req es de USERy no de BODY
 
-    Suscriptor.findById(req.user.id)
+    await Suscriptor.findById(req.user.id)
         .then(user => res.status(200).send(user))
 };
+
+suscriptoresCtrl.soyAdmin = async (req,res) =>{
+    
+    const admin = await Suscriptor.findById(req.user.id);
+
+    if (admin.email === 'admin@admin.com'){
+        res.status(200).send(true)
+    } else {
+        res.status(200).send(false)
+    }
+}
 
 suscriptoresCtrl.modificar =  async (req,res) => {
     // la consulta put no funciona, asique borramos y hacemos un suscriptor nuevo
@@ -127,14 +138,14 @@ suscriptoresCtrl.modificar =  async (req,res) => {
     if( nuevoSuscriptor ){
         //ahora que se que esta en uso, me fijo sie sta enuso por otra usuario
         if(nuevoSuscriptor != suscriptorViejo){
-            res.status(200).send('El email ya esta en uso');
+            res.status(401).send('El email ya esta en uso');
         }
 
         //el email de usuario y el entrante son de la misma persona, me aseguro 
         // de lo mismo con el dni
         nuevoSuscriptor = await Suscriptor.findOne({dni: req.body.dni});
         if(nuevoSuscriptor != suscriptorViejo){
-            res.status.send('El DNI ya esta en uso');
+            res.status(401).send('El DNI ya esta en uso');
         }
     }
     //si llegué aca, el usuario cambio su dni o su email correctamente
@@ -167,7 +178,7 @@ suscriptoresCtrl.modificar =  async (req,res) => {
                 }
             )
         })
-        .catch(err => res.status(500).send(err)); 
+        .catch(err => res.status(401).send(err)); 
         
 };
 

@@ -15,7 +15,7 @@ editorialesCtrl.cargar = async (req,res) => {
     const editorial = Editorial.findOne( { nombre:req.body.nombre } );
     
     if(editorial){
-        res.json('La editorial ya fue cargada anteriormente')
+        res.status(401).json('La editorial ya fue cargada anteriormente')
     }
     
     await new Editorial({
@@ -26,7 +26,7 @@ editorialesCtrl.cargar = async (req,res) => {
             res.json(edit);
             res.status(200).send('Editorial cargada')
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(401).json(err));
 
 
 };
@@ -38,7 +38,7 @@ editorialesCtrl.modificar = async (req,res) => {
    
     //si encuentra un autorNuevo Y no es el mismo al viejo
     if(editorialNueva  && (editorialNueva != editorialVieja)){
-        res.json('La editorial ya fue cargado')   
+        res.status(401).json('La editorial ya fue cargada anteriormente')   
     } else {
         await new Editorial({
             nombre: req.body.nombre,
@@ -48,7 +48,7 @@ editorialesCtrl.modificar = async (req,res) => {
             res.json(edit);
             res.status(200).send('Editorial cargada')
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(401).json(err));
     };
 };
 

@@ -22,7 +22,6 @@ export default class Home extends Component {
     render() {
         return (
             !this.state.token == ''? 
-
                 <div>
                      <h1>home Admin</h1>
                     <form onSubmit= {this.cerrarSesion}>

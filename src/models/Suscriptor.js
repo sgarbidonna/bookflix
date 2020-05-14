@@ -30,5 +30,9 @@ SuscriptorSchema.methods.matchPassword = async function(password) {
     
 };
 
+async function email(){
+    return await this.email;
+}
+
 module.exports = mongoose.model('Suscriptor', SuscriptorSchema);
 

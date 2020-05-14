@@ -15,7 +15,7 @@ autoresCtrl.cargar = async (req,res) => {
     const autor = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido} );
    
     if(autor){
-        res.json('El autor ya fue cargado')   
+        res.status(401).json('El autor ya fue cargado anteriormente')   
     }
 
     await Autor({
@@ -26,7 +26,7 @@ autoresCtrl.cargar = async (req,res) => {
             res.json(aut);
             res.status(200).send('Autor cargado')
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(401).json(err));
 
 };
 
@@ -37,7 +37,7 @@ autoresCtrl.modificar = async (req,res) => {
    
     //si encuentra un autorNuevo Y no es el mismo al viejo
     if(autorNuevo  && (autorNuevo != autorViejo)){
-        res.json('El autor ya fue cargado')   
+        res.status(401).json('El autor ya fue cargado anteriormente')   
     } else {
         await new Autor({
             nombre: req.body.nombre,

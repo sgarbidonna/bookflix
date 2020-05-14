@@ -16,7 +16,7 @@ generosCtrl.cargar=async (req,res) => {
     const genero = await Genero.findOne({ nombre:req.body.nombre });
     
     if(genero){
-       return res.json('El género ya fue cargado')
+       return res.status(401).json('El género ya fue cargado anteriormente')
     }
     await new Genero({
         nombre: req.body.nombre,
@@ -25,7 +25,7 @@ generosCtrl.cargar=async (req,res) => {
             res.status(200).send('Género cargado');
             res.json(gen);
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(401).json(err));
 
 
 };
@@ -37,7 +37,7 @@ generosCtrl.modificar = async (req,res) => {
    
     //si encuentra un autorNuevo Y no es el mismo al viejo
     if(generoNuevo  && generoNuevo != generoViejo){
-        res.json('El género ya fue cargado')   
+        res.status(401).json('El género ya fue cargado anteriormente')   
     } else {
         await new Genero({
             nombre: req.body.nombre,

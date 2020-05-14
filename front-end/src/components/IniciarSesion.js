@@ -39,17 +39,18 @@ class App extends Component {
 
     async iniciarSesion(event){
 
-        console.log(this.state);
         event.preventDefault();   
+
         await axios.post(login,{
             email: this.state.email,
             password: this.state.password,
         })
-                .then(res =>this.getToken(res))
+                .then(res => {
+                    console.log(res);
+                    this.getToken(res)})
                 .catch(err => {
-                    console.log('error en sesion');
                     console.log(err.response);
-                    //this.getErrors(err.response)
+                  
                 });
         
     }
@@ -62,10 +63,9 @@ class App extends Component {
     };
     
 
-//faltan los setState, y no funca el POST
     render(){
         return (
-        //verifico si existe el token
+    
         !this.state.token && !this.state.user?
         <div>
 

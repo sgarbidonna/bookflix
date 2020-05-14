@@ -21,7 +21,7 @@ novedadesCtrl.cargar =  async (req,res) => {
     const novedad = await Novedad.findOne({titulo : req.body.titulo, descripcion: req.body.descripcion });
    
     if(novedad){
-        res.json('La Novedad ya fue cargada')
+        res.status(401).json('La Novedad ya fue cargada anteriormente')
     }
 
     await new Novedad({
@@ -38,7 +38,7 @@ novedadesCtrl.cargar =  async (req,res) => {
                 novedad
             })
         })
-        .catch(err=> res.send(err));
+        .catch(err=> res.status(401).send(err));
 };
 
 novedadesCtrl.modificar = async (req,res) => {
@@ -61,7 +61,7 @@ novedadesCtrl.modificar = async (req,res) => {
                 novedad
             })
         })
-        .catch(err=> res.send(err));
+        .catch(err=> res.status(401).json(err));
     
 };
 

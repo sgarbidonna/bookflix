@@ -40,7 +40,7 @@ librosCtrl.cargar = async (req,res)=>{
                 res.json(lib)
             })
             .catch(err =>{
-                res.json(err)
+                res.status(401).json(err)
             })
 
 };
@@ -50,7 +50,7 @@ librosCtrl.modificar = async (req,res)=>{
     const libroNuevo = await Libro.findOne({ titulo: req.body.titulo, isbn: req.body.isbn});
     
     if (libroNuevo && libroNuevo!= libroViejo){
-        res.json('El número de isbn o el título ya se encuentran en uso por otro libro')
+        res.status(401).json('El número de isbn o el título ya se encuentran en uso por otro libro')
     }
     
    

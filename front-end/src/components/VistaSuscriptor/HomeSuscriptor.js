@@ -45,10 +45,10 @@ export default class Home extends Component {
                     <form onSubmit= {this.cerrarSesion}>
                         <button type= 'submit'> cerrar sesion </button>
                     </form>
-                    <CargarGenero></CargarGenero>
-                    <CargarMetadataLibro></CargarMetadataLibro>
-                    <Carrusel></Carrusel>
-                    <ListarNovedades></ListarNovedades>
+                    <CargarGenero> </CargarGenero>
+                    <CargarMetadataLibro> </CargarMetadataLibro>
+                    <Carrusel> </Carrusel>
+                    <ListarNovedades> </ListarNovedades>
                    
 
                     
