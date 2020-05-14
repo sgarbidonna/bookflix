@@ -15,7 +15,6 @@ export default class CargarMetadata extends Component {
     constructor(){
         super();
         this.state = {
-            user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
 
             titulo: '',
@@ -61,10 +60,10 @@ export default class CargarMetadata extends Component {
     }
     
     getData = async () => {
-        const {user} = this.state.user;
+        
        
         await axios.get(autores,{
-            user: user,
+            
             headers:{'xaccess':this.state.token}  
         })
         .then(res =>{
@@ -73,7 +72,7 @@ export default class CargarMetadata extends Component {
         .catch(err =>{console.log(err)});
 
         await axios.get(generos,{
-            user: user,
+            
             headers:{'xaccess':this.state.token}  
         })
         .then(res =>{
@@ -82,7 +81,7 @@ export default class CargarMetadata extends Component {
         .catch(err =>{console.log(err)});
 
         await axios.get(editoriales,{
-            user: user,
+            
             headers:{'xaccess': this.state.token}  
         })
         .then(res =>{
@@ -97,7 +96,6 @@ export default class CargarMetadata extends Component {
     }
 
     async componentDidMount(){
-
         this.getData();
     }
    
@@ -119,7 +117,10 @@ export default class CargarMetadata extends Component {
         axios.post(libros,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then( alert('Libro cargado con exito') )
+            .then( res=> {
+                console.log(res);
+                //alert('Libro cargado con exito')
+             })
             .catch(err => {
                 alert(err);
             }
@@ -141,7 +142,6 @@ export default class CargarMetadata extends Component {
     };
 
     getPortada(e){
-        
         this.setState({
             portadaImg: e.target.files[0]
         })
@@ -152,7 +152,6 @@ export default class CargarMetadata extends Component {
     render(){
         return (
         <div className="form-novedad" >
-
         
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
@@ -160,47 +159,48 @@ export default class CargarMetadata extends Component {
         <form onSubmit={this.onSubmit} >
             
             <div className="form-group">
-                <label className="text-light">Título
-                </label>
+               
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
                     name ="titulo"
                     onChange={this.onInputChange}
                     value={this.state.titulo}
-                    placeholder="Escriba un titulo"
+                    placeholder="Título"
                     required>
                 </input>
             </div>
             <div className="form-group">
-                <label className="text-light">ISBN </label>
+            
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
                     name ="ISBN"
                     onChange={this.onInputChange}
                     value={this.state.ISBN}
-                    placeholder="Escriba el ISBN"
+                    placeholder="ISBN"
                     required>
                 </input>
             </div>
 
             <div className="form-group">
-            <label className="text-light"> Autor/a </label>
+            
                 <select className="form-control"   
                     onChange={this.onInputChange} 
                     id="exampleFormControlSelect1" 
                     name="autor"
-                    required
-                >    {this.state.autores.map(autor =>
-                        <option key={autor._id} value={autor._id} >{autor.nombre}</option>
+                    required>    
+                <option selected>Autor/a</option>
+                {this.state.autores.map(autor =>
+                <option key={autor._id} value={autor._id} >{autor.nombre} {autor.apellido}</option>
                         )}
                 </select>
             </div>
 
             <div className="form-group">
-                <label htmlFor="exampleFormControlSelect1"> Género</label>
+            
                     <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero" required>
+                    <option selected>Género</option>
                         {this.state.generos.map(ge =>
                         <option key={ge._id} value={ge._id} >{ge.nombre}</option>
                         )}
@@ -208,8 +208,9 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-                <label htmlFor="exampleFormControlSelect1"> Editorial </label>
+                
                     <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial" required>
+                    <option selected>Editorial</option>
                     {this.state.editoriales.map(ed =>
                     <option key={ed.id} value={ed._id} >{ed.nombre}</option>
                     )}

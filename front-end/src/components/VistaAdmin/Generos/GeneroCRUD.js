@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
+import NavegacionAdmin from '../NavegacionAdmin'
 
-//Probando git 2
-//Probanco cambiosd de git
-const generos = 'http://localhost:4000/api/generos/';
+const getGeneros = 'http://localhost:4000/api/generos/';
 const cargar = 'http://localhost:4000/api/generos/cargar';
 const borrar = 'http://localhost:4000/api/generos/eliminar/';
 const modificar = 'http://localhost:4000/api/generos/modificar/';
@@ -16,19 +14,42 @@ class Generos extends Component {
         this.state = {
             user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
-            generos: [],
+            
+            generos:[],
             nombre: '',
             id: ''
         };
+
         this.handleChange = this.handleChange.bind(this);
         this.agregarGenero = this.agregarGenero.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-
+        this.eliminarGenero = this.eliminarGenero.bind(this);
+        this.modificarGenero = this.modificarGenero.bind(this);
+        this.getData = this.getData.bind(this);
+        this.onInputChange2 = this.onInputChange2.bind(this);
+        this.onInputChange3 = this.onInputChange3.bind(this);
     }
 
 
+    async getData(){
+        
+        await axios.get(getGeneros, {
+            
+            headers: { 'xaccess': this.state.token }
+        })
+            .then(res => {
+                this.setState({
+                    generos: res.data
+                });
+            })
+            .catch(err => {
+                alert(err)
+            });
 
+    }
+    async componentDidMount() {
 
+        this.getData();
+    }
 
     handleChange(e) {
         const { name, value } = e.target;
@@ -39,13 +60,7 @@ class Generos extends Component {
         );
     }
 
-    onInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    };
-
-    agregarGenero = async (e) => {
+    async agregarGenero(e){
         e.preventDefault();
 
         await axios.post(cargar,
@@ -66,45 +81,23 @@ class Generos extends Component {
     };
 
 
-    setGeneros(res) {
-        this.setState({
-            generos: res
-        });
-    }
+   
 
-    getData = async () => {
-        
-        await axios.get(generos, {
-            
-            headers: { 'xaccess': this.state.token }
-        })
-            .then(res => {
-                this.setGeneros(res.data)
-            })
-            .catch(err => {
-                alert(err)
-            });
-
-    }
-    async componentDidMount() {
-
-        this.getData();
-    }
 
 
     //Borrar Genero
-    onInputChange2 = (e) => {
-
-
+    onInputChange2(e) {
         this.setState({
             id: e.target.value
-
         });
 
-
     };
-
-    eliminarGenero = async (e) => {
+    onInputChange3(e){
+        this.setState({
+            id: e.target.value
+        });
+    };
+    async eliminarGenero(e){
         e.preventDefault();
         await axios.post(borrar,
             { id: this.state.id },
@@ -120,16 +113,9 @@ class Generos extends Component {
     };
 
 
-    onInputChange3 = (e) => {
-        this.setState({
-            id: e.target.value
+    
 
-        });
-
-
-    };
-
-    modificarGenero = async (e) => {
+    async modificarGenero(e){
         e.preventDefault();
 
         await axios.post(modificar ,
@@ -153,124 +139,113 @@ class Generos extends Component {
 
     render() {
         return (
-
+            <div><NavegacionAdmin/>
             <div className="row">
-
-                <div className="col-md-4">
-                    <form onSubmit={this.agregarGenero} >
+                
+                <div className="form-autor" >
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+                    <form onSubmit={this.agregarEditorial} >
 
                         <div className="col s5">
                             <div className="form-input-field col s5 bg-dark">
-                                <label className="text-light">Ingrese el género</label>
-                                <input
-                                    className="form-control col s12"
+                                
+                                <input className="form-control col s12"
                                     id="nombre"
                                     name="nombre"
                                     value={this.state.nombre}
                                     onChange={this.handleChange}
-
-                                    placeholder="Ingrese nombre de genero">
+                                    placeholder="Ingrese el nombre del género"
+                                    required>
                                 </input>
-                                <button type="submit" className="btn btn-success " >
-                                    Agregar Genero
-                                </button>
-                            </div>
 
+                                <button type="submit" className="btn btn-success " > Agregar Género </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+               
+
+                
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+
+                    <form onSubmit={this.eliminarEditorial}>
+                        <div className="form-group">
+                            
+                            <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
+                            <option selected>Seleccione un género para eliminar</option>
+                                {this.state.generos.map(genero =>
+                                    <option key={genero.id} value={genero._id} >{genero.nombre}</option>
+                                )}
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-success" > Eliminar Género </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+                
+
+
+                
+                <div className="form-input-field col s5 bg-dark">
+                <div className="card card-body text-light bg-dark">
+
+                    <form onSubmit={this.modificarEditorial}>
+
+                        <div className="form-group">
+                           
+                            <select required className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="editorial">
+                            <option selected>Seleccione un género para modificar</option>
+                                {this.state.generos.map(genero =>
+                                    <option key={genero.id} value={genero._id} >{genero.nombre}</option>
+                                )}
+                            </select>
+                            <label className="text-light">Ingrese el nuevo género</label>
+                            <input
+                                className="form-control col s12"
+                                id="nombre"
+                                name="nombre"
+                                value={this.state.nombre}
+                                onChange={this.handleChange}
+                                required
+                                placeholder="Ingrese el nuevo género">
+                            </input>
+                        </div>
+
+
+
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-success" >
+                                Actualizar Género
+                            </button>
                         </div>
 
 
                     </form>
-
-
-                    <div className="form-autor" >
-                        <div className="form-input-field col s5 bg-dark">
-                            <div className="card card-body text-light bg-dark">
-
-                                <form onSubmit={this.eliminarGenero}>
-
-
-
-                                    <div className="form-group">
-                                       
-                                        <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="genero">
-                                            <option selected>Seleccione un género para eliminar</option>
-                                            {this.state.generos.map(ge =>
-                                                <option key={ge.id} value={ge._id} >{ge.nombre}</option>
-                                            )}
-                                        </select>
-                                    </div>
-
-
-
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-success" >
-                                            Eliminar Genero
-                                        </button>
-                                    </div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="form-autor" >
-                        <div className="form-input-field col s5 bg-dark">
-                            <div className="card card-body text-light bg-dark">
-
-                                <form onSubmit={this.modificarGenero}>
-
-
-
-                                    <div className="form-group">
-                                        
-                                        <select className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="genero">
-                                        <option selected>Seleccione un género para editar</option>
-                                            {this.state.generos.map(ge =>
-                                                <option key={ge.id} value={ge._id} >{ge.nombre}</option>
-                                            )}
-                                        </select>
-                                        <label className="text-light">Ingrese el nuevo genero</label>
-                                        <input
-                                            className="form-control col s12"
-                                            id="nombre"
-                                            name="nombre"
-                                            value={this.state.nombre}
-                                            onChange={this.handleChange}
-
-                                            placeholder="Ingrese nombre de genero">
-                                        </input>
-                                    </div>
-
-
-
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-success" >
-                                            Actualizar Genero
-                                        </button>
-                                    </div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                
+                </div>
 
 
                 </div>
 
 
                 <div className="col-md-8">
-                    {this.state.generos.map(gene =>
+                    {this.state.generos.map(genero =>
                         <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                             <div class="card-body">
-                                <h5 class="card-title">{gene.nombre}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{gene._id}</h6>
+                    
+                                <h5 class="card-title" onChange={this.onInputChange2} >{genero.nombre}</h5>
+                    
                             </div>
                         </div>
                     )}
                 </div>
+            </div>
             </div>
         )
     }

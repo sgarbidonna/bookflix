@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route , Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
@@ -90,9 +90,9 @@ class App extends Component {
             {errors:error}
         )
         error.map(err=>{
-            if(! err == '') 
+            if(! err === '') 
                 alert(err);
-        } );
+        } ).then();
         
         
     }

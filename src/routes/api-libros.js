@@ -37,8 +37,8 @@ router.get('/:id',auth, cors(),visualizar);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 
-router.post('/modificar/:id',auth, uploadPortada, modificar);
+router.post('/modificar',auth, uploadPortada, modificar);
 
-router.post('/eliminar/:id',auth,cors(),eliminar);
+router.post('/eliminar',auth, cors() ,eliminar);
 
 module.exports = router;

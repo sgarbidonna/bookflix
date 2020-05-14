@@ -16,8 +16,9 @@ librosCtrl.visualizar = async (req,res)=>{
 
 librosCtrl.cargar = async (req,res)=>{
     const libro = await Libro.findOne({titulo: req.body.titulo, isbn: req.body.isbn});
+   
     if (libro){
-        res.json('El nombre del libro o el numero de isbn ya se encuentra en uso')
+        res.status(401).json('El nombre del libro o el numero de isbn ya se encuentra en uso')
     }
     
 
@@ -32,7 +33,7 @@ librosCtrl.cargar = async (req,res)=>{
     });
     
     if(req.body.expiracion != null){
-        libroNuevo.update({expiracion: req.body.expiracion})
+        await libroNuevo.update({expiracion: req.body.expiracion})
     }
     libroNuevo.save()
             .then(lib => {
@@ -46,15 +47,17 @@ librosCtrl.cargar = async (req,res)=>{
 };
 
 librosCtrl.modificar = async (req,res)=>{
-    const libroViejo = await Libro.findById({__id: req.params.id})
+    const libroViejo = await Libro.findById({__id: req.body.id})
     const libroNuevo = await Libro.findOne({ titulo: req.body.titulo, isbn: req.body.isbn});
     
-    if (libroNuevo && libroNuevo!= libroViejo){
+    if (libroNuevo && (libroNuevo!= libroViejo)){
         res.status(401).json('El número de isbn o el título ya se encuentran en uso por otro libro')
     }
     
-   
-    const libroModificado = await new Libro({
+    if(req.body.expiracion != null){
+        await libroViejo.update({expiracion: req.body.expiracion})
+    }
+    await libroViejo.update({
         titulo: req.body.titulo,
         portada: req.file.filename,
         isbn: req.body.isbn,
@@ -62,13 +65,8 @@ librosCtrl.modificar = async (req,res)=>{
         editorial:req.body.editorial,
         genero:req.body.genero,
         lanzamiento: req.body.lanzamiento
-    });
-    if(req.body.expiracion != null){
-        libroModificado.update({expiracion: req.body.expiracion})
-    }
-    libroModificado.save()
-            .then(lib => {
-                libroViejo.delete(),
+        })
+        .then(lib => {
                 res.status(200).send('Libro modificado con éxito'),
                 res.json(lib)
             })
@@ -79,9 +77,8 @@ librosCtrl.modificar = async (req,res)=>{
 };
 
 librosCtrl.eliminar = async (req,res)=>{
-   
-    await Libro.findById(req.params.id)
-        .remove()
+    
+    await Libro.findByIdAndRemove(req.body.id)
         .then(res.status(200).send('Libro eliminado'));
     
 };

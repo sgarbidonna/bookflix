@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const cors = require('cors');
 const path = require('path');
-//aca me traigo el modulo entero, se puede hacer de ambas formas
+
 const novedadesCtrl = require('../controllers/novedades-controllers');
 const multer = require('multer');
 
@@ -17,19 +17,8 @@ const storage = multer.diskStorage({
   }
 });
 
-/*
-const imageFilter = function(req, file, cb) {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4)$/i)) {
-      return cb(new Error('Solo se permiten formatos de imagen o de video!, no se guardó el archivo'), false);
-  }
-  cb(null, true);
-};
-*/
-
 const uploadPortada = multer({ 
   storage: storage ,
-  //limits: { fileSize: 1024 * 1024 * 5  },
-  //fileFilter: imageFilter ,
 }).single('portadaImg');
 
 router.get('/', auth,cors(),novedadesCtrl.listar);
@@ -119,29 +108,5 @@ const fileFilter = (req, file, cb) => {
 
 
 
-///// MIDDLEWARE FOR MULTER
-app.use(
-  multer(
-    { 
-      storage: fileStorage, 
-      limits:
-        { 
-          fileSize:'2mb' 
-        }, 
-      fileFilter: fileFilter 
-    }
-  ).fields(
-    [
-      { 
-        name: 'resume', 
-        maxCount: 1 
-      }, 
-      { 
-        name: 'image', 
-        maxCount: 1 
-      }
-    ]
-  )
-);
 
 */

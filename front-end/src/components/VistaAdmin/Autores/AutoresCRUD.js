@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
+import NavegacionAdmin from '../NavegacionAdmin'
 
-const autores = 'http://localhost:4000/api/autores/';
+const getAutores = 'http://localhost:4000/api/autores/';
 const cargar = 'http://localhost:4000/api/autores/cargar';
 const borrar = 'http://localhost:4000/api/autores/eliminar/';
 const modificar = 'http://localhost:4000/api/autores/modificar/';
@@ -23,7 +23,8 @@ class Autor extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.agregarAutor = this.agregarAutor.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        
+        this.eliminarAutor = this.eliminarAutor.bind(this);
+        this.modificarAutor = this.modificarAutor.bind(this);
     }
 
     handleChange = (e) => {
@@ -58,7 +59,7 @@ class Autor extends Component {
     };
 
     async getData() {
-        await axios.get(autores, 
+        await axios.get(getAutores, 
             { headers: { 'xaccess': this.state.token }
         })
             .then(res => {
@@ -124,9 +125,9 @@ class Autor extends Component {
 
     render() {
         return (
-
+            <div><NavegacionAdmin/>
             <div className="row">
-
+                
                 <div className="form-autor" >
                 <div className="form-input-field col s5 bg-dark">
                 <div className="card card-body text-light bg-dark">
@@ -246,6 +247,7 @@ class Autor extends Component {
                         </div>
                     )}
                 </div>
+            </div>
             </div>
         )
     }

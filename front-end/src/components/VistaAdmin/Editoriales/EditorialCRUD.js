@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
+import NavegacionAdmin from '../NavegacionAdmin'
 
 const editoriales = 'http://localhost:4000/api/editoriales/';
 const cargar = 'http://localhost:4000/api/editoriales/cargar';
@@ -124,9 +124,9 @@ class Editorial extends Component {
 
     render() {
         return (
-
+            <div><NavegacionAdmin/>
             <div className="row">
-
+                
                 <div className="form-autor" >
                 <div className="form-input-field col s5 bg-dark">
                 <div className="card card-body text-light bg-dark">
@@ -230,6 +230,7 @@ class Editorial extends Component {
                         </div>
                     )}
                 </div>
+            </div>
             </div>
         )
     }

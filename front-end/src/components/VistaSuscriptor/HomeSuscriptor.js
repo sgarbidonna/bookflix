@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router,  Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
 
@@ -37,7 +37,7 @@ export default class Home extends Component {
     
     render() {
         return (
-            !this.state.token == ''? 
+            !this.state.token === ''? 
 
                 <div>
                      <h1>home suscriptor</h1>

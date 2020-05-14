@@ -1,10 +1,12 @@
 
-import React, { Component , useEffect} from 'react'
-import { BrowserRouter as Router, link, Redirect, Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Redirect} from 'react-router-dom';
 
 import HomeAdmin from './VistaAdmin/HomeAdmin';
 import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
 import axios from 'axios';
+import Navegacion from './Navegacion';
+
 const soyAdminApi = 'http://localhost:4000/api/suscriptores/soyAdmin'
 
 export default class Home extends Component {
@@ -33,14 +35,14 @@ export default class Home extends Component {
     };
 
     render() {
-        
-        
         return (
-            this.state.token !== null ?  // si token es distinto de vacio pregunto por el admin
+            !(this.state.token == '' || null) ?  
                 this.state.soyAdmin 
                     ? <HomeAdmin></HomeAdmin> 
                     : <HomeSuscriptor></HomeSuscriptor>
-                : <Redirect to="/login"/>
+                    
+                : 
+                <Navegacion/>
         )
     }
 }

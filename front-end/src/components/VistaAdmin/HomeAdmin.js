@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Redirect,  } from 'react-router-dom';
-import Genero from '../VistaAdmin/Generos/GeneroCRUD';
-import Editorial from '../VistaAdmin/Editoriales/EditorialCRUD';
-import CargarMetadataLibro from '../VistaAdmin/Libros/CargarMetadataLibro';
-import CargarNovedad from '../VistaAdmin/Novedades/CargarNovedad';
-import Autores from './Autores/AutoresCRUD';
-import Libros from './Libros/Libros';
+import {  Redirect,  } from 'react-router-dom';
+
+import NavegacionAdmin from './NavegacionAdmin'
 
 export default class Home extends Component {
 
@@ -28,12 +24,26 @@ export default class Home extends Component {
     
     render() {
         return (
-            !this.state.token == ''? 
+            this.state.token !== '' ? 
                 <div>
-                     <h1>home Admin</h1>
-                    <form onSubmit= {this.cerrarSesion}>
-                        <button type= 'submit'> cerrar sesion </button>
-                    </form>
+                    <NavegacionAdmin/>
+                </div>
+            :
+            <Redirect to="/login"/>
+        )
+    }
+}
+
+/*
+import Genero from '../VistaAdmin/Generos/GeneroCRUD';
+import Editorial from '../VistaAdmin/Editoriales/EditorialCRUD';
+import CargarMetadataLibro from '../VistaAdmin/Libros/CargarMetadataLibro';
+import CargarNovedad from '../VistaAdmin/Novedades/CargarNovedad';
+import Autores from './Autores/AutoresCRUD';
+import Libros from './Libros/Libros';
+                <div>
+                  
+                    
                     <Libros></Libros>
                     <Autores> </Autores>
                     <Editorial> </Editorial>
@@ -42,8 +52,4 @@ export default class Home extends Component {
                     <CargarMetadataLibro> </CargarMetadataLibro>
                     
                 </div>
-            :
-            <Redirect to="/login"/>
-        )
-    }
-}
+*/

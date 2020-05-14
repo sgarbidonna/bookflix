@@ -37,7 +37,7 @@ export default class CargarNovedad extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then(res =>{
-                alert('Novedad cargada con exito')
+                //alert('Novedad cargada con exito')
                 console.log(res)})
             .catch(err => {
                 alert(err);
@@ -75,28 +75,27 @@ export default class CargarNovedad extends Component {
 
             
             <div className="form-group">
-                <label className="text-light">Título
-                </label>
+           
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
                     name ="titulo"
                     onChange={this.onInputChange}
                     value={this.state.titulo}
-                    placeholder="Escriba un titulo"
+                    placeholder="Título"
                     required>
                 </input>
             </div>
 
             <div className="form-group">
-                <label className="text-light">Descripción </label>
+                
                 <textarea className="form-control" 
                     id="exampleFormControlTextarea1" 
                     rows="3"
                     name ="descripcion"
                     onChange={this.onInputChange}
                     value={this.state.descripcion}
-                    placeholder="Escriba una descripcion"
+                    placeholder="Descripción"
                     required >
                 </textarea> 
             </div>
