@@ -37,8 +37,8 @@ export default class CargarNovedad extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then(res =>{
-                //alert('Novedad cargada con exito')
-                console.log(res)})
+                
+                alert(res.data)})
             .catch(err => {
                 alert(err);
                 console.log(err);

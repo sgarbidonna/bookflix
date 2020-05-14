@@ -20,7 +20,7 @@ function App() {
     <Router>
       <div className="body" >
 
-        <Route  path="/home" exact><Home/> </Route>
+        <Route  exact path="/home" ><Home/> </Route>
         <Route  path="/login"> <IniciarSesion/> </Route>
         <Route  path="/singup"><RegistrarSuscriptor/> </Route>
         

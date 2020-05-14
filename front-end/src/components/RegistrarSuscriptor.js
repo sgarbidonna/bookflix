@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import Navegacion from './Navegacion';
+import NavegacionAdmin from './VistaAdmin/NavegacionAdmin';
 
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
@@ -119,11 +121,12 @@ class App extends Component {
 
     render(){
         return (
-   
+           
+
         !this.state.token && !this.state.user?
 
         <div>  
-           
+            <Navegacion/>
         <div className="form-novedad" >
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">

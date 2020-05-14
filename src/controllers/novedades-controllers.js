@@ -14,7 +14,7 @@ novedadesCtrl.visualizar = async (req, res) => {
 
 novedadesCtrl.cargar =  async (req,res) => {
     
-    const novedad = await Novedad.findOne({titulo : req.body.titulo, descripcion: req.body.descripcion });
+    const novedad = await Novedad.findOne({titulo : req.body.titulo });
    
     if(novedad){
         res.status(401).json('La Novedad ya fue cargada anteriormente')
@@ -28,7 +28,6 @@ novedadesCtrl.cargar =  async (req,res) => {
        })
         .save()
         .then( novedad => {
-            console.log(novedad);
             res.status(200).json({
                 message: 'Novedad cargada con éxito',
                 novedad
@@ -38,20 +37,14 @@ novedadesCtrl.cargar =  async (req,res) => {
 };
 
 novedadesCtrl.modificar = async (req,res) => {
-    console.log(req.file); 
     
-    const novedadVieja = await Novedad.findOne({ _id: req.params.id });
-    
-    await new Novedad({
+    await Novedad.findByIdAndUpdate(req.body.id, {
         titulo:req.body.titulo, 
         descripcion: req.body.descripcion,
         publicacion: req.body.publicacion,
         portada: req.file.filename
        })
-        .save()
         .then( novedad => {
-            novedadVieja.delete();
-            console.log(novedad);
             res.status(200).json({
                 message: 'Novedad modificada con éxito',
                 novedad
@@ -62,9 +55,8 @@ novedadesCtrl.modificar = async (req,res) => {
 };
 
 novedadesCtrl.eliminar = async (req,res) => {
-    
-    await Novedad.findOne({ _id: req.params.id })
-        .remove()
+    console.log(req.body.id);
+    await Novedad.findByIdAndRemove(req.body.id)
         .then(res.status(200).send('Novedad eliminada'));
     
 };

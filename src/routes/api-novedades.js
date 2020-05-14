@@ -27,9 +27,9 @@ router.get('/:id', auth, cors(), novedadesCtrl.visualizar);
 
 router.post('/cargar', auth, uploadPortada, novedadesCtrl.cargar);
 
-router.post('/modificar/:id', auth, uploadPortada, novedadesCtrl.modificar);
+router.post('/modificar', auth, uploadPortada, novedadesCtrl.modificar);
 
-router.post('eliminar/:id', auth, cors(), novedadesCtrl.eliminar);
+router.post('/eliminar', auth, cors(), novedadesCtrl.eliminar);
 
 module.exports = router;
 

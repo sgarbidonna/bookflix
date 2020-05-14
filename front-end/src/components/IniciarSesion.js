@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import {  Redirect } from 'react-router-dom';
+import Navegacion from './Navegacion';
 
 const login = 'http://localhost:4000/api/suscriptores/login';
 
@@ -65,10 +66,10 @@ class App extends Component {
 
     render(){
         return (
-    
+            
         !this.state.token && !this.state.user?
         <div>
-
+            <Navegacion/>
         <div className="col-md-6 offset-md-3 form-login">
             <div className="card card-body bg-dark  text-light " >
 
@@ -112,6 +113,7 @@ class App extends Component {
         </div>
           
         :
+        
         <Redirect
         from="/login"
         to="/home" />
