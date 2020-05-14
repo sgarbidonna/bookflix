@@ -153,7 +153,7 @@ suscriptoresCtrl.modificar =  async (req,res) => {
     //si llegué aca, el usuario cambio su dni o su email correctamente
     // o bien cambió otros campos, los guardo
 
-    await new Suscriptor ({
+    suscriptorViejo.update({
             nombre: req.body.nombre, 
             email: req.body.email,
             dni: req.body.dni,
@@ -162,10 +162,9 @@ suscriptoresCtrl.modificar =  async (req,res) => {
             perfiles: [new Perfil({ nombre: req.body.nombre })]
             // restan modificar los perfiles
     })
-        .save()
-        .then( user => {
-            //ahora que ya guarde el nuevo, borro el viejo
-            suscriptorViejo.delete(), 
+        .then( res.status(200).json('Suscriptor modificado')
+           /*
+           user => {
             //renuevo su token
             JWT.sign(
                 {   id: user._id },
@@ -178,16 +177,16 @@ suscriptoresCtrl.modificar =  async (req,res) => {
                         user
                     });
                 }
-            )
-        })
+            )}
+            */
+        )
         .catch(err => res.status(401).send(err)); 
         
 };
 
 suscriptoresCtrl.eliminar =  async (req,res)=>{
     //encuentro el suscriptor y lo elimino redireccionandolo al home
-    await Suscriptor.findById(req.user.id)
-        .remove()
+    await Suscriptor.findByIdAndRemove(req.user.id)
         .then(res=> res.redirect('/'));
 };
 
