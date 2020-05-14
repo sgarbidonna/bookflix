@@ -7,16 +7,12 @@ import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 
 
-const Modificar = (props) => {
+const Modificar = ({libroDeEntrada}) => {
         
-    render() {
-        const titulo='';
-
         const modificarTitulo = async (event) => {
-
+            
             alert(this.props.libro.titulo);
-            titulo =  event.target.value;
-            console.log(titulo);
+            
         }
 
         const modificarLibro = async () => {
@@ -53,7 +49,7 @@ const Modificar = (props) => {
             </div> 
         
         )
-    }
+    
 
     }
     export default Modificar
