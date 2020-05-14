@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Navegacion from './Navegacion';
-import NavegacionAdmin from './VistaAdmin/NavegacionAdmin';
 
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
-class App extends Component {
+class RegistrarSuscriptor extends Component {
     
     constructor (){
         super();
@@ -94,7 +93,7 @@ class App extends Component {
         error.map(err=>{
             if(! err === '') 
                 alert(err);
-        } ).then();
+        } );
         
         
     }
@@ -260,4 +259,4 @@ class App extends Component {
     }
 }
 
-export default App;      
+export default RegistrarSuscriptor;      

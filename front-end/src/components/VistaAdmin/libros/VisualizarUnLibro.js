@@ -12,13 +12,13 @@ export default class UnLibro extends Component {
 
         await axios.post(eliminar ,
             { id: this.props.libro._id },
-            { headers: { 'xaccess': this.props.token } }
+            { headers: { 'xaccess': sessionStorage.getItem('token') } }
 
         ).then(res => {
             alert(res.data)
         })
             .catch(err => {
-                alert(err)
+                alert(err.data)
         });
 
     }
@@ -38,7 +38,7 @@ export default class UnLibro extends Component {
                 <img width="280px" height="auto" src={portada + `${this.props.libro.portada}`} />
                 <div></div>
                 <h6 className="card-subtitle mb-2 text-muted">Fecha de lanzamiento: {this.props.libro.lanzamiento}</h6>
-                {this.props.libro.expiracion !== ''} ? <h6 className="card-subtitle mb-2 text-muted">Fecha de expiración: {this.props.libro.expiracion}</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Fecha de expiración: {this.props.libro.expiracion}</h6>
                
                 
             </div>

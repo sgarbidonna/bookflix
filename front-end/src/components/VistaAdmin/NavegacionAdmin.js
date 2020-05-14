@@ -17,7 +17,7 @@ export default class NavegacionAdmin extends Component {
   };
 
 
-  cerrarSesion(){
+  cerrarSesion = async () => {
     sessionStorage.removeItem('token');
     return (<Redirect to='https://www.google.com.ar'/>)
    
@@ -61,7 +61,7 @@ export default class NavegacionAdmin extends Component {
                   </li>
                   
                   <form>
-                    <button type= 'submit' onClick= {this.cerrarSesion()}> Cerrar Sesión </button>
+                    <button type='submit' onClick= {this.cerrarSesion}> Cerrar Sesión </button>
                     </form>
                 </ul>
               </div>

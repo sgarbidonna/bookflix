@@ -27,14 +27,13 @@ class App extends Component {
 
  
     getToken = async(res) => {
-        const { user, token } = res.data;        
+        const { user, token } = res.data;  
+
         sessionStorage.setItem('token', token );
+
         sessionStorage.setItem('user', JSON.stringify( {user} ) );
 
         this.setState( { token,  user } );
-
-        /// esto es lo q deberiamos guardar en el atributo soyAdmin de Home
-        console.log(user.email === 'admin@admin.com')
     };
     
 
@@ -67,9 +66,10 @@ class App extends Component {
     render(){
         return (
             
-        !this.state.token && !this.state.user?
+        !this.state.token && !this.state.user ?
         <div>
             <Navegacion/>
+        
         <div className="col-md-6 offset-md-3 form-login">
             <div className="card card-body bg-dark  text-light " >
 

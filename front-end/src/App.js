@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import IniciarSesion from './components/IniciarSesion';
-
 import RegistrarSuscriptor from './components/RegistrarSuscriptor';
+
 import Libros from './components/VistaAdmin/Libros/Libros';
 import Novedades from './components/VistaAdmin/Novedades/Novedades';
 import Autores from './components/VistaAdmin/Autores/AutoresCRUD';
