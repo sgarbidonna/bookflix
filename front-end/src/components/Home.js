@@ -14,24 +14,19 @@ export default class Home extends Component {
         this.state={
             user: '',
             token: sessionStorage.getItem('token'),
-            soyAdmin:true
+            soyAdmin: true //arreglar
         };
         this.setSoyAdmin = this.setSoyAdmin.bind(this)
        
     }  
     async setSoyAdmin() {
-
-        
-        await axios.get(soyAdminApi,{
-            
+        await axios.get( soyAdminApi ,{
             headers:{'xaccess':this.state.token}  
         }).then(res =>{
             this.setState({
                 soyAdmin : res.data
             });
-            
         })
-        .catch(err =>{console.log(err.response)});
     };
 
     render() {

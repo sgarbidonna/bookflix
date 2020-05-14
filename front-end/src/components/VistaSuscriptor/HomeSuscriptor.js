@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router,  Redirect } from 'react-router-dom';
-import CargarMetadataLibro from '../VistaAdmin/Libros/CargarMetadataLibro';
 import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
-import CargarGenero from '../VistaAdmin/Generos/CargarGenero';
+
 
 
 export default class Home extends Component {
@@ -45,8 +44,7 @@ export default class Home extends Component {
                     <form onSubmit= {this.cerrarSesion}>
                         <button type= 'submit'> cerrar sesion </button>
                     </form>
-                    <CargarGenero> </CargarGenero>
-                    <CargarMetadataLibro> </CargarMetadataLibro>
+                    
                     <Carrusel> </Carrusel>
                     <ListarNovedades> </ListarNovedades>
                    
