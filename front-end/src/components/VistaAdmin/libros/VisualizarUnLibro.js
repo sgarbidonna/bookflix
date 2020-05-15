@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ModificarUnLibro from './ModificarUnLibro';
+import { Link } from 'react-router-dom';
 
 const eliminar = 'http://localhost:4000/api/libros/eliminar'
 const portada = 'http://localhost:4000/uploads/';
@@ -40,9 +41,9 @@ export default class UnLibro extends Component {
                     <form>
                         <button type="button" className="btn btn-success" onClick={() => {eliminarLibro()}}> Delete </button>
                     </form>
-                    <form>
-                        <button type="button" className="btn btn-success" onClick={() => {modificarLibro()}}> Modificar </button>
-                    </form>
+                    
+                    <Link to={'/libros/modificar/'+this.props.libro._id  } type="button" className="btn btn-success" > Modificar </Link>
+                    
                 </h5>
                 
                 <h6 className="card-subtitle mb-2 text-muted">ISBN:{this.props.libro.isbn}</h6>

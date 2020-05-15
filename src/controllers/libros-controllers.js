@@ -1,8 +1,6 @@
 const librosCtrl = {};
 const Libro = require('../models/Libro');
-const Editorial = require('../models/Editorial');
-const Autor = require('../models/Autor');
-const Genero = require('../models/Genero');
+
 
 librosCtrl.listar = async (req,res)=>{
     const libros = await Libro.find();
@@ -10,8 +8,10 @@ librosCtrl.listar = async (req,res)=>{
 };
 
 librosCtrl.visualizar = async (req,res)=>{
-    const libro = await Libro.findById({_id:req.body.id});
-    res.json(libro);
+    
+    await Libro.findById(req.body.id)
+        .then(lib=>{ res.status(200).json(lib)})
+    
 };
 
 librosCtrl.cargar = async (req,res)=>{
@@ -47,32 +47,38 @@ librosCtrl.cargar = async (req,res)=>{
 };
 
 librosCtrl.modificar = async (req,res)=>{
-    const libroViejo = await Libro.findById({__id: req.body.id})
-    const libroNuevo = await Libro.findOne({isbn: req.body.isbn});
     
-    if (libroNuevo && (libroNuevo!= libroViejo)){
-        res.status(401).json('El número de isbn ya se encuentra en uso por otro libro')
+    
+    const libroNuevo = await Libro.findOne({ isbn: req.body.isbn });
+    
+    if(libroNuevo._id != req.body.id){
+            return res.status(401).send('El número de isbn ya se encuentra en uso por otro libro')
+        }
+       
+
+    else{
+        const libroViejo=await Libro.findById(req.body.id);
+
+        if(req.file){
+            await libroViejo.updateOne({portada: req.file.filename})
+        }
+        await libroViejo.updateOne({
+            titulo: req.body.titulo,
+            
+            isbn: req.body.isbn,
+            autor:req.body.autor,
+            editorial:req.body.editorial,
+            genero:req.body.genero,
+            lanzamiento: req.body.lanzamiento,
+            expiracion: req.body.expiracion
+            })
+            .then(lib => {
+                    res.status(200).send('Libro modificado con éxito'),
+                    res.json(lib)
+                })
     }
     
-    if(req.body.expiracion != null){
-        await libroViejo.update({expiracion: req.body.expiracion})
-    }
-    await libroViejo.update({
-        titulo: req.body.titulo,
-        portada: req.file.filename,
-        isbn: req.body.isbn,
-        autor:req.body.autor,
-        editorial:req.body.editorial,
-        genero:req.body.genero,
-        lanzamiento: req.body.lanzamiento
-        })
-        .then(lib => {
-                res.status(200).send('Libro modificado con éxito'),
-                res.json(lib)
-            })
-            .catch(err =>{
-                res.json(err)
-            })
+    
 
 };
 

@@ -33,7 +33,7 @@ const uploadPortada = multer({
 
 router.get('/',auth,cors(),listar);
 
-router.get('/:id',auth, cors(),visualizar);
+router.post('/me',auth, cors(),visualizar);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 

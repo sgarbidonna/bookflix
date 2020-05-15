@@ -17,6 +17,7 @@ const LibroSchema = new Schema({
     },
     isbn:{
         type: String,
+        
         required:true,
     },
     editorial:{

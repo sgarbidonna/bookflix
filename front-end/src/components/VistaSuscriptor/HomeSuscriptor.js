@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
 import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
-
-
+import NavegacionSuscriptor from './NavegacionSuscriptor';
+import VerSuscripcion from './VerSuscripcion';
 
 export default class Home extends Component {
 
@@ -40,11 +40,9 @@ export default class Home extends Component {
             this.state.token !== '' ? 
 
                 <div>
-                     <h1>home suscriptor</h1>
-                    <form onSubmit= {this.cerrarSesion}>
-                        <button type= 'submit'> cerrar sesion </button>
-                    </form>
-                    
+    
+                    <NavegacionSuscriptor></NavegacionSuscriptor> 
+                    <VerSuscripcion></VerSuscripcion>
                     <Carrusel> </Carrusel>
                     <ListarNovedades> </ListarNovedades>
                    

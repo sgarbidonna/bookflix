@@ -23,7 +23,7 @@ const uploadPortada = multer({
 
 router.get('/', auth,cors(),novedadesCtrl.listar);
 
-router.get('/:id', auth, cors(), novedadesCtrl.visualizar);
+router.post('/me', auth, cors(), novedadesCtrl.visualizar);
 
 router.post('/cargar', auth, uploadPortada, novedadesCtrl.cargar);
 

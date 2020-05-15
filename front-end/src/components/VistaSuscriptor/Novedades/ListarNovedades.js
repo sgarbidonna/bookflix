@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import ItemNovedad from './ItemNovedad';
+import ItemListNovedad from './ItemListNovedad';
 
 
 
@@ -11,12 +13,11 @@ export default class ListarNovedades extends Component {
         this.state={
             user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
-            novedades:[]
+            novedades:[],
+          
         }
 
     }
-    
-
     setNovedades(res){
         console.log(res);
         this.setState({
@@ -44,24 +45,20 @@ export default class ListarNovedades extends Component {
 
         this.getData();
     }
+   
+  
 
     render() {
-        return (
-            <div>
 
-               
-
-
-                {this.state.novedades.map(nove => 
-                     <div class="card col-md-6 offset-md-3 text-light bg-dark" >
-                     <div class="card-body">
-                        <h5 class="card-title">{nove.titulo}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{nove._id}</h6>
-                     </div>
-                     </div>
-                )}    
-               
-            </div>
-        )
+        
+            return (
+                <div>
+                    {this.state.novedades.map(nove => 
+                        <ItemListNovedad novedad={nove}></ItemListNovedad>)
+                    }                  
+                </div>
+            )
+        
+        
     }
 }

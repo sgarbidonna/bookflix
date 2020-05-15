@@ -37,7 +37,7 @@ export default class Home extends Component {
 
     render() {
         return (
-            (this.state.token == '' || null) ?  
+            (this.state.token === '' || null) ?  
                 <VisualizacionInicial/>
 
             :    this.state.soyAdmin 

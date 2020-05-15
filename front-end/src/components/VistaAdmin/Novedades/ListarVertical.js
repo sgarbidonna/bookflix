@@ -11,7 +11,6 @@ export default class ListarVertical extends Component {
         super();
         this.state = {
             token: sessionStorage.getItem('token'),
-            
             novedades: []
         }
 

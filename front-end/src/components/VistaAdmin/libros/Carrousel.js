@@ -12,7 +12,7 @@ export default class Carrousel extends Component {
     constructor(){
         super();
         this.state={
-            user: JSON.parse(sessionStorage.getItem('user')),
+          
             token: sessionStorage.getItem('token'),
             libros:[],
             libross:[]
@@ -48,9 +48,9 @@ export default class Carrousel extends Component {
     }
 
     getData = async () =>{
-        const {user} = this.state.user;
+        
         await axios.get(libros,{
-            user: user,
+           
             headers:{'xaccess':this.state.token}  
         })
         .then(res =>{

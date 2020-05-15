@@ -16,7 +16,7 @@ export default class NavegacionAdmin extends Component {
 
   cerrarSesion = async () => {
     sessionStorage.removeItem('token');
-    return (<Redirect to='https://www.google.com.ar'/>)
+    sessionStorage.removeItem('user');
    
   };
    
@@ -28,8 +28,8 @@ export default class NavegacionAdmin extends Component {
           <Redirect to='/login'/>
 
           : <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
-              <a className="navbar-brand" href=" "> BOOKFLIX </a>
               
+              <img width="185px" height="50px" src={'http://localhost:4000/uploads/bookflix.png'}/>
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto" >
                   
@@ -60,10 +60,12 @@ export default class NavegacionAdmin extends Component {
                   <li className="nav-item">
                   <Link className="nav-link" to="/suscriptores">Suscriptores </Link>
                   </li>
+                  <li>
+                     <Link className="nav-link" to='/login' type='submit' onClick= {this.cerrarSesion}> Cerrar Sesión </Link>
+                  </li>
                   
-                  <form>
-                    <button type='submit' onClick= {this.cerrarSesion}> Cerrar Sesión </button>
-                    </form>
+                  
+                   
                 </ul>
               </div>
           

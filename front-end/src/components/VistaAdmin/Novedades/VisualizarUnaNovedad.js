@@ -24,7 +24,7 @@ export default class UnaNovedad extends Component {
     }
     return (
         
-            <div>
+            <div className= "card  text-light bg-dark">
                 <div className="card-body">
                 
                 <img alt='' width="300px" height="auto" src={portada + `${this.props.novedad.portada}`} />

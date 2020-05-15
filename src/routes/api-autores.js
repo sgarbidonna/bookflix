@@ -7,7 +7,7 @@ const { listar, visualizar, cargar, modificar, eliminar } = require('../controll
 
 router.get('/', auth, cors(), listar);
 
-router.get('/me',auth, cors(),visualizar);
+router.post('/me',auth, cors(),visualizar);
 
 router.post('/cargar', auth,cors(), cargar);
 
