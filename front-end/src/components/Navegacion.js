@@ -7,8 +7,7 @@ class App extends Component {
         return (
           
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-              <a className="navbar-brand">BOOKFLIX</a>
-
+              <img width="185px" height="50px" src={'http://localhost:4000/uploads/bookflix.png'}/> 
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
