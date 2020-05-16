@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -45,13 +45,20 @@ export default class MiSuscripcion extends Component {
         return (
             <div>
             <div class="card col-md-7 offset-md-3 text-light bg-dark" >
-                <h5 class="card-title">Mi Suscripción: </h5>
+                <h1 class="card-title"> {this.state.miSuscripcion.nombre} </h1>
                     <div class="card-body">
-                        <h5 class="card-title">Nombre: {this.state.miSuscripcion.nombre}</h5>
-                        <h6 class="card-subtitle mb-2 ">Email: {this.state.miSuscripcion.email}</h6>
-                        <h6 class="card-subtitle mb-2 ">Contraseña: {this.state.miSuscripcion.password}</h6>
-                        <h6 class="card-subtitle mb-2 ">Tipo de suscripción: {this.state.miSuscripcion.suscripcion}</h6>
+                        
+                        <h4 class="card-subtitle mb-2 ">EMAIL {this.state.miSuscripcion.email}</h4>
+                        <h4 class="card-subtitle mb-2 ">SUSCRIPCION {this.state.miSuscripcion.suscripcion}</h4>
+                        <h4 class="card-subtitle mb-2 ">DNI {this.state.miSuscripcion.dni}</h4>
+                        
+
+                        <div>
+                            <Link to={'/suscriptor/suscripcion/modificar'} className='btn btn-danger'> Modificar</Link>
+                        </div>
                     </div>
+                   
+                
             </div>
 
 

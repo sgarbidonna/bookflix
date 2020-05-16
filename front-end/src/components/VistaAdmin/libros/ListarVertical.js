@@ -37,9 +37,9 @@ async componentDidMount(){
 
 render() {
     return (
-        <div>
-            <div className="card col-md-6 offset-md-3 text-light bg-dark" >
-                <h5 className="card-title">Libros: </h5>
+        <div >
+            <div className="card col-md-6 offset-md-3 text-light bg-dark" width="980">
+                <h5 className="card-title"  width="980">Libros: </h5>
                     {this.state.libros.map(libro => 
 
                         <VisualizarUnLibro key={libro._id} libro={libro} token={this.state.token}/> )}

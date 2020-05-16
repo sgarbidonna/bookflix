@@ -14,11 +14,9 @@ export default class UnSuscriptor extends Component {
             { id: this.props.suscriptor._id },
             { headers: { 'xaccess': sessionStorage.getItem('token') } }
 
-        ).then(res => {
-            alert(res.data)
-        })
-            .catch(err => {
-                alert(err.data)
+        ).then(alert('Suscriptor Eliminado'))
+        .catch(err => {
+                alert(JSON.stringify(err.data))
         });
 
     }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../../../node_modules/axios';
 
-const portada = 'http://localhost:4000/uploads/';
 const eliminar = 'http://localhost:4000/api/novedades/eliminar'
 
 class ItemNovedadAdmin extends Component {
@@ -40,7 +39,8 @@ class ItemNovedadAdmin extends Component {
                         <h6 className="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.props.novedad.publicacion}</h6>
                         <div>
                             <button className='btn btn-danger' onClick={this.eliminarNovedad} >Eliminar</button> {''}
-                            <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-danger'> Modificar</Link>
+
+                            <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>
                         </div>
                      </div>
                 </div>

@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const cors = require('cors');
 const path = require('path');
 
-const novedadesCtrl = require('../controllers/novedades-controllers');
+const {listar,visualizar,modificar,cargar,eliminar} = require('../controllers/novedades-controllers');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -21,15 +21,15 @@ const uploadPortada = multer({
   storage: storage ,
 }).single('portadaImg');
 
-router.get('/', auth,cors(),novedadesCtrl.listar);
+router.get('/', auth,cors(),listar);
 
-router.post('/me', auth, cors(), novedadesCtrl.visualizar);
+router.post('/me', auth, cors(), visualizar);
 
-router.post('/cargar', auth, uploadPortada, novedadesCtrl.cargar);
+router.post('/cargar', auth, uploadPortada, cargar);
 
-router.post('/modificar', auth, uploadPortada, novedadesCtrl.modificar);
+router.post('/modificar', auth, uploadPortada, modificar);
 
-router.post('/eliminar', auth, cors(), novedadesCtrl.eliminar);
+router.post('/eliminar', auth, cors(), eliminar);
 
 module.exports = router;
 

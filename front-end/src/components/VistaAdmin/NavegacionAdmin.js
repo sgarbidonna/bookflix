@@ -28,8 +28,9 @@ export default class NavegacionAdmin extends Component {
           <Redirect to='/login'/>
 
           : <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
-              
-              <img width="185px" height="50px" src={'http://localhost:4000/uploads/bookflix.png'}/>
+              <Link className="nav-link" to="/home">
+               <img width="185px"  height="50px" src={'http://localhost:4000/uploads/bookflix.png'}/>
+               </Link>
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto" >
                   

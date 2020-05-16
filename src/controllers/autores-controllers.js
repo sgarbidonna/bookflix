@@ -13,9 +13,10 @@ autoresCtrl.visualizar = async (req,res) => {
 
 autoresCtrl.cargar = async (req,res) => {
     const autor = await Autor.findOne({ nombre:req.body.nombre , apellido:req.body.apellido} );
-   
+    console.log(autor);
+    
     if(autor){
-        res.status(401).json('El autor ya fue cargado anteriormente')   
+        return res.status(401).json('El autor ya fue cargado anteriormente')   
     }
 
     await Autor({

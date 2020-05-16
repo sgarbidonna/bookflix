@@ -14,7 +14,7 @@ class App extends Component {
               
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto" >
-                  <li className="nav-item active">
+                  <li className="nav-item ">
                   <Link className="nav-link" to="/login">Log In</Link>
                   </li>
                   <li className="nav-item">

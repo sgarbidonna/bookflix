@@ -15,10 +15,10 @@ librosCtrl.visualizar = async (req,res)=>{
 };
 
 librosCtrl.cargar = async (req,res)=>{
-    const libro = await Libro.findOne({isbn: req.body.isbn});
+    const libro = await Libro.findOne({ isbn: req.body.isbn}, {nombre: req.body.nombre });
    
     if (libro){
-        res.status(401).json('El numero de isbn ya se encuentra en uso')
+        res.status(401).json('El título o el número de ISBN ya se encuentran en uso')
     }
     
 

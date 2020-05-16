@@ -17,6 +17,7 @@ class Editorial extends Component {
             
             editoriales: [],
             nombre: '',
+            nombre2:'',
             id: ''
         };
         this.handleChange = this.handleChange.bind(this);
@@ -33,6 +34,15 @@ class Editorial extends Component {
 
         );
     }
+    handleChange2= (e) => {
+        
+        this.setState({
+            [e.target.name]: e.target.value
+        }
+
+        );
+    }
+    
 
     onInputChange = (e) => {
         this.setState({
@@ -43,17 +53,19 @@ class Editorial extends Component {
     agregarEditorial = async (e) => {
         e.preventDefault();
 
+    
+
         await axios.post(cargar,
             { nombre: this.state.nombre },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('se cargo una editorial');
+            alert('Editorial cargada');
             this.getData()
         })
 
         .catch(err => {
-            alert(err)
+            alert('La editorial ya se encuentra en el sistema')
         } );
 
     };
@@ -109,14 +121,15 @@ class Editorial extends Component {
 
         await axios.post(modificar,
             { id: this.state.id,
-            nombre: this.state.nombre },
+            nombre: this.state.nombre2 },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
             this.getData()
+            alert("Editorial modificada con exito")
         })
         .catch(err => {
-            alert(err)
+            alert('La editorial ya existe en el sistema, pruebe con otro nombre')
         });
 
     };
@@ -130,12 +143,14 @@ class Editorial extends Component {
                 <div className="form-autor" >
                 <div className="form-input-field col s5 bg-dark">
                 <div className="card card-body text-light bg-dark">
-                    <form onSubmit={this.agregarEditorial} >
 
+                    <form onSubmit={this.agregarEditorial} >
+                    <div className="form-group">
                         <div className="col s5">
                             <div className="form-input-field col s5 bg-dark">
                                 <label className="text-light">Ingrese la editorial</label>
-                                <input className="form-control col s12"
+                                <input 
+                                    className="form-control col s12"
                                     id="nombre"
                                     name="nombre"
                                     value={this.state.nombre}
@@ -143,9 +158,11 @@ class Editorial extends Component {
                                     placeholder="Ingrese el nombre de la editorial"
                                     required>
                                 </input>
-
+                                <div className="form-group">
                                 <button type="submit" className="btn btn-success " > Agregar Edtorial </button>
+                                </div>
                             </div>
+                        </div>
                         </div>
                     </form>
                 </div>
@@ -192,10 +209,10 @@ class Editorial extends Component {
                             <label className="text-light">Ingrese la nueva editorial</label>
                             <input
                                 className="form-control col s12"
-                                id="nombre"
-                                name="nombre"
-                                value={this.state.nombre}
-                                onChange={this.handleChange}
+                                id="nombre2"
+                                name="nombre2"
+                                value={this.state.nombre2}
+                                onChange={this.handleChange2}
                                 required
                                 placeholder="Ingrese el nuevo nombre">
                             </input>

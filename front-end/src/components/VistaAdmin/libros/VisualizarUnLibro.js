@@ -36,10 +36,10 @@ export default class UnLibro extends Component {
     
     return (
         
-            <div className="card-body">
+            <div className="card-body" >
                 <h5 className="card-title"> {this.props.libro.titulo}
                     <form>
-                        <button type="button" className="btn btn-success" onClick={() => {eliminarLibro()}}> Delete </button>
+                        <button type="button" className="btn btn-danger" onClick={() => {eliminarLibro()}}> Delete </button>
                     </form>
                     
                     <Link to={'/libros/modificar/'+this.props.libro._id  } type="button" className="btn btn-success" > Modificar </Link>
@@ -50,7 +50,7 @@ export default class UnLibro extends Component {
                 <h6 className="card-subtitle mb-2 text-muted">Autor: {this.props.libro.autor}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Genero: {this.props.libro.genero}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Editorial: {this.props.libro.editorial}</h6>
-                <img width="280px" height="auto" src={portada + `${this.props.libro.portada}`} />
+                <img width="720px" height="auto" src={portada + `${this.props.libro.portada}`} />
                 <div></div>
                 <h6 className="card-subtitle mb-2 text-muted">Fecha de lanzamiento: {this.props.libro.lanzamiento}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Fecha de expiración: {this.props.libro.expiracion}</h6>

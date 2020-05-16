@@ -40,27 +40,30 @@ novedadesCtrl.cargar =  async (req,res) => {
 novedadesCtrl.modificar = async (req,res) => {
     const novedadNueva = await Novedad.findOne({ titulo: req.body.titulo });
     
-    if(novedadNueva._id != req.body.id){
-            return res.status(401).send('El titulo ya se encuentra en uso por otra novedad')
-    } else{
-        const novedadVieja =  await Novedad.findById(req.body.id);
+    
+    if (!novedadNueva || (novedadNueva._id == req.body.id)){
+
+        const novedad =  await Novedad.findById(req.body.id);
         
         if(req.file){
-            await novedadVieja.updateOne({portada: req.file.filename})
+            await novedad.updateOne({portada: req.file.filename})
         }
         
-        await novedadVieja.updateOne(req.body.id, 
-            {
-            titulo:req.body.titulo, 
-            descripcion: req.body.descripcion,
-            publicacion: req.body.publicacion,
+        await novedad.updateOne(req.body.id, {
+                titulo:req.body.titulo, 
+                descripcion: req.body.descripcion,
+                publicacion: req.body.publicacion,
             
-        })
+            })
             .then( novedad => {
                 res.status(200).send('Novedad modificada con éxito'),
                 res.json(novedad)
             })
-        }
+        
+    } else{
+            return res.status(401).send('El titulo ya se encuentra en uso por otra novedad')
+    }
+       
 };
 
 novedadesCtrl.eliminar = async (req,res) => {

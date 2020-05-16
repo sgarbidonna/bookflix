@@ -7,6 +7,7 @@ import axios from '../../../../node_modules/axios';
 const modificar = 'http://localhost:4000/api/novedades/modificar';
 const me ='http://localhost:4000/api/novedades/me';
 const portada = 'http://localhost:4000/uploads/';
+
 class ModificarNovedad extends Component {
 
     constructor(props){
@@ -33,6 +34,7 @@ class ModificarNovedad extends Component {
         formData.append('descripcion', this.state.descripcion);
         formData.append('portadaImg', this.state.portadaImg);
         formData.append('publicacion',this.state.publicacion)
+        formData.append('id', this.state.id);
     
         axios.post(modificar,formData,{
                 headers: { 'xaccess':this.state.token }
@@ -41,8 +43,7 @@ class ModificarNovedad extends Component {
                 
                 alert(res.data)})
             .catch(err => {
-                alert(err);
-                console.log(err);
+                alert(err.message);
             }
         );
     };
@@ -88,8 +89,7 @@ class ModificarNovedad extends Component {
           { id: this.state.id },
           { headers:{'xaccess': this.state.token}}
         ).then(res =>{
-            console.log('trajo esto');
-            console.log(res.data);
+            
             this.setNovedad(res.data);
         })
         .catch(err =>{console.log(err)})
@@ -160,7 +160,7 @@ class ModificarNovedad extends Component {
 
             <div className="form-group">
                 <button type ="submit" className="btn btn-success">
-                    ModificarNovedad          
+                    Modificar Novedad          
                 </button>
             </div>
                     

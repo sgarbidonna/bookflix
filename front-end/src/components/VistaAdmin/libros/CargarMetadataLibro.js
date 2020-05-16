@@ -104,6 +104,10 @@ export default class CargarMetadata extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+        if((this.state.ISBN.length < 13) || (this.state.ISBN.length > 16)){
+            return alert('Número de ISBN incorrecto, debe contener entre 13 y 16 digitos')
+        }
+        
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('isbn',this.state.ISBN);
@@ -118,11 +122,11 @@ export default class CargarMetadata extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then( res=> {
-                alert(res.data);
-                //alert('Libro cargado con exito')
+                
+                alert('Libro cargado con exito')
              })
             .catch(err => {
-                alert(err);
+                alert('El título o el número de ISBN ya se encuentran en el sistema');
             }
         );
     };

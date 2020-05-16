@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Navegacion from './Navegacion';
+import DatePicker from '../../node_modules/react-datepicker';
 
 const cargar = 'http://localhost:4000/api/suscriptores/registrar';
 
@@ -18,6 +19,8 @@ class RegistrarSuscriptor extends Component {
             suscripcion:'',
             numT:'',
             codT:'',
+            añoE:'',
+            mesE:'',
             token:'',
             user: null,
             errors:[],
@@ -28,9 +31,9 @@ class RegistrarSuscriptor extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.getToken = this.getToken.bind(this);
         this.getErrors = this.getErrors.bind(this);
-        this.setRegular= this.setRegular.bind(this);
+        this.setSuscripcion= this.setSuscripcion.bind(this);
         this.setPremium= this.setPremium.bind(this);
-      
+        this.setRegular = this.setRegular(this);
     }
 
     handleChange(event) {
@@ -45,32 +48,13 @@ class RegistrarSuscriptor extends Component {
             [event.target.name]: event.target.value
         })
     };
-    setRegular(){
-        
-        this.setState({
-           suscripcion: 'regular'
-        });
-        console.log(this.state.suscripcion);
-    };
-
-    setPremium(){
-     
-        this.setState({
-            suscripcion: 'premium'
-         });
-         console.log(this.state.suscripcion);
-
-    };
     
     getToken=(res)=>{
             const {data} = res;
             const {token , user} = data; 
 
-           
             sessionStorage.setItem('token', token );
-         
             sessionStorage.setItem('user', JSON.stringify( {user} ) );
-
             this.setState(
                 {
                 token: token,
@@ -79,14 +63,14 @@ class RegistrarSuscriptor extends Component {
             );
     };
     getErrors=(err)=>{
-        //traigo la data de los errores
+      
         const {data} = err;
-        //traigo los mensajes de errores por su nombre
+        
         const {nombre , email, password , password2}=data; 
-        //pongo los mensajes en un arreglo
+        
         const error = [nombre , email, password , password2]; 
 
-        //mapeo el arreglo
+        
         this.setState(
             {errors:error}
         )
@@ -98,9 +82,69 @@ class RegistrarSuscriptor extends Component {
         
     }
     
-    async cargarSuscriptor(event){
+    setRegular(){
+        
+        this.setState({
+           suscripcion: 'regular'
+        });
+        
+    };
 
+    setPremium(){
+     
+        this.setState({
+            suscripcion: 'premium'
+         });
+         
+
+    };
+
+    setSuscripcion(){
+        if(this.state.suscripcion =='regular' || ''){
+            this.setState({
+                suscripcion: 'regular'
+             });
+        }
+        else{
+            this.setState({
+                suscripcion: 'premium'
+             });
+        }
+    }
+    validaciones(){
+        
+        if (this.state.numT.length!=16){
+            return alert('Pruebe con una tarjeta que contenga 16 dígitos')
+        }
+        else if (this.state.codT.length!=3){
+            return alert('Ingrese un código de tarjeta de 3 dígitos')
+        }
+/*
+        if(this.state.añoE.length=2){
+            if(this.state.añoE=20 ){
+                if(this.state.mesE<5){
+                    return alert('Ingrese una tarjeta que no esté vencida')
+                }
+            }else if (this.state.añoE <20){
+                return alert('Ingrese una tarjeta que no esté vencida')
+            }
+        }else if(this.state.añoE.length=4){
+            if(this.state.añoE=2020){
+                if(this.state.mesE<5){
+                    return alert('Ingrese una tarjeta que no esté vencida')
+                }
+            } else if (this.state.añoE <2020){
+                return alert('Ingrese una tarjeta que no esté vencida')
+            }
+        }
+*/
+    }
+
+    async cargarSuscriptor(event){
         event.preventDefault();  
+
+        this.validaciones();
+
         await axios.post(cargar,{
             nombre:this.state.nombre ,
             email: this.state.email,
@@ -111,20 +155,20 @@ class RegistrarSuscriptor extends Component {
             numT:this.state.numT,
             codT:this.state.codT,
         })
-                .then(res => this.getToken(res))
-                .catch(res => {
-                  this.getErrors(res.response)
-                });
+                .then(res => {this.getToken(res)})
+                .catch(err => { alert(JSON.stringify(err.data)) });
 
     }
 
     render(){
+
         return (
            
 
         !this.state.token && !this.state.user?
 
         <div>  
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
             <Navegacion/>
         <div className="form-novedad" >
         <div className="col-md-6 offset-md-3">
@@ -163,7 +207,7 @@ class RegistrarSuscriptor extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-light">Contreseña</label>
+                <label className="text-light">Contraseña</label>
                 <input type='password' className="form-control" 
                     id="password" 
                     name ="password"
@@ -200,26 +244,25 @@ class RegistrarSuscriptor extends Component {
                 </input>    
             </div>
             
- 
-
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className="text-light">Tipo de Suscripción </label>
-                <label> <button type="button" class="btn btn-outline-danger" onClick={this.setRegular} data-toggle="button"  > REGULAR</button> </label>
-               
-               <label> <button type="button" class="btn btn-outline-danger"  onClick={this.setPremium} data-toggle="button" > PREMIUM</button></label>
-                
-            </div>
+                        <label className="text-light">Tipo de Suscripción </label>
+                        <label> <button type="checkbox" class="btn btn-danger" onClick={this.setRegular} > REGULAR</button>
+                        <button type="checkbox" class="btn btn-danger" onClick={this.setPremium} > PREMIUM</button></label>  
+                </div>
+
+            
 
             <div className="form-group">
                 <label className="text-light">Número de tarjeta
                 </label>
                 <input 
+                    type="number"
                     className="form-control" 
                     id="numT" 
                     name ="numT"
                     onChange={this.onInputChange}
                     value={this.state.numT}
-                    required
+                    required 
                     placeholder="Ingrese número de tarjeta, deberá contener 16 digitos">
                 </input>    
             </div>
@@ -228,15 +271,46 @@ class RegistrarSuscriptor extends Component {
                 <label className="text-light">Codigo De Tarjeta
                 </label>
                 <input 
+                    type="number"
                     className="form-control" 
                     id="codT" 
                     name ="codT"
                     onChange={this.onInputChange}
                     value={this.state.codT}
                     required
-                    placeholder="Ingrese el codigo de su tajeta">
+                   
+                    placeholder="Ingrese el codigo de su tajeta, deberá contener 3 dígitos">
                 </input>    
             </div>
+            <div className="form-group">
+                <label className="text-light">Fecha de expiracion
+                </label>
+                <input 
+                    type="number"
+                    className="form-control" 
+                    id="mesE" 
+                    name ="mesE"
+                    onChange={this.onInputChange}
+                    value={this.state.mesE}
+                    required
+                   
+                    placeholder="MES">
+                </input>    
+            
+                <input 
+                    type="number"
+                    className="form-control" 
+                    id="añoE" 
+                    name ="añoE"
+                    onChange={this.onInputChange}
+                    value={this.state.añoE}
+                    required
+                   
+                    placeholder="AÑO">
+                </input>    
+            </div>
+
+
             <div className="form-group">
                 <button  type="submit" className="btn btn-danger btn-lg btn-block"
                         >

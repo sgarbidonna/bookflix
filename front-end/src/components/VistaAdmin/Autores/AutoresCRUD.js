@@ -17,7 +17,9 @@ class Autor extends Component {
             
             autores: [],
             nombre: '',
+            nombre2:'',
             apellido:'',
+            apellido2: '',
             id: ''
         };
         this.handleChange = this.handleChange.bind(this);
@@ -32,10 +34,21 @@ class Autor extends Component {
             [e.target.name]: e.target.value
         });
     }
+    handleChange2 = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
 
     onInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
+        })
+    };
+    onInputChange2 = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+            id: e.target.value
         })
     };
 
@@ -76,11 +89,11 @@ class Autor extends Component {
         await this.getData();
     };
 
-    onInputChange2 = (e) => {
+   /* onInputChange2 = (e) => {
        this.setState({
             id: e.target.value
         });
-    };
+    };*/
 
     eliminarAutor = async (e) => {
         e.preventDefault();
@@ -109,8 +122,8 @@ class Autor extends Component {
 
         await axios.post(modificar,
             { id: this.state.id,
-            nombre: this.state.nombre,
-            apellido: this.state.apellido},
+            nombre: this.state.nombre2,
+            apellido: this.state.apellido2},
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
@@ -201,18 +214,18 @@ class Autor extends Component {
                             </select>
                             <label className="text-light">Ingrese los nuevos datos</label>
                             <input className="form-control col s12"
-                                    id="nombre"
-                                    name="nombre"
-                                    value={this.state.nombre}
-                                    onChange={this.handleChange}
+                                    id="nombre2"
+                                    name="nombre2"
+                                    value={this.state.nombre2}
+                                    onChange={this.handleChange2}
                                     placeholder="Nombre"
                                     required>
                                 </input>
                                 <input className="form-control col s12"
-                                    id="apellido"
-                                    name="apellido"
-                                    value={this.state.apellido}
-                                    onChange={this.handleChange}
+                                    id="apellido2"
+                                    name="apellido2"
+                                    value={this.state.apellido2}
+                                    onChange={this.handleChange2}
                                     placeholder="Apellido"
                                     required>
                                 </input>

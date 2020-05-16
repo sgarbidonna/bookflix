@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import NavegacionAdmin from '../NavegacionAdmin'
 import CargarNovedad from './CargarNovedad'
-import Carrousel from './Carrousel';
-import ListarVertical from './ListarVertical';
-import ListarNovedades from '../../VistaSuscriptor/Novedades/ListarNovedades';
 import ListarNovedadesAdmin from './ListarNovedadesAdmin';
 
 
@@ -15,10 +12,8 @@ render() {
         <div>
             <NavegacionAdmin/>
             <CargarNovedad/>
-
             <ListarNovedadesAdmin></ListarNovedadesAdmin>
-            <Carrousel/>
-            <ListarVertical/>
+
         </div>
     )}
 }

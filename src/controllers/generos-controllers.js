@@ -16,16 +16,13 @@ generosCtrl.cargar=async (req,res) => {
     const genero = await Genero.findOne({ nombre:req.body.nombre });
     
     if(genero){
-       return res.status(401).json('El género ya fue cargado anteriormente')
+       return res.json('El género ya fue cargado anteriormente')
     }
     await new Genero({
         nombre: req.body.nombre,
        }).save()
-        .then( gen =>{
-            res.status(200).send('Género cargado');
-            res.json(gen);
-        })
-        .catch(err => res.status(401).json(err));
+        .then( res.json('Género cargado'))
+        .catch(err => res.json(err));
 
 
 };
@@ -39,11 +36,10 @@ generosCtrl.modificar = async (req,res) => {
             res.status(401).json('El género ya fue cargado anteriormente')   
         
     }
-        await generoViejo.update({
-            nombre: req.body.nombre,
-        }).then( res.status(200).json('Género modificado'))
-    
-    
+        await generoViejo.update({ nombre: req.body.nombre })
+        .then(res.status(200).send('Género modificado correctamente')  )
+        .catch(err => res.status(401).json(err));
+     
     
 };
 

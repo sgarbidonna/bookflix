@@ -16,7 +16,7 @@ editorialesCtrl.cargar = async (req,res) => {
     
 
     if(editorial){
-        return res.json('La editorial ya fue cargada anteriormente')
+        return res.status(401).json('La editorial ya fue cargada anteriormente')
     }
 
     await new Editorial({
