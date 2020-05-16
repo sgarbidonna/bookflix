@@ -21,6 +21,9 @@ export default class MiSuscripcion extends Component {
             suscripcion:'',    
             dni:'',
             rta:'',
+            añoE:'',
+            mesE:'',
+
 
             valorInicial:'',     
         };
@@ -72,17 +75,56 @@ export default class MiSuscripcion extends Component {
             [event.target.name]: event.target.value
         })
     };
-    
+
+   
     async modificarSuscriptor(event){
+        
         event.preventDefault();  
-       
         
         if(this.state.valorInicial !== this.state.suscripcion){
-
-            if(this.state.numT==='' && this.state.codT===''){
+           
+            if(this.state.numT==='' || this.state.codT==='' || this.state.añoE ==='' || this.state.mesE=== ''){
                 return (alert('Ingrese los datos de la tarjeta'));
             }
-        }  
+
+            if (this.state.numT.length != 16){
+                return alert('Pruebe con una tarjeta que contenga 16 dígitos')
+            }
+            else if (this.state.codT.length != 3){
+                return alert('Ingrese un código de seguridad de 3 dígitos')
+            }
+    
+            if ( this.state.añoE == '' || this.state.mesE == ''){
+                return alert('Ingrese MES y AÑO de expiración de su tarjeta')
+            }
+            else{
+                if(this.state.añoE.length == 2 ){
+                    var aux = parseInt(this.state.añoE);
+                    
+                    if(aux == 20 ){
+                        var aux2 = parseInt(this.state.mesE);
+                        if(aux2 < 5){
+                            return alert('Ingrese una tarjeta que no esté vencida')
+                        }
+                    }else if (aux < 20){
+                        return alert('Ingrese una tarjeta que no esté vencida')
+                    }
+               
+                }else if(this.state.añoE.length == 4 ){
+                    var aux = parseInt(this.state.añoE);
+                    if(aux == 2020){
+                        var aux2 = parseInt(this.state.mesE);
+                        if(aux2 < 5){
+                            return alert('Ingrese una tarjeta que no esté vencida')
+                        }
+                    } else if (aux < 2020){
+                        return alert('Ingrese una tarjeta que no esté vencida')
+                    }
+                }
+            } 
+
+        }
+             
         
         await axios.post(modificar, {
                     id: this.state.id,
@@ -198,7 +240,33 @@ export default class MiSuscripcion extends Component {
                     </div>
                    
                   
-                    <div className="form-group">
+                    
+                
+                <div className="form-group">
+                <label className="text-light">Fecha de expiracion
+                </label>
+                <input 
+                    type="number"
+                    className="form-control" 
+                    id="mesE" 
+                    name ="mesE"
+                    onChange={this.onInputChange}
+                    value={this.state.mesE}
+                    placeholder="MES">
+                </input>    
+                </div>
+                <input 
+                    type="number"
+                    className="form-control" 
+                    id="añoE" 
+                    name ="añoE"
+                    onChange={this.onInputChange}
+                    value={this.state.añoE}
+                    placeholder="AÑO">
+                </input>    
+            
+
+            <div className="form-group">
                 <label className="text-light">Contraseña
                 </label>
                 <input 
@@ -208,12 +276,12 @@ export default class MiSuscripcion extends Component {
                     name ="password"
                     onChange={this.onInputChange}
                     Value=""
+                    required
                     placeholder=""
                     >
                 </input>    
                 
-                </div>
-
+            </div>
          
             
             <div className="form-group">

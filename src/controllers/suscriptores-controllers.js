@@ -70,7 +70,7 @@ suscriptoresCtrl.registrar = async (req,res) => {
                 }
             )
         })
-        .catch(err => res.status(401).send(err));
+        .catch(err => res.send(err));
 
 };
 
@@ -79,18 +79,18 @@ suscriptoresCtrl.login = async (req,res) => {
     
     //esto deberian checarlo en el front
     if(!email || !password ){
-        return res.status(401).send('Debe rellenar todos los campos')
+        return res.send('Debe rellenar todos los campos')
     }
 
     const suscriptor = await Suscriptor.findOne({ email })
     if (!suscriptor) {
-        return res.status(401).send('El usuario no existe');
+        return res.send('El usuario no existe');
     }
 
     const match = await suscriptor.matchPassword(password);
 
     if(!match){
-        return res.status(401).send('La contraseña es incorrecta');
+        return res.send('La contraseña es incorrecta');
     }
     //el primer parametro es un payload
     JWT.sign({ id: suscriptor._id },
@@ -109,7 +109,7 @@ suscriptoresCtrl.login = async (req,res) => {
 suscriptoresCtrl.visualizar =  async (req,res)=>{
 
     await Suscriptor.findById(req.user.id)
-        .then(user => res.status(200).send(user))
+        .then(user => res.send(user))
 };
 
 suscriptoresCtrl.soyAdmin = async (req,res) =>{
@@ -117,9 +117,9 @@ suscriptoresCtrl.soyAdmin = async (req,res) =>{
     const admin = await Suscriptor.findById(req.user.id);
 
     if (admin.email === 'admin@admin.com'){
-        res.status(200).send(true)
+        res.send(true)
     } else {
-        res.status(200).send(false)
+        res.send(false)
     }
 }
 
@@ -156,20 +156,20 @@ suscriptoresCtrl.modificar =  async (req,res) => {
             susc
         
         })        
-        .catch(err => res.status(401).send(err)); 
+        .catch(err => res.send(err)); 
         
 };
 
 suscriptoresCtrl.eliminar =  async (req,res)=>{
-    console.log(req.body.id);
+    
     
     await Suscriptor.findByIdAndRemove(req.body.id)
-        .then(respuesta=>  res.json(respuesta));
+        .then(res.json('Suscriptor/a Eliminado/a'));
 };
 
 suscriptoresCtrl.logout = (req,res) => {
     //borro su token redireccionandolo al home
-    req.logout().then(res.status(200).json('Sesion eliminada'))
+    req.logout().then(res.json('Sesion eliminada'))
                 .catch(err => res.json(err));
     res.redirect('/');  
 } 

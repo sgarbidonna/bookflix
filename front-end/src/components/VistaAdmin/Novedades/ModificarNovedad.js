@@ -39,13 +39,14 @@ class ModificarNovedad extends Component {
         axios.post(modificar,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then(res =>{
-                
-                alert(res.data)})
+            .then(res => {
+            
+                alert(JSON.stringify(res.data));
+            })
+    
             .catch(err => {
-                alert(err.message);
-            }
-        );
+                alert(JSON.stringify(err.data))
+            } );
     };
 
     onInputChange = (e) => {

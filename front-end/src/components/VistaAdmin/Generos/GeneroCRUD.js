@@ -26,7 +26,24 @@ class Generos extends Component {
         
 
     }
+    async getData() {
+        await axios.get(generos, 
+            { headers: { 'xaccess': this.state.token }
+        })
+            .then(res => {
+                this.setState({
+                    generos: res.data
+                });
+            })
+            .catch(err => {
+                alert(err)
+            });
 
+    }
+    async componentDidMount() {
+        await this.getData();
+    };
+    
     handleChange= (e) => {
         
         this.setState({
@@ -72,24 +89,6 @@ class Generos extends Component {
 
     };
 
-    async getData() {
-        await axios.get(generos, 
-            { headers: { 'xaccess': this.state.token }
-        })
-            .then(res => {
-                this.setState({
-                    generos: res.data
-                });
-            })
-            .catch(err => {
-                alert(err)
-            });
-
-    }
-    async componentDidMount() {
-        await this.getData();
-    };
-
     onInputChange2 = (e) => {
        this.setState({
             id: e.target.value
@@ -104,11 +103,11 @@ class Generos extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('Género eliminado');
             this.getData();
+            alert(JSON.stringify(res.data));
         })
-            .catch(err => {
-                alert(err)
+        .catch(err => {
+            alert(JSON.stringify(err.data))
         });
     };
 
@@ -127,13 +126,12 @@ class Generos extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            this.getData()
-            alert("Editorial modificada con exito")
+            this.getData();
+            alert(JSON.stringify(res.data));
         })
         .catch(err => {
-            alert('La editorial ya existe en el sistema, pruebe con otro nombre')
+            alert(JSON.stringify(err.data))
         });
-
     };
 
 

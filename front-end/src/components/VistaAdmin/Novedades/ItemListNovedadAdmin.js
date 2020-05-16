@@ -17,11 +17,13 @@ class ItemNovedadAdmin extends Component {
             { headers: { 'xaccess':sessionStorage.getItem('token') } }
 
         ).then(res => {
-            alert(res.data)
+            
+            alert(JSON.stringify(res.data));
         })
-            .catch(err => {
-                alert(err)
-        });
+
+        .catch(err => {
+            alert(JSON.stringify(err.data))
+        } );
     }
     
     render() {

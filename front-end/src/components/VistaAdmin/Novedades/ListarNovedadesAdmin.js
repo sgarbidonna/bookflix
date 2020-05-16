@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import ItemNovedad from './ItemNovedad';
 import ItemNovedadAdmin from './ItemListNovedadAdmin';
 
 
@@ -37,7 +36,6 @@ export default class ListarNovedades extends Component {
             this.setNovedades(res.data)
         })
         .catch(err =>{
-            console.log('lista de novedades');
             console.log(err.response)});
 
     }

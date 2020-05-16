@@ -33,19 +33,19 @@ generosCtrl.modificar = async (req,res) => {
     const generoNuevo = await Genero.findOne({ nombre:req.body.nombre});
    
     if(generoNuevo && (generoNuevo != generoViejo)){
-            res.status(401).json('El género ya fue cargado anteriormente')   
+            res.json('El género ya fue cargado anteriormente')   
         
     }
         await generoViejo.update({ nombre: req.body.nombre })
         .then(res.status(200).send('Género modificado correctamente')  )
-        .catch(err => res.status(401).json(err));
+        .catch(err => res.json(err));
      
     
 };
 
 generosCtrl.eliminar = async (req,res) => {
     await Genero.findByIdAndRemove(req.body.id)
-        .then(res.status(200).send('Género eliminado'));
+        .then(res.send('Género eliminado'));
     
 };
 

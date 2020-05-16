@@ -121,14 +121,14 @@ export default class CargarMetadata extends Component {
         axios.post(libros,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then( res=> {
+            .then(res => {
                 
-                alert('Libro cargado con exito')
-             })
+                alert(JSON.stringify(res.data));
+            })
+    
             .catch(err => {
-                alert('El título o el número de ISBN ya se encuentran en el sistema');
-            }
-        );
+                alert(JSON.stringify(err.data))
+            } );
     };
 
     onInputChange = (e) => {

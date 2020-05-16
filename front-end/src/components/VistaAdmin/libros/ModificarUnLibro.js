@@ -157,15 +157,13 @@ class ModificarUnLibro extends Component {
         axios.post(modificar,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then( res => {
-                console.log(res.data);
-                alert(res.data)
-                //alert('Libro cargado con exito')
-             })
+            .then(res => {
+                alert(JSON.stringify(res.data));
+            })
+    
             .catch(err => {
-                alert(err.response);
-            }
-        );
+                alert(JSON.stringify(err.data))
+            } );
     };
 
     onInputChange = (e) => {

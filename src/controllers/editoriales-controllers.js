@@ -16,7 +16,7 @@ editorialesCtrl.cargar = async (req,res) => {
     
 
     if(editorial){
-        return res.status(401).json('La editorial ya fue cargada anteriormente')
+        return res.json('Intente con otro nombre, la editorial ingresada ya forma parte del sistema')
     }
 
     await new Editorial({
@@ -24,10 +24,11 @@ editorialesCtrl.cargar = async (req,res) => {
         })
         .save()
         .then(edit => {
-            res.json(edit);
-            res.status(200).send('Editorial cargada')
+            
+            res.send('Editorial cargada');
+            res.json(edit)
         })
-        .catch(err => res.status(401).json(err));
+        .catch(err => res.json(err));
     
     
 
@@ -41,12 +42,12 @@ editorialesCtrl.modificar = async (req,res) => {
    
     
     if(editorialNueva  && (editorialNueva != editorialVieja)){
-        res.status(401).json('La editorial ya fue cargada anteriormente')   
+        res.json('Intente con otro nombre, la editorial ingresada ya forma parte del sistema')   
     } 
 
     await editorialVieja.update({ nombre: req.body.nombre })
-        .then(res.status(200).send('Editorial modificada correctamente')  )
-        .catch(err => res.status(401).json(err));
+        .then(res.send('Editorial modificada correctamente')  )
+        .catch(err => res.json(err));
      
 };
 
@@ -54,7 +55,7 @@ editorialesCtrl.eliminar = async (req,res) => {
     
     await Editorial.findByIdAndRemove(req.body.id)
         
-        .then(res.status(200).send('Editorial eliminada'));
+        .then(res.send('Editorial eliminada'));
     
 };
 

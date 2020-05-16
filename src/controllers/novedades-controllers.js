@@ -10,7 +10,7 @@ novedadesCtrl.listar = async (req, res) => {
 novedadesCtrl.visualizar = async (req, res) => {
     
     await Novedad.findById(req.body.id)
-        .then(nov=>{ res.status(200).json(nov)})
+        .then(nov=>{ res.json(nov)})
 };
 
 novedadesCtrl.cargar =  async (req,res) => {
@@ -18,7 +18,7 @@ novedadesCtrl.cargar =  async (req,res) => {
     const novedad = await Novedad.findOne({titulo : req.body.titulo });
    
     if(novedad){
-        res.status(401).json('La Novedad ya fue cargada anteriormente')
+        return res.json('La Novedad ya fue cargada anteriormente')
     }
 
     await new Novedad({
@@ -28,13 +28,9 @@ novedadesCtrl.cargar =  async (req,res) => {
         portada: req.file.filename,
        })
         .save()
-        .then( novedad => {
-            res.status(200).json({
-                message: 'Novedad cargada con éxito',
-                novedad
-            })
-        })
-        .catch(err=> res.status(401).send(err));
+        .then(  res.json('Novedad cargada con éxito'))
+        
+        .catch(err=> res.send(err));
 };
 
 novedadesCtrl.modificar = async (req,res) => {
@@ -56,12 +52,11 @@ novedadesCtrl.modificar = async (req,res) => {
             
             })
             .then( novedad => {
-                res.status(200).send('Novedad modificada con éxito'),
-                res.json(novedad)
+                res.send('Novedad modificada con éxito')
             })
         
     } else{
-            return res.status(401).send('El titulo ya se encuentra en uso por otra novedad')
+            return res.send('El titulo ya se encuentra en uso por otra novedad')
     }
        
 };
@@ -69,7 +64,7 @@ novedadesCtrl.modificar = async (req,res) => {
 novedadesCtrl.eliminar = async (req,res) => {
     console.log(req.body.id);
     await Novedad.findByIdAndRemove(req.body.id)
-        .then(res.status(200).send('Novedad eliminada'));
+        .then(res.send('Novedad eliminada'));
     
 };
 

@@ -113,31 +113,36 @@ class RegistrarSuscriptor extends Component {
     }
     validaciones(){
         
-        if (this.state.numT.length!=16){
+        if (this.state.numT.length != 16){
             return alert('Pruebe con una tarjeta que contenga 16 dígitos')
         }
-        else if (this.state.codT.length!=3){
-            return alert('Ingrese un código de tarjeta de 3 dígitos')
+        else if (this.state.codT.length != 3){
+            return alert('Ingrese un código de seguridad de 3 dígitos')
         }
-/*
-        if(this.state.añoE.length=2){
-            if(this.state.añoE=20 ){
-                if(this.state.mesE<5){
+        var aux = parseInt(this.state.añoE);
+
+        if(this.state.añoE.length == 2){
+            if(aux == 20 ){
+                var aux2 = parseInt(this.state.mesE);
+                if(aux2 < 5){
                     return alert('Ingrese una tarjeta que no esté vencida')
                 }
-            }else if (this.state.añoE <20){
+            }else if (aux < 20){
                 return alert('Ingrese una tarjeta que no esté vencida')
             }
-        }else if(this.state.añoE.length=4){
-            if(this.state.añoE=2020){
-                if(this.state.mesE<5){
+       
+        }else if(this.state.añoE.length == 4){
+            
+            if(aux == 2020){
+                var aux2 = parseInt(this.state.mesE);
+                if(aux2 < 5){
                     return alert('Ingrese una tarjeta que no esté vencida')
                 }
-            } else if (this.state.añoE <2020){
+            } else if (aux < 2020){
                 return alert('Ingrese una tarjeta que no esté vencida')
             }
         }
-*/
+
     }
 
     async cargarSuscriptor(event){
@@ -155,8 +160,13 @@ class RegistrarSuscriptor extends Component {
             numT:this.state.numT,
             codT:this.state.codT,
         })
-                .then(res => {this.getToken(res)})
-                .catch(err => { alert(JSON.stringify(err.data)) });
+        .then(res => {
+        
+            this.getToken(res)})
+        .catch(err => {
+           alert(JSON.stringify(err.data))
+          
+        });
 
     }
 

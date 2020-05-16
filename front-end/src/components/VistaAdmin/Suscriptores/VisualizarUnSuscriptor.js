@@ -14,10 +14,14 @@ export default class UnSuscriptor extends Component {
             { id: this.props.suscriptor._id },
             { headers: { 'xaccess': sessionStorage.getItem('token') } }
 
-        ).then(alert('Suscriptor Eliminado'))
+        ).then(res => {
+            
+            alert(JSON.stringify(res.data));
+        })
+
         .catch(err => {
-                alert(JSON.stringify(err.data))
-        });
+            alert(JSON.stringify(err.data))
+        } );
 
     }
     return (

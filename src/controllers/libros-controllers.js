@@ -10,15 +10,21 @@ librosCtrl.listar = async (req,res)=>{
 librosCtrl.visualizar = async (req,res)=>{
     
     await Libro.findById(req.body.id)
-        .then(lib=>{ res.status(200).json(lib)})
+        .then(lib=>{ res.json(lib)})
     
 };
 
 librosCtrl.cargar = async (req,res)=>{
-    const libro = await Libro.findOne({ isbn: req.body.isbn}, {nombre: req.body.nombre });
+    const libroI = await Libro.findOne({ isbn: req.body.isbn});
    
-    if (libro){
-        res.status(401).json('El título o el número de ISBN ya se encuentran en uso')
+    if (libroI){
+
+        return res.send('El número de ISBN ya se encuentra en uso')
+    } else{
+        const libroT = await Libro.findOne( {nombre: req.body.nombre });
+        if(libroT){
+            return res.send('El título ya se encuentra en uso por otro libro.')
+        }
     }
     
 
@@ -37,11 +43,10 @@ librosCtrl.cargar = async (req,res)=>{
     }
     libroNuevo.save()
             .then(lib => {
-                res.status(200).send('Libro cargado con éxito'),
-                res.json(lib)
+                res.send('Libro cargado con éxito')            
             })
             .catch(err =>{
-                res.status(401).json(err)
+                res.json(err)
             })
 
 };
@@ -52,7 +57,7 @@ librosCtrl.modificar = async (req,res)=>{
     const libroNuevo = await Libro.findOne({ isbn: req.body.isbn });
     
     if(libroNuevo._id != req.body.id){
-            return res.status(401).send('El número de isbn ya se encuentra en uso por otro libro')
+            return res.send('El número de isbn ya se encuentra en uso por otro libro')
         }
        
 
@@ -73,7 +78,7 @@ librosCtrl.modificar = async (req,res)=>{
             expiracion: req.body.expiracion
             })
             .then(lib => {
-                    res.status(200).send('Libro modificado con éxito'),
+                    res.send('Libro modificado con éxito'),
                     res.json(lib)
                 })
     }
@@ -85,7 +90,7 @@ librosCtrl.modificar = async (req,res)=>{
 librosCtrl.eliminar = async (req,res)=>{
     
     await Libro.findByIdAndRemove(req.body.id)
-        .then(res.status(200).send('Libro eliminado'));
+        .then(res.send('Libro eliminado'));
     
 };
 

@@ -36,14 +36,14 @@ export default class CargarNovedad extends Component {
         axios.post(cargar,formData,{
                 headers: { 'xaccess':this.state.token }
             })
-            .then(res =>{
-                
-                alert(res.data)})
+            .then(res => {
+            
+                alert(JSON.stringify(res.data));
+            })
+    
             .catch(err => {
-                alert(err);
-                console.log(err);
-            }
-        );
+                alert(JSON.stringify(err.data))
+            } );
     };
 
     onInputChange = (e) => {

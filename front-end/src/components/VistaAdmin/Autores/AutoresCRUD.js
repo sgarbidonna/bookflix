@@ -28,6 +28,23 @@ class Autor extends Component {
         this.eliminarAutor = this.eliminarAutor.bind(this);
         this.modificarAutor = this.modificarAutor.bind(this);
     }
+    async getData() {
+        await axios.get(getAutores, 
+            { headers: { 'xaccess': this.state.token }
+        })
+            .then(res => {
+                this.setState({
+                    autores: res.data
+                });
+            })
+            .catch(err => {
+                alert(err)
+            });
+
+    }
+    async componentDidMount() {
+        await this.getData();
+    };
 
     handleChange = (e) => {
         this.setState({
@@ -61,39 +78,16 @@ class Autor extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('Se cargó un autor');
+            alert(JSON.stringify(res.data));
             this.getData()
         })
 
         .catch(err => {
-            alert(err)
+            alert(JSON.stringify(err.data))
         } );
 
     };
 
-    async getData() {
-        await axios.get(getAutores, 
-            { headers: { 'xaccess': this.state.token }
-        })
-            .then(res => {
-                this.setState({
-                    autores: res.data
-                });
-            })
-            .catch(err => {
-                alert(err)
-            });
-
-    }
-    async componentDidMount() {
-        await this.getData();
-    };
-
-   /* onInputChange2 = (e) => {
-       this.setState({
-            id: e.target.value
-        });
-    };*/
 
     eliminarAutor = async (e) => {
         e.preventDefault();
@@ -103,11 +97,11 @@ class Autor extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('Autor eliminado');
+            alert(JSON.stringify(res.data));
             this.getData();
         })
             .catch(err => {
-                alert(err.data)
+                alert(JSON.stringify(err.data))
         });
     };
 
@@ -127,10 +121,11 @@ class Autor extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            this.getData()
+            this.getData();
+            alert(JSON.stringify(res.data));
         })
         .catch(err => {
-            alert(err)
+            alert(JSON.stringify(err.data))
         });
 
     };

@@ -26,6 +26,24 @@ class Editorial extends Component {
         
     }
 
+    async getData() {
+        await axios.get(editoriales, 
+            { headers: { 'xaccess': this.state.token }
+        })
+            .then(res => {
+                this.setState({
+                    editoriales: res.data
+                });
+            })
+            .catch(err => {
+                alert(err)
+            });
+
+    }
+    async componentDidMount() {
+        await this.getData();
+    };
+    
     handleChange= (e) => {
         
         this.setState({
@@ -60,33 +78,15 @@ class Editorial extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('Editorial cargada');
-            this.getData()
+            this.getData();
+            alert(JSON.stringify(res.data));
         })
-
         .catch(err => {
-            alert('La editorial ya se encuentra en el sistema')
-        } );
+            alert(JSON.stringify(err.data))
+        });
 
     };
 
-    async getData() {
-        await axios.get(editoriales, 
-            { headers: { 'xaccess': this.state.token }
-        })
-            .then(res => {
-                this.setState({
-                    editoriales: res.data
-                });
-            })
-            .catch(err => {
-                alert(err)
-            });
-
-    }
-    async componentDidMount() {
-        await this.getData();
-    };
 
     onInputChange2 = (e) => {
        this.setState({
@@ -102,11 +102,11 @@ class Editorial extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            alert('Editorial eliminada');
             this.getData();
+            alert(JSON.stringify(res.data));
         })
-            .catch(err => {
-                alert(err)
+        .catch(err => {
+            alert(JSON.stringify(err.data))
         });
     };
 
@@ -125,11 +125,11 @@ class Editorial extends Component {
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {
-            this.getData()
-            alert("Editorial modificada con exito")
+            this.getData();
+            alert(JSON.stringify(res.data));
         })
         .catch(err => {
-            alert('La editorial ya existe en el sistema, pruebe con otro nombre')
+            alert(JSON.stringify(err.data))
         });
 
     };
