@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from '../../../../node_modules/axios';
-const portada = 'http://localhost:4000/uploads/';
+
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
 
 
 class ItemNovedad extends Component {
@@ -21,16 +22,22 @@ class ItemNovedad extends Component {
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                      <div class="card-body">
                     
-                     
-                            <h5 className="card-title ">Titulo: {this.props.libro.titulo} </h5>
-                            
+                        
+                            <h5 className="card-title ">{this.props.libro.titulo} </h5>
                        
-                        <h6 className="card-subtitle mb-2 text-muted">Titulo: {this.props.libro.titulo}</h6>
+                        
+
+                            <div  className="btn btn-secondary " > 
+                                Ver Detalle 
+                            
+                                </div>
+                        
                      </div>
                 </div>
             </div>
+            
         )
     }
 }
 
-export default  ItemNovedad ;
+export default  ItemNovedad;

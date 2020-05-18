@@ -41,7 +41,7 @@ class VisualizarNovedad extends Component {
                 </div>
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                      <div class="card-body">
-                        <img alt='' width="300px" height="auto" src={portada + `${this.state.novedad.portada}`} />
+                        <img alt='' width="580px" height="auto" src={portada + `${this.state.novedad.portada}`} />
                         <h5 class="card-title">{this.state.novedad.titulo}</h5>
                         <h6 class="card-subtitle mb-2 text-muted"> {this.state.novedad.descripcion}</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Publicada: {this.state.novedad.publicacion}</h6>

@@ -6,7 +6,7 @@ class VerificarSesion extends Component {
         if(sessionStorage.getItem('token') === null)
             return (  <Redirect to ='/login' ></Redirect> )
         else 
-            return ( <div></div> )
+            return ( <div> </div> )
         
     }
 }

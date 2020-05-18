@@ -32,47 +32,40 @@ class ItemNovedadAdmin extends Component {
 
         return (
             <div>
-                <div class="card-body" >
-                </div>
+                <div class="card-body" > </div>
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
-                     <div class="card-body">
+                    <div class="card-body">
+
+                    <h5 className="card-title "> {this.props.novedad.titulo} </h5>
                     
-                        
-                            <h5 className="card-title ">{this.props.novedad.titulo} </h5>
-                       
-                        <h6 className="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.props.novedad.publicacion}</h6>
-                        <div>
+                    <h6 className="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.props.novedad.publicacion}</h6>
+                    <div>
 
-                            <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 
-                                Ver Detalle 
-                            </Link> {' '} {' '}
-                            <button className="btn btn-danger" onClick={() => confirmAlert({
-                  customUI: ({ onClose }) => {
-                    return (
-                      <div className='custom-ui'>
-                        <h1>¿Está seguro?</h1> {' '}
-                        <p>¿Desea borrar esta novedad?</p>
-                        <button onClick={onClose}>No</button> {' '}
-                       <button  
-                            onClick={() => {
-                              this.eliminarNovedad();
-                              onClose();
-                              
-                              
-                            
-                          }}
-                        >
-                          Si, deseo borrar novedad
-                          </button>
-                      </div>
-                    );
-                  }
-                })}>Eliminar</button> {''}
+                    <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 
+                        Ver Detalle 
+                    </Link> {' '} {' '}
 
-                            <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>
-                        </div>
-                     </div>
-                </div>
+                    <button className="btn btn-danger" onClick={() => confirmAlert({
+                        customUI: ({ onClose }) => {
+                            return (
+                                <div className='custom-ui'>
+                                    <h1>¿Está seguro?</h1> {' '}
+                                    <p>¿Desea borrar esta novedad?</p>
+                                    <button onClick={onClose}>No</button> {' '}
+                                <button  
+                                        onClick={() => {
+                                        this.eliminarNovedad();
+                                        onClose();
+                                }} >
+                                    Si, deseo borrar novedad
+                    </button>
+                    </div>);} })}> Eliminar</button> {''}
+
+                    <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>
+                   
+                    </div>
+                    </div>
+            </div>
             </div>
         )
     }
