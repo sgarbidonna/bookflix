@@ -134,6 +134,7 @@ class Autor extends Component {
     render() {
         return (
             <div><NavegacionAdmin/>
+            
             <div className="row">
                 
                 <div className="form-autor" >
