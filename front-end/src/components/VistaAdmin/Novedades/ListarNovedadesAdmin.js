@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-
-import axios from 'axios';
-import ItemNovedadAdmin from './ItemListNovedadAdmin';
 import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import axios from 'axios';
+import ItemNovedadAdmin from './ItemListNovedadAdmin';
 
 const novedades= 'http://localhost:4000/api/novedades/';
+
 export default class ListarNovedades extends Component {
     constructor(){
         super();

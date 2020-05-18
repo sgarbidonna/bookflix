@@ -49,7 +49,7 @@ class ItemNovedadAdmin extends Component {
                             <button className="btn btn-danger" onClick={() => confirmAlert({
                   customUI: ({ onClose }) => {
                     return (
-                      <div className='btn btn-danger'>
+                      <div className='custom-ui'>
                         <h1>¿Está seguro?</h1> {' '}
                         <p>¿Desea borrar esta novedad?</p>
                         <button onClick={onClose}>No</button> {' '}

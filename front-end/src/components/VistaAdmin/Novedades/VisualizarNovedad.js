@@ -4,7 +4,7 @@ const portada = 'http://localhost:4000/uploads/';
 const me='http://localhost:4000/api/novedades/me';
 
 
-class ItemNovedadAdmin extends Component {
+class VisualizarNovedad extends Component {
     constructor (props){
         super(props);
         this.state={
@@ -42,9 +42,9 @@ class ItemNovedadAdmin extends Component {
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                      <div class="card-body">
                         <img alt='' width="300px" height="auto" src={portada + `${this.state.novedad.portada}`} />
-                        <h5 class="card-title">Titulo: {this.state.novedad.titulo}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Descripcion: {this.state.novedad.descripcion}</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.state.novedad.publicacion}</h6>
+                        <h5 class="card-title">{this.state.novedad.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> {this.state.novedad.descripcion}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Publicada: {this.state.novedad.publicacion}</h6>
                      </div>
                 </div>
             </div>
@@ -52,4 +52,4 @@ class ItemNovedadAdmin extends Component {
     }
 }
 
-export default  ItemNovedadAdmin ;
+export default  VisualizarNovedad ;

@@ -48,7 +48,8 @@ class App extends Component {
                 .then(res => {
                     this.getToken(res)})
                 .catch(error => {
-                    alert(error.response.data);
+
+                    alert(JSON.stringify(error.response.data.msg));
                         
                     
                   

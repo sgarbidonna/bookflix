@@ -24,11 +24,29 @@ librosCtrl.cargar = async (req,res)=>{
     } else{
         const libroT = await Libro.findOne( {titulo: req.body.titulo });
         if(libroT){
-            return res.send('El título ya se encuentra en uso por otro libro.')
+            return res.status(401).json({msg:'El título ya se encuentra en uso por otro libro.'})
         }
     }
     if((req.body.isbn.length< 13) || (req.body.isbn.length > 16)){
-        return res.send('El numero de ISBN debe contener entre 13 y 16 dígitos')
+        return res.status(401).json({msg:'El numero de ISBN debe contener entre 13 y 16 dígitos'})
+    }
+
+    if(!req.body.genero){
+        return res.status(401).json({msg:'La carga de género es obligatoria'})
+    }
+
+    if(!req.body.autor){
+        return res.status(401).json({msg:'La carga de Autor/a es obligatoria'})
+    }
+
+    if(!req.body.editorial){
+        return res.status(401).json({msg:'La carga de editorial es obligatoria'})
+    }
+    if(!req.file){
+        return res.status(401).json({msg:'La carga de imagen de portada es obligatoria'})
+    }
+    if(!req.body.lanzamiento){
+        return res.status(401).json({msg:'Ingrese una fecha de lanzamiento'})
     }
 
     const libroNuevo = await new Libro({

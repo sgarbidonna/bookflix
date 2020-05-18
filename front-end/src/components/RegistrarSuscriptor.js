@@ -31,9 +31,7 @@ class RegistrarSuscriptor extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.getToken = this.getToken.bind(this);
         this.getErrors = this.getErrors.bind(this);
-        this.setSuscripcion= this.setSuscripcion.bind(this);
-        this.setPremium= this.setPremium.bind(this);
-        this.setRegular = this.setRegular(this);
+        
     }
 
     handleChange(event) {
@@ -82,37 +80,13 @@ class RegistrarSuscriptor extends Component {
         
     }
     
-    setRegular(){
-        
-        this.setState({
-           suscripcion: 'regular'
-        });
-        
-    };
 
-    setPremium(){
-     
-        this.setState({
-            suscripcion: 'premium'
-         });
-         
+  
 
-    };
-
-    setSuscripcion(){
-        if(this.state.suscripcion =='regular' || ''){
-            this.setState({
-                suscripcion: 'regular'
-             });
-        }
-        else{
-            this.setState({
-                suscripcion: 'premium'
-             });
-        }
-    }
-    validaciones(){
+    async cargarSuscriptor(event){
         
+        event.preventDefault();  
+
         if (this.state.numT.length != 16){
             return alert('Pruebe con una tarjeta que contenga 16 dígitos')
         }
@@ -143,13 +117,6 @@ class RegistrarSuscriptor extends Component {
             }
         }
 
-    }
-
-    async cargarSuscriptor(event){
-        event.preventDefault();  
-
-        this.validaciones();
-
         await axios.post(cargar,{
             nombre:this.state.nombre ,
             email: this.state.email,
@@ -164,7 +131,7 @@ class RegistrarSuscriptor extends Component {
         
             this.getToken(res)})
         .catch(err => {
-           alert(JSON.stringify(err.data))
+           alert(JSON.stringify(err.response.data.msg))
           
         });
 
@@ -256,8 +223,8 @@ class RegistrarSuscriptor extends Component {
             
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label className="text-light">Tipo de Suscripción </label>
-                        <label> <button type="checkbox" class="btn btn-danger" onClick={this.setRegular} > REGULAR</button>
-                        <button type="checkbox" class="btn btn-danger" onClick={this.setPremium} > PREMIUM</button></label>  
+                        <label> <button type="checkbox" class="btn btn-danger" onClick={this.onInputChange} name="suscripcion" value="REGULAR" data-toggle="button"> REGULAR</button>
+                        <button type="checkbox" class="btn btn-danger"  onClick={this.onInputChange} name="suscripcion" value="PREMIUM" data-toggle="button"> PREMIUM</button></label>  
                 </div>
 
             

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ModificarUnLibro from './ModificarUnLibro';
-import { Link } from 'react-router-dom';
+
 const editoriales= 'http://localhost:4000/api/editoriales/'
 const generos ='http://localhost:4000/api/generos/'
 const autores = 'http://localhost:4000/api/autores/'
@@ -106,14 +105,14 @@ export default class DetalleLibrosAdmin extends Component {
         <div class="card col-md-6 offset-md-3 text-light bg-dark" >
             <div className="card-body">
                 <h4 className="card-title card-group"> {this.state.libro.titulo}</h4>
-                <img width="280px" height="auto" src={portada + `${this.state.libro.portada}`} />
+                <img width="580px"height="auto" src={portada + `${this.state.libro.portada}`} />
                 <div></div>
                 <h6 className="card-subtitle mb-2 text-muted">ISBN:{this.state.libro.isbn}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Autor: {this.state.autor.nombre}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Genero: {this.state.genero.nombre}</h6>
                 <h6 className="card-subtitle mb-2 text-muted">Editorial: {this.state.editorial.nombre}</h6>
                
-                <h6 className="card-subtitle mb-2 text-muted">Fecha de lanzamiento: {this.state.libro.lanzamiento}</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Publicado: {this.state.libro.lanzamiento}</h6>
                
                 {this.fechaExpiracion}
                 

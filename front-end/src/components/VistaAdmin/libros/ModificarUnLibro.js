@@ -30,7 +30,7 @@ class ModificarUnLibro extends Component {
             genero:'',
             fechaDeExpiracion: new Date(), 
             fechaDePublicacion: new Date(), 
-
+            fechaDeHoy: new Date(),
     
             generos:[],
             autores:[],
@@ -150,6 +150,16 @@ class ModificarUnLibro extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+        if(this.state.fechaDePublicacion < this.state.fechaDeHoy){
+            return alert('La fecha de publicación no debe ser menor a la fecha actual')
+        }
+
+        if(this.state.fechaDeExpiracion !=''){
+            if(this.state.fechaDeExpiracion < this.state.fechaDePublicacion){
+                return alert('La fecha de expiracion debe ser mayor a la de publicacion')
+                
+            }
+        }
         const formData = new FormData();
         formData.append('id', this.state.id);
         formData.append('titulo', this.state.titulo);

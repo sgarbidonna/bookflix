@@ -11,7 +11,7 @@ const SuscriptorSchema = new Schema({
     perfiles:{},
     suscripcion:{ type:String, require:true },
     dni:{ type:String, require:true } 
-         // enum: ['regular','premium'],
+     
 });
 
 

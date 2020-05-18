@@ -25,7 +25,7 @@ export default class CargarMetadata extends Component {
             genero:'',
             fechaDeExpiracion: '', 
             fechaDePublicacion: '', 
-
+            fechaDeHoy: new Date(),
     
             generos:[],
             autores:[],
@@ -97,13 +97,24 @@ export default class CargarMetadata extends Component {
 
     async componentDidMount(){
         this.getData();
+  
     }
    
     
 
     onSubmit = async (e) => {
         e.preventDefault();
-
+        
+        if(this.state.fechaDePublicacion < this.state.fechaDeHoy){
+            return alert('La fecha de publicación no debe ser menor a la fecha actual')
+        }
+        if(this.state.fechaDeExpiracion !=''){
+            
+            if(this.state.fechaDeExpiracion < this.state.fechaDePublicacion){
+                return alert('La fecha de expiracion debe ser mayor a la de publicacion')
+                
+            }
+        }
     
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
@@ -124,7 +135,7 @@ export default class CargarMetadata extends Component {
             })
     
             .catch(err => {
-                alert(JSON.stringify(err.data))
+                alert(JSON.stringify(err.response.data.msg))
             } );
     };
 
@@ -232,7 +243,7 @@ export default class CargarMetadata extends Component {
             <div className="form-group">
                
                 <DatePicker className="form-control"
-                    
+                    formData="dd/mm/yy"
                  selected={this.state.fechaDeExpiracion}
                  name='fechaDeExpiracion'
                  onChange={this.onChangeFechaDeExpiracion}

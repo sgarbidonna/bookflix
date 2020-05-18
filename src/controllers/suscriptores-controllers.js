@@ -19,19 +19,19 @@ suscriptoresCtrl.registrar = async (req,res) => {
     console.log(req.body.suscripcion);
 
     if(!isValid){
-        return res.send(errors);
+        return res.status(401).json({msg: errors});
     }
     
     const suscriptorEmail = await Suscriptor.findOne({ email: req.body.email });
     if (suscriptorEmail){
-        return res.send('Ingrese otro email, el actual ya está en uso' );
+        return res.status(401).json({msg:'Ingrese otro email, el actual ya está en uso' });
     };
-    
+     
     
     const suscriptorDNI = await Suscriptor.findOne({dni: req.body.dni}) ;
 
     if(suscriptorDNI){
-        return res.send('Ingrese otro dni, el actual ya está en uso')
+        return res.status(401).json({msg:'Ingrese otro dni, el actual ya está en uso'})
     };
 
     const nuevoSuscriptor = new Suscriptor({
@@ -124,19 +124,21 @@ suscriptoresCtrl.soyAdmin = async (req,res) =>{
 }
 
 suscriptoresCtrl.modificar =  async (req,res) => {
-    console.log(req.body.suscripcion);
-    const nuevoSuscriptor = await Suscriptor.findOne({email:req.body.email});
- 
-    if( nuevoSuscriptor && (nuevoSuscriptor._id != req.body.id )){
-            res.send('El email ya esta en uso');
-        }
+    
+    const nuevoSuscriptor = await Suscriptor.findOne({email: req.body.email});
 
-    if(nuevoSuscriptor && (nuevoSuscriptor.dni != req.body.dni)){
-            res.send('El DNI ya esta en uso');
-        }
+    if(nuevoSuscriptor && (nuevoSuscriptor._id != req.body.id )){
+            return res.send('El email ya esta en uso');
+    }
+
+    const nuevoSuscriptorDNI = await Suscriptor.findOne({dni: req.body.dni});
+    console.log(nuevoSuscriptorDNI)
+    
+    if(nuevoSuscriptorDNI && (nuevoSuscriptorDNI._id != req.body.id)){
+            return res.send('El DNI ya esta en uso');
+    }
         
     const suscriptor = await Suscriptor.findById(req.body.id);
-
 
     const match = await suscriptor.matchPassword(req.body.password);
     if(!match){

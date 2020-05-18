@@ -26,7 +26,7 @@ import ModificarNovedad from './components/VistaAdmin/Novedades/ModificarNovedad
 
 import DetalleLibroAdmin from  './components/VistaAdmin/Libros/DetalleLibroAdmin';
 import CargarMetadata from './components/VistaAdmin/Libros/CargarMetadataLibro';
-import ItemNovedadAdmin from './components/VistaAdmin/Novedades/ItemNovedadAdmin';
+import ItemNovedadAdmin from './components/VistaAdmin/Novedades/VisualizarNovedad';
 import CargarNovedad from './components/VistaAdmin/Novedades/CargarNovedad';
 import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros'
 
