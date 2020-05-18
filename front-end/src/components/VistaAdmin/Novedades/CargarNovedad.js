@@ -3,6 +3,7 @@ import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from '../../../../node_modules/react-datepicker';
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import axios from '../../../../node_modules/axios';
+import {  Redirect } from 'react-router-dom';
 
 const cargar = 'http://localhost:4000/api/novedades/cargar';
 
@@ -37,8 +38,8 @@ export default class CargarNovedad extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then(res => {
-            
                 alert(JSON.stringify(res.data));
+                return( <Redirect to="http://localhost:3000/novedad" />)
             })
     
             .catch(err => {

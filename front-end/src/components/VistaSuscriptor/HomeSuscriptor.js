@@ -42,11 +42,13 @@ export default class Home extends Component {
                 <div>
     
                     <NavegacionSuscriptor></NavegacionSuscriptor> 
-                    <VerSuscripcion></VerSuscripcion>
-                    <Carrusel> </Carrusel>
-                    <ListarNovedades> </ListarNovedades>
+                    
+                    <div class="d-flex justify-content-center">
                    
-
+                      
+                    <div className='btn btn-secondary' > PRONTO NUEVAS FUNCIONALIDADES !</div> 
+                       
+                    </div>
                     
                 </div>
             :

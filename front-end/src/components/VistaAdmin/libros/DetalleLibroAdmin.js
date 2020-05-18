@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const editoriales= 'http://localhost:4000/api/editoriales/'
 const generos ='http://localhost:4000/api/generos/'
 const autores = 'http://localhost:4000/api/autores/'
-const eliminar = 'http://localhost:4000/api/libros/eliminar';
+
 const portada = 'http://localhost:4000/uploads/';
 const me = 'http://localhost:4000/api/libros/me';
 

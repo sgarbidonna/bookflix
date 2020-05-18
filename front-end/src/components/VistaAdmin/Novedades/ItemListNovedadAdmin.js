@@ -38,21 +38,21 @@ class ItemNovedadAdmin extends Component {
                      <div class="card-body">
                     
                         
-                            <h5 className="card-title ">Titulo: {this.props.novedad.titulo} </h5>
+                            <h5 className="card-title ">{this.props.novedad.titulo} </h5>
                        
                         <h6 className="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.props.novedad.publicacion}</h6>
                         <div>
 
                             <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 
                                 Ver Detalle 
-                            </Link>
+                            </Link> {' '} {' '}
                             <button className="btn btn-danger" onClick={() => confirmAlert({
                   customUI: ({ onClose }) => {
                     return (
                       <div className='btn btn-danger'>
-                        <h1>¿Está seguro?</h1>
+                        <h1>¿Está seguro?</h1> {' '}
                         <p>¿Desea borrar esta novedad?</p>
-                        <button onClick={onClose}>No</button>
+                        <button onClick={onClose}>No</button> {' '}
                        <button  
                             onClick={() => {
                               this.eliminarNovedad();
@@ -67,7 +67,7 @@ class ItemNovedadAdmin extends Component {
                       </div>
                     );
                   }
-                })}>Borrar novedad</button> {''}
+                })}>Eliminar</button> {''}
 
                             <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>
                         </div>

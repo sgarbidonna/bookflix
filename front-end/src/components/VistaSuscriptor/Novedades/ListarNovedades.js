@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ItemNovedad from './ItemNovedad';
 import ItemListNovedad from './ItemListNovedad';
-
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 
 const novedades= 'http://localhost:4000/api/novedades/';
@@ -14,15 +16,40 @@ export default class ListarNovedades extends Component {
             user: JSON.parse(sessionStorage.getItem('user')),
             token: sessionStorage.getItem('token'),
             novedades:[],
+            NovedadesCarrusel:[],
           
         }
 
     }
     setNovedades(res){
-        console.log(res);
+        
+       
+        var num =2;
+        var aux=[]; 
+        var aux2=[];
+
+        res.map(no=>{
+            if(aux.length< num){
+                aux.push(no);
+            }else{
+                aux.push(no);
+                aux2.push(aux);
+                aux=[] 
+            };
+        })
+        if(aux!=[]){
+            aux2.push(aux);
+        }
+
+        console.log('carrusel');
+        console.log(aux2);
         this.setState({
-            novedades:res
+            novedades:res,
+            NovedadesCarrusel:aux2
         });
+
+
+
     }
 
     getData = async () =>{
@@ -50,15 +77,44 @@ export default class ListarNovedades extends Component {
 
     render() {
 
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            className: 'slides',
+            
+          };
         
             return (
                 <div>
-                    {this.state.novedades.map(nove => 
-                        <ItemListNovedad novedad={nove}></ItemListNovedad>)
-                    }                  
+                    
+                     <div className="carrusel">
+                        <Slider {...settings} >
+        
+                            {this.state.NovedadesCarrusel.map(novedad => 
+                            <div>
+                               {novedad.map( nove=>
+                                <div>
+                                    <ItemListNovedad novedad={nove}></ItemListNovedad>      
+                                </div>  
+                                )}
+                            </div>
+                            )}                          
+                        </Slider>
+                        </div>
                 </div>
-            )
-        
-        
-    }
+            )           
+
+
+
+
+    };
+
+    
+    
+
+
+
 }
