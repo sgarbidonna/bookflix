@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 import ItemNovedadAdmin from './ItemListNovedadAdmin';
+import { Link } from 'react-router-dom';
 
 
 
@@ -51,6 +52,12 @@ export default class ListarNovedades extends Component {
         
             return (
                 <div>
+
+
+                    <div>
+                        <Link to ='/novedad/nueva' className='btn btn-success col-md-6 offset-md-3' > Cargar una novedad</Link>
+
+                    </div>
                     {this.state.novedades.map(nove => 
                         <ItemNovedadAdmin novedad={nove}></ItemNovedadAdmin>)
                     }                  

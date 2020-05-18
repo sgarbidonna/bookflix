@@ -35,11 +35,15 @@ class ItemNovedadAdmin extends Component {
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                      <div class="card-body">
                     
-                        <Link to={'/suscriptor/novedad/'+this.props.novedad._id} className="card-title " > 
+                        
                             <h5 className="card-title ">Titulo: {this.props.novedad.titulo} </h5>
-                        </Link>
+                       
                         <h6 className="card-subtitle mb-2 text-muted">Fecha de publicacion: {this.props.novedad.publicacion}</h6>
                         <div>
+
+                            <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 
+                                Ver Detalle 
+                            </Link>
                             <button className='btn btn-danger' onClick={this.eliminarNovedad} >Eliminar</button> {''}
 
                             <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>

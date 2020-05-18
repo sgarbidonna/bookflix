@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-import NavegacionAdmin from '../NavegacionAdmin'
-import CargarMetadata from './CargarMetadataLibro'
-import ListarVertical from './ListarVertical'
-import Carrousel from './Carrousel'
+import NavegacionAdmin from '../NavegacionAdmin';
+import CargarMetadata from './CargarMetadataLibro';
+import ListarVertical from './ListarVertical';
+import Carrousel from './Carrousel';
+import ListarLibrosAdmin from './ListarLibrosAdmin'
 
 
 export default class Libros extends Component {
@@ -14,9 +15,10 @@ render() {
         <div>
 
             <NavegacionAdmin/>
-            <CargarMetadata/>
-            <Carrousel/>
-            <ListarVertical/>
+           
+            <ListarLibrosAdmin></ListarLibrosAdmin>
+           
+            
             
 
         </div>

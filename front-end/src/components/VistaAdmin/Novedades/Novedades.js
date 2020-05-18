@@ -11,7 +11,7 @@ render() {
     return (
         <div>
             <NavegacionAdmin/>
-            <CargarNovedad/>
+            
             <ListarNovedadesAdmin></ListarNovedadesAdmin>
 
         </div>
