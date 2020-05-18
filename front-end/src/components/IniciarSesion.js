@@ -46,10 +46,11 @@ class App extends Component {
             password: this.state.password,
         })
                 .then(res => {
-                    
                     this.getToken(res)})
-                .catch(err => {
-                   alert(JSON.stringify(err.data))
+                .catch(error => {
+                    alert(error.response.data);
+                        
+                    
                   
                 });
         

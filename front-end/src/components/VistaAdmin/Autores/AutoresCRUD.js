@@ -74,7 +74,7 @@ class Autor extends Component {
 
         await axios.post(cargar,
             { nombre: this.state.nombre,
-            apellido: this.state.apellido },
+                apellido: this.state.apellido },
             { headers: { 'xaccess': this.state.token } }
 
         ).then(res => {

@@ -2,7 +2,7 @@ const generosCtrl = {};
 const Genero = require('../models/Genero');
 
 generosCtrl.listar = async (req, res) => {
-    const generos = await Genero.find()
+    const generos = await Genero.find().sort({ nombre: 'asc' });
     res.json(generos);
 };
 

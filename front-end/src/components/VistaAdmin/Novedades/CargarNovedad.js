@@ -16,7 +16,7 @@ export default class CargarNovedad extends Component {
                 
                 titulo: '',
                 descripcion: '',
-                publicacion: new Date(), 
+                publicacion: '', 
                 portadaImg: null,
     };
         this.getPortada=this.getPortada.bind(this);
@@ -99,7 +99,7 @@ export default class CargarNovedad extends Component {
                     required >
                 </textarea> 
             </div>
-
+            <label className="text-light">Fecha de publicación</label>
             <div className="form-group">
                 <DatePicker className="form-control"
                         selected={this.state.publicacion}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import {  Redirect,  } from 'react-router-dom';
+import { Redirect , Link } from 'react-router-dom';
 
-import NavegacionAdmin from './NavegacionAdmin'
+import NavegacionAdmin from './NavegacionAdminHome'
 
 export default class Home extends Component {
 
@@ -27,6 +27,16 @@ export default class Home extends Component {
             this.state.token !== '' ? 
                 <div>
                     <NavegacionAdmin/>
+
+                    <div class="d-flex justify-content-center">
+                    <Link className='btn btn-secondary' to="/libros">Libros</Link> 
+                    <Link className='btn btn-secondary' to="/novedades">Novedades </Link>
+                    <Link className='btn btn-secondary' to="/autores">Autores </Link>
+                    <Link className='btn btn-secondary' to="/editoriales">Editoriales </Link>
+                    <Link className='btn btn-secondary' to="/generos">Generos </Link>
+                    <Link className='btn btn-secondary' to="/suscriptores">Suscriptores </Link>
+                    </div>
+
                 </div>
             :
             <Redirect to="/login"/>

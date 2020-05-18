@@ -27,6 +27,9 @@ class ItemListLibro extends Component {
 
     }
 
+    componentDidMount(){
+        console.log(this.props)
+    }
     
     render() {
 
@@ -34,12 +37,12 @@ class ItemListLibro extends Component {
         return (
             <div>
                 <div class="card-body" >
-                </div>
+                </div> 
                 <div class="card col-md-6 offset-md-3 text-light bg-dark" >
                      <div class="card-body">
                     
                      
-                            <h5 className="card-title ">Titulo: {this.props.libro.titulo} </h5>
+                            <h5 className="card-title ">{this.props.libro.titulo} </h5>
                             <Link className='btn btn-danger' to={'/libro/detalle/'+this.props.libro._id}  > 
                              Ver detalle 
                              </Link>

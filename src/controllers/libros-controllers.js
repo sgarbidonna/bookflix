@@ -11,22 +11,25 @@ librosCtrl.visualizar = async (req,res)=>{
     
     await Libro.findById(req.body.id)
         .then(lib=>{ res.json(lib)})
+        .catch(err=> res.json(err))
     
 };
 
 librosCtrl.cargar = async (req,res)=>{
     const libroI = await Libro.findOne({ isbn: req.body.isbn});
    
+    
     if (libroI){
-
         return res.send('El número de ISBN ya se encuentra en uso')
     } else{
-        const libroT = await Libro.findOne( {nombre: req.body.nombre });
+        const libroT = await Libro.findOne( {titulo: req.body.titulo });
         if(libroT){
             return res.send('El título ya se encuentra en uso por otro libro.')
         }
     }
-    
+    if((req.body.isbn.length< 13) || (req.body.isbn.length > 16)){
+        return res.send('El numero de ISBN debe contener entre 13 y 16 dígitos')
+    }
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,
@@ -38,7 +41,7 @@ librosCtrl.cargar = async (req,res)=>{
         lanzamiento: req.body.lanzamiento
     });
     
-    if(req.body.expiracion != null){
+    if(req.body.expiracion){
         await libroNuevo.update({expiracion: req.body.expiracion})
     }
     libroNuevo.save()
@@ -55,10 +58,21 @@ librosCtrl.modificar = async (req,res)=>{
     
     
     const libroNuevo = await Libro.findOne({ isbn: req.body.isbn });
-    
-    if(libroNuevo._id != req.body.id){
+    if(libroNuevo && (libroNuevo._id != req.body.id)){
             return res.send('El número de isbn ya se encuentra en uso por otro libro')
-        }
+    } 
+    
+    const libroT = await Libro.findOne( {titulo: req.body.titulo });
+
+    console.log(libroT);
+
+    if(libroT && (libroT._id != req.body.id)){
+        return res.send('El título ya se encuentra en uso por otro libro.')
+    }
+
+    if((req.body.isbn.length< 13) || (req.body.isbn.length > 16)){
+        return res.send('El numero de ISBN debe contener entre 13 y 16 dígitos')
+    }
        
 
     else{
@@ -66,6 +80,9 @@ librosCtrl.modificar = async (req,res)=>{
 
         if(req.file){
             await libroViejo.updateOne({portada: req.file.filename})
+        }
+        if(req.body.expiracion){
+            await libroViejo.updateOne({expiracion: req.body.expiracion})
         }
         await libroViejo.updateOne({
             titulo: req.body.titulo,
@@ -75,12 +92,10 @@ librosCtrl.modificar = async (req,res)=>{
             editorial:req.body.editorial,
             genero:req.body.genero,
             lanzamiento: req.body.lanzamiento,
-            expiracion: req.body.expiracion
+            
             })
-            .then(lib => {
-                    res.send('Libro modificado con éxito'),
-                    res.json(lib)
-                })
+            .then(res.send('Libro modificado con éxito'))
+            .catch(err=> res.json(err))
     }
     
     
@@ -90,7 +105,7 @@ librosCtrl.modificar = async (req,res)=>{
 librosCtrl.eliminar = async (req,res)=>{
     
     await Libro.findByIdAndRemove(req.body.id)
-        .then(res.send('Libro eliminado'));
+        .then(res.send('Libro eliminado')).catch(err=> res.json(err));
     
 };
 

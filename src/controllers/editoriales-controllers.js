@@ -2,7 +2,7 @@ const editorialesCtrl = {};
 const Editorial = require('../models/Editorial');
 
 editorialesCtrl.listar = async (req, res) => {
-    const editoriales = await Editorial.find();
+    const editoriales = await Editorial.find().sort({ nombre: 'asc' });;
     res.json(editoriales);
 };
 

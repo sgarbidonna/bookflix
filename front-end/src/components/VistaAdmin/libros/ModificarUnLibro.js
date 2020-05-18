@@ -71,8 +71,7 @@ class ModificarUnLibro extends Component {
             portadaImg: libro.portada,
             autor:libro.autor,
             editorial: libro.editorial,
-            genero: libro.genero ,
-            fechaDeExpiracion: new Date(libro.expiracion), 
+            genero: libro.genero , 
             fechaDePublicacion: new Date(libro.lanzamiento),
 
 
@@ -80,7 +79,15 @@ class ModificarUnLibro extends Component {
         
 
 
-
+        if(libro.expiracion){
+            this.setState({
+                fechaDeExpiracion: new Date(libro.expiracion),
+            })
+        }else{
+            this.setState({
+                fechaDeExpiracion: new Date,
+            })
+        }
 
 
 
@@ -126,7 +133,7 @@ class ModificarUnLibro extends Component {
           { id: this.state.id },
           { headers:{'xaccess': this.state.token}}
         ).then(res =>{
-            console.log('trajo esto');
+
             console.log(res.data);
             this.setLibro(res.data);
         })
@@ -272,7 +279,7 @@ class ModificarUnLibro extends Component {
                  onChange={this.onChangeFechaDePublicacion}
                  required/>
             </div>
-
+            
             <label className="text-light"> Fecha De Expiración</label>
             <div className="form-group">
                
@@ -288,6 +295,7 @@ class ModificarUnLibro extends Component {
             <div className="form-group">
             <img width="280px" height="auto" src={portada + `${this.state.portadaImg}`} />            
             </div>
+
             <label className="text-light">Portada:</label>
             <div className="form-group">
 

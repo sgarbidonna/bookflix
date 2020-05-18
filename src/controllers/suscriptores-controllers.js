@@ -79,18 +79,18 @@ suscriptoresCtrl.login = async (req,res) => {
     
     //esto deberian checarlo en el front
     if(!email || !password ){
-        return res.send('Debe rellenar todos los campos')
+        return res.status(401).json({msg:'Debe rellenar todos los campos'})
     }
 
     const suscriptor = await Suscriptor.findOne({ email })
     if (!suscriptor) {
-        return res.send('El usuario no existe');
+        return res.status(401).json({msg:'El usuario no existe'});
     }
 
     const match = await suscriptor.matchPassword(password);
 
     if(!match){
-        return res.send('La contraseña es incorrecta');
+        return res.status(401).json({msg:'La contraseña es incorrecta'});
     }
     //el primer parametro es un payload
     JWT.sign({ id: suscriptor._id },

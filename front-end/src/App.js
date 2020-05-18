@@ -7,13 +7,13 @@ import Home from './components/Home';
 import IniciarSesion from './components/IniciarSesion';
 import RegistrarSuscriptor from './components/RegistrarSuscriptor';
 
-import Libros from './components/VistaAdmin/libros/Libros';
+import Libros from './components/VistaAdmin/Libros/Libros';
 import Novedades from './components/VistaAdmin/Novedades/Novedades';
 import Autores from './components/VistaAdmin/Autores/AutoresCRUD';
 import Editoriales from './components/VistaAdmin/Editoriales/EditorialCRUD';
 import Generos from './components/VistaAdmin/Generos/GeneroCRUD';
 import Suscriptores from './components/VistaAdmin/Suscriptores/Suscriptores';
-import ModificarUnLibro from './components/VistaAdmin/libros/ModificarUnLibro';
+import ModificarUnLibro from './components/VistaAdmin/Libros/ModificarUnLibro';
 import NavegacionAdmin from './components/VistaAdmin/NavegacionAdmin';
 import NavegacionSuscriptor  from './components/VistaSuscriptor/NavegacionSuscriptor';
 import MiSuscripcion from './components/VistaSuscriptor/VerSuscripcion';
@@ -24,8 +24,8 @@ import ModificarSuscripcion from './components/VistaSuscriptor/ModificarSuscripc
 import ItemNovedad from './components/VistaSuscriptor/Novedades/ItemNovedad';
 import ModificarNovedad from './components/VistaAdmin/Novedades/ModificarNovedad';
 
-import DetalleLibroAdmin from  './components/VistaAdmin/libros/DetalleLibroAdmin';
-import CargarMetadata from './components/VistaAdmin/libros/CargarMetadataLibro';
+import DetalleLibroAdmin from  './components/VistaAdmin/Libros/DetalleLibroAdmin';
+import CargarMetadata from './components/VistaAdmin/Libros/CargarMetadataLibro';
 import ItemNovedadAdmin from './components/VistaAdmin/Novedades/ItemNovedadAdmin';
 import CargarNovedad from './components/VistaAdmin/Novedades/CargarNovedad';
 import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros'

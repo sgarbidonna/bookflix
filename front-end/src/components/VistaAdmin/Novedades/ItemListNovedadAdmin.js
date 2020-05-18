@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../../../node_modules/axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const eliminar = 'http://localhost:4000/api/novedades/eliminar'
 
@@ -44,7 +46,28 @@ class ItemNovedadAdmin extends Component {
                             <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 
                                 Ver Detalle 
                             </Link>
-                            <button className='btn btn-danger' onClick={this.eliminarNovedad} >Eliminar</button> {''}
+                            <button className="btn btn-danger" onClick={() => confirmAlert({
+                  customUI: ({ onClose }) => {
+                    return (
+                      <div className='btn btn-danger'>
+                        <h1>¿Está seguro?</h1>
+                        <p>¿Desea borrar esta novedad?</p>
+                        <button onClick={onClose}>No</button>
+                       <button  
+                            onClick={() => {
+                              this.eliminarNovedad();
+                              onClose();
+                              
+                              
+                            
+                          }}
+                        >
+                          Si, deseo borrar novedad
+                          </button>
+                      </div>
+                    );
+                  }
+                })}>Borrar novedad</button> {''}
 
                             <Link to={'/novedades/modificar/'+this.props.novedad._id } className='btn btn-success'> Modificar</Link>
                         </div>

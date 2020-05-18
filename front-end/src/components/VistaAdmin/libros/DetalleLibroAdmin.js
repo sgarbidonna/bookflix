@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ModificarUnLibro from './ModificarUnLibro';
 import { Link } from 'react-router-dom';
-
+const editoriales= 'http://localhost:4000/api/editoriales/'
+const generos ='http://localhost:4000/api/generos/'
+const autores = 'http://localhost:4000/api/autores/'
 const eliminar = 'http://localhost:4000/api/libros/eliminar';
 const portada = 'http://localhost:4000/uploads/';
 const me = 'http://localhost:4000/api/libros/me';
@@ -15,9 +17,55 @@ export default class DetalleLibrosAdmin extends Component {
             id: this.props.match.params.id,
             token: sessionStorage.getItem('token'),
             libro:'',
-        }
 
+            editorial:'',
+            genero:'',
+            autor:'',
+        }
+        this.fechaExpiracion = this.fechaExpiracion.bind(this)
     }
+
+    getNombres= async ()=>{
+          //traigo el autor actual
+          await axios.post(autores+'me',
+          { id: this.state.libro.autor },
+          { headers:{'xaccess': this.state.token}}
+      )
+      .then(res =>{
+          console.log(res.data);
+          this.setState({
+              autor:res.data
+          })
+      })
+      .catch(err =>{console.log(err)});
+
+      //traigo el genero actual
+      await axios.post(generos+'me',
+          { id:  this.state.libro.genero },
+          { headers:{'xaccess': this.state.token}}
+      )
+      .then(res =>{
+          console.log(res.data);
+          this.setState({
+              genero:res.data
+          })
+      })
+      .catch(err =>{console.log(err)});
+
+       //traigo la editorial actual
+      await axios.post(editoriales+'me',
+          { id: this.state.libro.editorial },
+          { headers:{'xaccess': this.state.token}}
+      )
+      .then(res =>{
+          console.log(res.data);
+          this.setState({
+              editorial:res.data
+          })
+      })
+      .catch(err =>{console.log(err)});
+    }
+
     getDatos=async()=>{
         await axios.post(me,
             { id: this.state.id },
@@ -26,18 +74,27 @@ export default class DetalleLibrosAdmin extends Component {
             console.log(res.data);
             this.setState({
                 libro:res.data
-            })
+            });
+           this.getNombres();
+
         })
         .catch(err =>{console.log(err)});
+
     }
     
-    async componentDidMount(){
-     this.getDatos()
+    componentDidMount(){
+     this.getDatos();
     }
 
     
 
-
+    fechaExpiracion= ()=>{
+        if(!this.props.libro.fechaExpiracion){
+            return (<h6 className="card-subtitle mb-2 text-muted">Fecha de expiración: {this.state.libro.expiracion}</h6>)
+        }else{
+            return (<div/>)
+        }
+    }
   render(){
    
     
@@ -52,13 +109,15 @@ export default class DetalleLibrosAdmin extends Component {
                 <img width="280px" height="auto" src={portada + `${this.state.libro.portada}`} />
                 <div></div>
                 <h6 className="card-subtitle mb-2 text-muted">ISBN:{this.state.libro.isbn}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Autor: {this.state.libro.autor}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Genero: {this.state.libro.genero}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Editorial: {this.state.libro.editorial}</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Autor: {this.state.autor.nombre}</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Genero: {this.state.genero.nombre}</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Editorial: {this.state.editorial.nombre}</h6>
                
                 <h6 className="card-subtitle mb-2 text-muted">Fecha de lanzamiento: {this.state.libro.lanzamiento}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Fecha de expiración: {this.state.libro.expiracion}</h6>
                
+                {this.fechaExpiracion}
+                
+                
             </div>
                   
             </div>

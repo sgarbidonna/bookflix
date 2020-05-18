@@ -37,9 +37,7 @@ export default class ListarLibrosAdmin extends Component {
         .then(res =>{
             this.setLibros(res.data)
         })
-        .catch(err =>{
-            console.log('lista  de libros');
-            console.log(err.response)});
+        .catch();
 
     }
     async componentDidMount(){

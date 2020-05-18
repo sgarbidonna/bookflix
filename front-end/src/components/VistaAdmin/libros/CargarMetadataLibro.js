@@ -23,8 +23,8 @@ export default class CargarMetadata extends Component {
             autor:'',
             editorial:'',
             genero:'',
-            fechaDeExpiracion: new Date(), 
-            fechaDePublicacion: new Date(), 
+            fechaDeExpiracion: '', 
+            fechaDePublicacion: '', 
 
     
             generos:[],
@@ -104,10 +104,7 @@ export default class CargarMetadata extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
-        if((this.state.ISBN.length < 13) || (this.state.ISBN.length > 16)){
-            return alert('Número de ISBN incorrecto, debe contener entre 13 y 16 digitos')
-        }
-        
+    
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('isbn',this.state.ISBN);
@@ -115,7 +112,7 @@ export default class CargarMetadata extends Component {
         formData.append('editorial', this.state.editorial);
         formData.append('genero', this.state.genero);
         formData.append('lanzamiento', this.state.fechaDePublicacion);
-        formData.append('portadaImg', this.state.portadaImg);
+        formData.append('portadaImg', this.state.portadaImg); 
         formData.append('expiracion',this.state.fechaDeExpiracion)
     
         axios.post(libros,formData,{
@@ -235,6 +232,7 @@ export default class CargarMetadata extends Component {
             <div className="form-group">
                
                 <DatePicker className="form-control"
+                    
                  selected={this.state.fechaDeExpiracion}
                  name='fechaDeExpiracion'
                  onChange={this.onChangeFechaDeExpiracion}

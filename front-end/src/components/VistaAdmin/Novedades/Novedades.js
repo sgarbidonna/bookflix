@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavegacionAdmin from '../NavegacionAdmin'
-import CargarNovedad from './CargarNovedad'
+
 import ListarNovedadesAdmin from './ListarNovedadesAdmin';
 
 

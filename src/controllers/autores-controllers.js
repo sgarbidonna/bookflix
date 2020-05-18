@@ -2,7 +2,7 @@ const autoresCtrl = {};
 const Autor = require('../models/Autor');
 
 autoresCtrl.listar = async (req, res) => {
-    const autores = await Autor.find();
+    const autores = await Autor.find().sort({ nombre: 'asc' });;
     res.json(autores);
 };
 

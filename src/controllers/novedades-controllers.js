@@ -21,6 +21,14 @@ novedadesCtrl.cargar =  async (req,res) => {
         return res.json('La Novedad ya fue cargada anteriormente')
     }
 
+    if(!req.file){
+        return res.json('Ingrese una imagen de portada')
+    }
+
+    if(!req.body.publicacion){
+        return res.json('Ingrese una fecha de publicación')
+    }
+
     await new Novedad({
         titulo:req.body.titulo, 
         descripcion: req.body.descripcion,
