@@ -23,9 +23,9 @@ export default class CargarMetadata extends Component {
             autor:'',
             editorial:'',
             genero:'',
-            fechaDeExpiracion: '', 
-            fechaDePublicacion: '', 
-            fechaDeHoy: new Date(),
+            //fechaDeExpiracion: '', 
+            //fechaDePublicacion: '', 
+            //fechaDeHoy: new Date(),
     
             generos:[],
             autores:[],
@@ -104,7 +104,7 @@ export default class CargarMetadata extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-        
+        /*
         if(this.state.fechaDePublicacion < this.state.fechaDeHoy){
             return alert('La fecha de publicación no debe ser menor a la fecha actual')
         }
@@ -115,16 +115,16 @@ export default class CargarMetadata extends Component {
                 
             }
         }
-    
+    */ 
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('isbn',this.state.ISBN);
         formData.append('autor', this.state.autor);
         formData.append('editorial', this.state.editorial);
         formData.append('genero', this.state.genero);
-        formData.append('lanzamiento', this.state.fechaDePublicacion);
+        //formData.append('lanzamiento', this.state.fechaDePublicacion);
         formData.append('portadaImg', this.state.portadaImg); 
-        formData.append('expiracion',this.state.fechaDeExpiracion)
+        //formData.append('expiracion',this.state.fechaDeExpiracion)
     
         axios.post(libros,formData,{
                 headers: { 'xaccess':this.state.token }
@@ -229,26 +229,7 @@ export default class CargarMetadata extends Component {
                     </select>
             </div>
             
-            <label className="text-light">Fecha De Publicacion</label>
-            <div className="form-group">
-               
-                <DatePicker className="form-control"
-                 selected={this.state.fechaDePublicacion}
-                 name='fechaDePublicacion'
-                 onChange={this.onChangeFechaDePublicacion}
-                 required/>
-            </div>
-
-            <label className="text-light"> Fecha De Expiración</label>
-            <div className="form-group">
-               
-                <DatePicker className="form-control"
-                    formData="dd/mm/yy"
-                 selected={this.state.fechaDeExpiracion}
-                 name='fechaDeExpiracion'
-                 onChange={this.onChangeFechaDeExpiracion}
-                />
-            </div>
+            
 
             <label className="text-light">Portada</label>
             <div className="form-group">
@@ -272,3 +253,25 @@ export default class CargarMetadata extends Component {
         )
     }
 }
+/*
+<label className="text-light">Fecha De Publicacion</label>
+            <div className="form-group">
+               
+                <DatePicker className="form-control"
+                 selected={this.state.fechaDePublicacion}
+                 name='fechaDePublicacion'
+                 onChange={this.onChangeFechaDePublicacion}
+                 required/>
+            </div>
+
+            <label className="text-light"> Fecha De Expiración</label>
+            <div className="form-group">
+               
+                <DatePicker className="form-control"
+                    formData="dd/mm/yy"
+                 selected={this.state.fechaDeExpiracion}
+                 name='fechaDeExpiracion'
+                 onChange={this.onChangeFechaDeExpiracion}
+                />
+            </div>
+            */

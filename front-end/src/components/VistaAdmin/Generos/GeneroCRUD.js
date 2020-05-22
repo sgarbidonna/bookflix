@@ -107,7 +107,7 @@ class Generos extends Component {
             alert(JSON.stringify(res.data));
         })
         .catch(err => {
-            alert(JSON.stringify(err.data))
+            alert(JSON.stringify(err.response.data.msg))
         });
     };
 

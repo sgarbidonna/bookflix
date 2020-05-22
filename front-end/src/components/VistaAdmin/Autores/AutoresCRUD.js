@@ -100,8 +100,8 @@ class Autor extends Component {
             alert(JSON.stringify(res.data));
             this.getData();
         })
-            .catch(err => {
-                alert(JSON.stringify(err.data))
+            .catch(err => { 
+                alert(JSON.stringify(err.response.data.msg))
         });
     };
 

@@ -80,11 +80,7 @@ class ModificarNovedad extends Component {
 
 
     getData = async () => {
-        
-        //traigo los datos  la novedad a modificar
-       
-         console.log(this.state.token);
-
+    
         
         await axios.post(me,
           { id: this.state.id },

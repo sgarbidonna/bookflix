@@ -53,15 +53,13 @@ novedadesCtrl.modificar = async (req,res) => {
             await novedad.updateOne({portada: req.file.filename})
         }
         
-        await novedad.updateOne(req.body.id, {
+        await novedad.updateOne({
                 titulo:req.body.titulo, 
                 descripcion: req.body.descripcion,
                 publicacion: req.body.publicacion,
             
             })
-            .then( novedad => {
-                res.send('Novedad modificada con éxito')
-            })
+            .then(res.send('Novedad modificada con éxito'))
         
     } else{
             return res.send('El titulo ya se encuentra en uso por otra novedad')

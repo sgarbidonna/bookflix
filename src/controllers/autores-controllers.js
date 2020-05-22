@@ -1,5 +1,6 @@
 const autoresCtrl = {};
 const Autor = require('../models/Autor');
+const Libro = require('../models/Libro');
 
 autoresCtrl.listar = async (req, res) => {
     const autores = await Autor.find().sort({ nombre: 'asc' });;
@@ -50,9 +51,14 @@ autoresCtrl.modificar = async (req,res) => {
 };
 
 autoresCtrl.eliminar = async (req,res) => {
-    
-    await Autor.findByIdAndRemove(req.body.id)
+    const cantRemove = await Libro.findOne({autor: req.body.id});
+    if (cantRemove){
+        res.status(401).json({msg: 'No podrá eliminarse. El autor está siendo utilizado por la publicación de al menos 1 libro'})
+    }else{
+        await Autor.findByIdAndRemove(req.body.id)
         .then(res.send('Autor eliminado correctamente'));
+    }
+     
     
 };
 

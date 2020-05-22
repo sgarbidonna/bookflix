@@ -56,12 +56,12 @@ librosCtrl.cargar = async (req,res)=>{
         autor:req.body.autor,
         editorial:req.body.editorial,
         genero:req.body.genero,
-        lanzamiento: req.body.lanzamiento
+        //lanzamiento: req.body.lanzamiento
     });
-    
+    /*
     if(req.body.expiracion){
         await libroNuevo.update({expiracion: req.body.expiracion})
-    }
+    }*/
     libroNuevo.save()
             .then(lib => {
                 res.send('Libro cargado con éxito')            
@@ -98,10 +98,10 @@ librosCtrl.modificar = async (req,res)=>{
 
         if(req.file){
             await libroViejo.updateOne({portada: req.file.filename})
-        }
+        }/*
         if(req.body.expiracion){
             await libroViejo.updateOne({expiracion: req.body.expiracion})
-        }
+        }*/ 
         await libroViejo.updateOne({
             titulo: req.body.titulo,
             
@@ -109,7 +109,7 @@ librosCtrl.modificar = async (req,res)=>{
             autor:req.body.autor,
             editorial:req.body.editorial,
             genero:req.body.genero,
-            lanzamiento: req.body.lanzamiento,
+            //lanzamiento: req.body.lanzamiento,
             
             })
             .then(res.send('Libro modificado con éxito'))

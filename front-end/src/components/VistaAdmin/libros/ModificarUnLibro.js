@@ -28,9 +28,9 @@ class ModificarUnLibro extends Component {
             autor:'',
             editorial:'',
             genero:'',
-            fechaDeExpiracion: new Date(), 
-            fechaDePublicacion: new Date(), 
-            fechaDeHoy: new Date(),
+            //fechaDeExpiracion: new Date(), 
+            //fechaDePublicacion: new Date(), 
+           // fechaDeHoy: new Date(),
     
             generos:[],
             autores:[],
@@ -72,12 +72,12 @@ class ModificarUnLibro extends Component {
             autor:libro.autor,
             editorial: libro.editorial,
             genero: libro.genero , 
-            fechaDePublicacion: new Date(libro.lanzamiento),
+            //fechaDePublicacion: new Date(libro.lanzamiento),
 
 
         })
         
-
+/*
 
         if(libro.expiracion){
             this.setState({
@@ -88,6 +88,7 @@ class ModificarUnLibro extends Component {
                 fechaDeExpiracion: new Date,
             })
         }
+        */
 
 
 
@@ -124,11 +125,6 @@ class ModificarUnLibro extends Component {
         .catch(err =>{console.log(err)});
 
 
-        //traigo los datos del libro a modificar
-       
-         console.log(this.state.token);
-
-        
         await axios.post(me,
           { id: this.state.id },
           { headers:{'xaccess': this.state.token}}
@@ -149,7 +145,7 @@ class ModificarUnLibro extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-
+/*
         if(this.state.fechaDePublicacion < this.state.fechaDeHoy){
             return alert('La fecha de publicación no debe ser menor a la fecha actual')
         }
@@ -160,6 +156,7 @@ class ModificarUnLibro extends Component {
                 
             }
         }
+*/
         const formData = new FormData();
         formData.append('id', this.state.id);
         formData.append('titulo', this.state.titulo);
@@ -167,9 +164,9 @@ class ModificarUnLibro extends Component {
         formData.append('autor', this.state.autor);
         formData.append('editorial', this.state.editorial);
         formData.append('genero', this.state.genero);
-        formData.append('lanzamiento', this.state.fechaDePublicacion);
+        //formData.append('lanzamiento', this.state.fechaDePublicacion);
         formData.append('portadaImg', this.state.portadaImg);
-        formData.append('expiracion',this.state.fechaDeExpiracion)
+        //formData.append('expiracion',this.state.fechaDeExpiracion)
     
         axios.post(modificar,formData,{
                 headers: { 'xaccess':this.state.token }
@@ -280,25 +277,7 @@ class ModificarUnLibro extends Component {
                     </select>
             </div>
             
-            <label className="text-light">Fecha De Publicacion</label>
-            <div className="form-group">
-               
-                <DatePicker className="form-control"
-                 selected={this.state.fechaDePublicacion}
-                 name='fechaDePublicacion'
-                 onChange={this.onChangeFechaDePublicacion}
-                 required/>
-            </div>
-            
-            <label className="text-light"> Fecha De Expiración</label>
-            <div className="form-group">
-               
-                <DatePicker className="form-control"
-                 selected={this.state.fechaDeExpiracion}
-                 name='fechaDeExpiracion'
-                 onChange={this.onChangeFechaDeExpiracion}
-                />
-            </div>
+           
 
 
             <label className="text-light">Portada Anterior</label>
@@ -330,3 +309,24 @@ class ModificarUnLibro extends Component {
 
 
 export default ModificarUnLibro;
+/*
+ <label className="text-light">Fecha De Publicacion</label>
+            <div className="form-group">
+               
+                <DatePicker className="form-control"
+                 selected={this.state.fechaDePublicacion}
+                 name='fechaDePublicacion'
+                 onChange={this.onChangeFechaDePublicacion}
+                 required/>
+            </div>
+            
+            <label className="text-light"> Fecha De Expiración</label>
+            <div className="form-group">
+               
+                <DatePicker className="form-control"
+                 selected={this.state.fechaDeExpiracion}
+                 name='fechaDeExpiracion'
+                 onChange={this.onChangeFechaDeExpiracion}
+                />
+            </div>
+            */

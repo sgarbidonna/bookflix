@@ -1,5 +1,6 @@
 const editorialesCtrl = {};
 const Editorial = require('../models/Editorial');
+const Libro = require('../models/Libro');
 
 editorialesCtrl.listar = async (req, res) => {
     const editoriales = await Editorial.find().sort({ nombre: 'asc' });;
@@ -52,11 +53,13 @@ editorialesCtrl.modificar = async (req,res) => {
 };
 
 editorialesCtrl.eliminar = async (req,res) => {
-    
-    await Editorial.findByIdAndRemove(req.body.id)
-        
+    const cantRemove = await Libro.findOne({editorial: req.body.id});
+    if (cantRemove){
+        res.status(401).json({msg: 'No podrá eliminarse. La editorial está siendo utilizada por la publicación de al menos 1 libro'})
+    }else{
+        await Editorial.findByIdAndRemove(req.body.id)
         .then(res.send('Editorial eliminada'));
-    
+    }
 };
 
 

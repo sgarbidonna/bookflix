@@ -1,5 +1,6 @@
 const generosCtrl = {};
 const Genero = require('../models/Genero');
+const Libro = require('../models/Libro');
 
 generosCtrl.listar = async (req, res) => {
     const generos = await Genero.find().sort({ nombre: 'asc' });
@@ -44,9 +45,13 @@ generosCtrl.modificar = async (req,res) => {
 };
 
 generosCtrl.eliminar = async (req,res) => {
-    await Genero.findByIdAndRemove(req.body.id)
+    const cantRemove = await Libro.findOne({genero: req.body.id});
+    if (cantRemove){
+        res.status(401).json({msg: 'No podrá eliminarse. El género está siendo utilizado por la publicación de al menos 1 libro'})
+    }else{
+        await Genero.findByIdAndRemove(req.body.id)
         .then(res.send('Género eliminado'));
-    
+    }
 };
 
 module.exports = generosCtrl;
