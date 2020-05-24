@@ -6,6 +6,7 @@ class Errors extends Component {
  
     }
     
+//Solo un cambio
 
     render() {
         return (
